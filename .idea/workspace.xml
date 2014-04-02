@@ -6,7 +6,7 @@
     </list>
     <ignored path="real-life-simulator.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="dd85ff4a-4b99-471b-a757-dd1181b9d8fc" time="1396438246807" ignored="false" />
+    <file path="/Dummy.txt" changelist="dd85ff4a-4b99-471b-a757-dd1181b9d8fc" time="1396438429466" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +70,7 @@
       <file leaf-file-name="TestA.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TestA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="13" selection-start="79" selection-end="79" vertical-scroll-proportion="0.25660378">
+            <state line="7" column="13" selection-start="165" selection-end="165" vertical-scroll-proportion="0.4490566">
               <folding />
             </state>
           </provider>
@@ -338,7 +338,11 @@
       <created>1396438308438</created>
       <updated>1396438308438</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Test commit#Adina">
+      <created>1396438471121</created>
+      <updated>1396438471121</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -441,7 +445,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/TestA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="79" selection-end="79" vertical-scroll-proportion="0.25660378">
+        <state line="7" column="13" selection-start="165" selection-end="165" vertical-scroll-proportion="0.4490566">
           <folding />
         </state>
       </provider>
