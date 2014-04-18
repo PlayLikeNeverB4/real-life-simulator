@@ -2,7 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd85ff4a-4b99-471b-a757-dd1181b9d8fc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/uml/Real-Life-Simulator-UML.zargo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/resources/background.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/resources/tab.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/resources/titlebar.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/resources/titlebar_end.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AbstractEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AbstractMovableObject.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AbstractObject.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AbstractPerson.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/AbstractPersonRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/AbstractRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AbstractStaticObject.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AbstractTree.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/AmbientCharacter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/app/ApplicationControl.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/ApplicationControl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/Camera.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/FemaleRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/FireEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/GameEngine.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/GameWorld.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/GameWorldRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/GraphicsManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/IRenderable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/InputManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/MainCharacter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/MainWindow.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/MaleRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/MoveEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/Oak.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/graphics/OakRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/logic/SwitchEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/allclasses-frame.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/allclasses-noframe.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/constant-values.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/deprecated-list.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/help-doc.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/index-files/index-1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/index-files/index-2.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/overview-tree.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/app/package-frame.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/package-list" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/app/package-summary.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/app/package-tree.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/stylesheet.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="real-life-simulator.iws" />
@@ -136,20 +180,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="real-life-simulator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="real-life-simulator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="real-life-simulator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uml" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -337,7 +367,11 @@
       <created>1396438471121</created>
       <updated>1396438471121</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added UML diagram.">
+      <created>1397852077763</created>
+      <updated>1397852077763</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -351,9 +385,10 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3269962" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32824427" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889733" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889733" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -365,7 +400,6 @@
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889733" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
     </layout>
@@ -384,7 +418,8 @@
     </option>
     <MESSAGE value="Test commit" />
     <MESSAGE value="Test commit#Adina" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test commit#Adina" />
+    <MESSAGE value="Added UML diagram." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added UML diagram." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
