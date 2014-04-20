@@ -11,8 +11,11 @@ import javax.media.opengl.glu.GLU;
  * This class manages all of the rendering
  */
 public class GraphicsManager implements GLEventListener {
-
+    /**
+     * The {@link AbstractRenderer} which renders the game world
+     */
     private AbstractRenderer gameWorldRenderer;
+
     private MainWindow mainWindow;
 
     /**
@@ -36,13 +39,10 @@ public class GraphicsManager implements GLEventListener {
     private GLCanvas canvas;
 
     /**
-     *
      * @param gameEngine        The {@link GameEngine} for which it manages the graphics
-     * @param gameWorldRenderer The {@link AbstractRenderer} which renders the game world
      * @param mainWindow        The {@link MainWindow} of the application
      */
-    public GraphicsManager(GameEngine gameEngine, AbstractRenderer gameWorldRenderer, MainWindow mainWindow) {
-        this.gameWorldRenderer = gameWorldRenderer;
+    public GraphicsManager(GameEngine gameEngine, MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
     }
