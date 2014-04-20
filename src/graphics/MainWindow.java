@@ -13,7 +13,7 @@ public class MainWindow extends JFrame {
      * Default constructor has implicit width = 900 and height = 700.
      */
     public MainWindow() {
-        new MainWindow(900, 700);
+        this(900, 700);
     }
 
     /**
