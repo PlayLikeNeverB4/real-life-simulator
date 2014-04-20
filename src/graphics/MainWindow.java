@@ -13,16 +13,7 @@ public class MainWindow extends JFrame {
      * Default constructor has implicit width = 900 and height = 700.
      */
     public MainWindow() {
-        super("Real Life Simulator");
-
-        this.width = 900;
-        this.height = 700;
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.setSize(width, height);
-
-        this.setVisible(true);
+        new MainWindow(900, 700);
     }
 
     /**
@@ -31,7 +22,6 @@ public class MainWindow extends JFrame {
      * @param height specify the height of the frame
      */
     public MainWindow(int width, int height) {
-
         super("Real Life Simulator");
 
         this.width = width;
