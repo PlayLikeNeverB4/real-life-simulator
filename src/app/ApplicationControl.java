@@ -18,8 +18,8 @@ public class ApplicationControl {
      */
     public ApplicationControl() {
         mainWindow = new MainWindow(1000, 800);
-        graphicsManager = new GraphicsManager(mainWindow);
-        gameEngine = new GameEngine();
+        gameEngine = new GameEngine(graphicsManager);
+        graphicsManager = new GraphicsManager(gameEngine, mainWindow);
     }
 
     /**
