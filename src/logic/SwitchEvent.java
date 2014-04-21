@@ -2,14 +2,19 @@ package logic;
 
 public class SwitchEvent extends AbstractEvent {
 
-    @Override
-    protected void find() {
+    public SwitchEvent(SwitchEvent switchEvent) {
+    }
 
+    public SwitchEvent() {
     }
 
     @Override
-    protected void updateWorldObject() {
+    protected AbstractObject findObject() {
+        return null;
+    }
 
+    @Override
+    protected void updateWorldObject(AbstractObject targetObject) throws Exception {
     }
 
 }
