@@ -1,15 +1,24 @@
 package logic;
 
+/**
+ * This class will handle the events that are referring to a FireObject
+ */
 public class FireEvent extends AbstractEvent {
 
-    @Override
-    protected void find() {
+    public FireEvent(FireEvent fireEvent) {
+    }
 
+    public FireEvent() {
     }
 
     @Override
-    protected void updateWorldObject() {
-
+    protected AbstractObject findObject() {
+        return null;
     }
+
+    @Override
+    protected void updateWorldObject(AbstractObject targetObject) throws Exception {
+    }
+
 
 }
