@@ -47,19 +47,23 @@ public class GraphicsManager implements GLEventListener {
         this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
     }
 
-    /**
-     * Draws the game world
-     */
-    public void draw() {
-//        display(...);
-    }
-
     public GL2 getGlObject() {
         return glObject;
     }
 
     public GLU getGluObject() {
         return gluObject;
+    }
+
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
+    /**
+     * Draws the game world
+     */
+    public void draw() {
+//        display(...);
     }
 
     /*
