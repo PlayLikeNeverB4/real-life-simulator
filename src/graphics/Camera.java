@@ -35,7 +35,7 @@ public class Camera {
         // Set the camera
         float widthHeightRatio = (float) graphicsManager.getMainWindow().getWidth() / (float) graphicsManager.getMainWindow().getHeight();
         glu.gluPerspective(90, widthHeightRatio, 0.1, 2000);
-        glu.gluLookAt(0, -10, 0, 0, 0, 0, 0, 1, 0);
+        glu.gluLookAt(0, -10, 0, 0, 0, 0, 0, 0, 1);
 
         // Change back to model view matrix
         gl.glMatrixMode(GL2.GL_MODELVIEW);

@@ -1,8 +1,10 @@
 package graphics;
 
+import logic.AbstractObject;
+
 public abstract class AbstractPersonRenderer extends AbstractRenderer {
 
-    protected AbstractPersonRenderer(IRenderable renderedObject, GraphicsManager graphicsManager) {
+    protected AbstractPersonRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         super(renderedObject, graphicsManager);
     }
 

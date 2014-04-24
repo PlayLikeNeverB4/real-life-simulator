@@ -1,8 +1,10 @@
 package graphics;
 
+import logic.AbstractObject;
+
 public class FemaleRenderer extends AbstractPersonRenderer {
 
-    public FemaleRenderer(IRenderable renderedObject, GraphicsManager graphicsManager) {
+    public FemaleRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         super(renderedObject, graphicsManager);
     }
 

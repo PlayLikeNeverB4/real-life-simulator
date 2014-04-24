@@ -1,13 +1,15 @@
 package graphics;
 
+import logic.AbstractObject;
+
 public abstract class AbstractRenderer {
 
-    private IRenderable renderedObject;
-    private GraphicsManager graphicsManager;
+    protected AbstractObject renderedObject;
+    protected GraphicsManager graphicsManager;
   
     public abstract void render();
 
-    protected AbstractRenderer(IRenderable renderedObject, GraphicsManager graphicsManager) {
+    protected AbstractRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         this.renderedObject = renderedObject;
         this.graphicsManager = graphicsManager;
     }

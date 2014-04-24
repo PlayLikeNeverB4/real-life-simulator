@@ -12,12 +12,9 @@ import javax.media.opengl.glu.GLU;
  * This class manages all of the rendering
  */
 public class GraphicsManager implements GLEventListener {
-    /**
-     * The {@link AbstractRenderer} which renders the game world
-     */
-    private AbstractRenderer gameWorldRenderer;
 
     private MainWindow mainWindow;
+    private GameEngine gameEngine;
 
     /**
      * The {@link Camera} of the scenes that are rendered
@@ -40,12 +37,11 @@ public class GraphicsManager implements GLEventListener {
     private GLCanvas canvas;
 
     /**
-     * @param gameEngine        The {@link GameEngine} for which it manages the graphics
-     * @param mainWindow        The {@link MainWindow} of the application
+     * @param mainWindow        The {@link graphics.MainWindow} of the application
      */
-    public GraphicsManager(GameEngine gameEngine, MainWindow mainWindow) {
+    public GraphicsManager(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
-        this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
+        this.camera = null;
 
         // Creating a new GL profile
         GLProfile glprofile = GLProfile.getDefault();
@@ -92,11 +88,9 @@ public class GraphicsManager implements GLEventListener {
         return mainWindow;
     }
 
-    /**
-     * Draws the game world
-     */
-    public void draw() {
-//        display(...);
+    public void setGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+        this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
     }
 
     /*
@@ -129,6 +123,12 @@ public class GraphicsManager implements GLEventListener {
      */
     @Override
     public void display(GLAutoDrawable canvas) {
+        gameEngine.loopOnce();
+        // Erasing the canvas -- filling it with the clear color.
+        glObject.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        glObject.glLoadIdentity();
+        camera.setItself();
+        gameEngine.getGameWorld().getRenderer().render();
     }
 
     @Override
