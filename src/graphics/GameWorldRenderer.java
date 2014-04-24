@@ -2,8 +2,8 @@ package graphics;
 
 public class GameWorldRenderer extends AbstractRenderer {
 
-    public GameWorldRenderer() {
-
+    public GameWorldRenderer(IRenderable renderedObject, GraphicsManager graphicsManager) {
+        super(renderedObject, graphicsManager);
     }
 
     @Override
