@@ -29,7 +29,6 @@ public class GameEngine {
         this.graphicsManager = graphicsManager;
         inputManager = new InputManager();
         gameWorld = new GameWorld(graphicsManager);
-        initializeGameWorld();
     }
     
     public GameWorld getGameWorld() {
@@ -42,14 +41,6 @@ public class GameEngine {
 
     public GraphicsManager getGraphicsManager() {
         return graphicsManager;
-    }
-
-    /**
-     * This method creates objects and adds them to the game world
-     */
-    private void initializeGameWorld() {
-        gameWorld.getObjectList().add(new TestObject(new Position(0, 0, 0), 20, graphicsManager));
-//        gameWorld.getObjectList().add(new TestObject(new Position(5, 0, 0), 40, graphicsManager));
     }
 
     /**

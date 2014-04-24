@@ -37,6 +37,15 @@ public class GameWorld extends AbstractObject {
         objectList.add(mainCharacter);
         movableObjectList.add(mainCharacter);
         this.renderer = new GameWorldRenderer(this, graphicsManager);
+        initializeGameWorld(graphicsManager);
+    }
+
+    /**
+     * This method creates objects and adds them to the game world
+     */
+    private void initializeGameWorld(GraphicsManager graphicsManager) {
+        objectList.add(new TestObject(new Position(0, 0, 0), 7, graphicsManager));
+//        gameWorld.getObjectList().add(new TestObject(new Position(5, 0, 0), 40, graphicsManager));
     }
 
     public MainCharacter getMainCharacter() {
