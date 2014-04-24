@@ -20,6 +20,7 @@ public class ApplicationControl {
         mainWindow = new MainWindow(1365, 740);
         gameEngine = new GameEngine(graphicsManager);
         graphicsManager = new GraphicsManager(gameEngine, mainWindow);
+        mainWindow.setVisible(true);
     }
 
     /**

@@ -1,5 +1,6 @@
 package graphics;
 
+import com.jogamp.opengl.util.Animator;
 import logic.GameEngine;
 
 import javax.media.opengl.*;
@@ -45,32 +46,7 @@ public class GraphicsManager implements GLEventListener {
     public GraphicsManager(GameEngine gameEngine, MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
-    }
 
-    public GL2 getGlObject() {
-        return glObject;
-    }
-
-    public GLU getGluObject() {
-        return gluObject;
-    }
-
-    public MainWindow getMainWindow() {
-        return mainWindow;
-    }
-
-    /**
-     * Draws the game world
-     */
-    public void draw() {
-//        display(...);
-    }
-
-    /*
-        Initializes JOGL
-     */
-    @Override
-    public void init(GLAutoDrawable canvas) {
         // Creating a new GL profile
         GLProfile glprofile = GLProfile.getDefault();
 
@@ -97,6 +73,37 @@ public class GraphicsManager implements GLEventListener {
         // Adding the keyboard and mouse event listeners to the canvas
 //        this.canvas.addKeyListener(this);
 
+        // Creating an animator that will redraw the scene 40 times per second
+        Animator animator = new Animator(this.canvas);
+
+        // Starting the animator
+        animator.start();
+    }
+
+    public GL2 getGlObject() {
+        return glObject;
+    }
+
+    public GLU getGluObject() {
+        return gluObject;
+    }
+
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
+    /**
+     * Draws the game world
+     */
+    public void draw() {
+//        display(...);
+    }
+
+    /*
+        Initializes JOGL
+     */
+    @Override
+    public void init(GLAutoDrawable canvas) {
         // Saving the GL object for later use
         this.glObject = this.canvas.getGL().getGL2();
 
@@ -122,7 +129,6 @@ public class GraphicsManager implements GLEventListener {
      */
     @Override
     public void display(GLAutoDrawable canvas) {
-
     }
 
     @Override
