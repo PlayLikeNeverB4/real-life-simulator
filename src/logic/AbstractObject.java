@@ -17,6 +17,10 @@ public abstract class AbstractObject {
      */
     AbstractRenderer renderer;
 
+    public Position getPosition() {
+        return position;
+    }
+
     public AbstractRenderer getRenderer() {
         return renderer;
     }
@@ -24,4 +28,9 @@ public abstract class AbstractObject {
     protected void updatePosition(double dx, double dy, double dz) {
     }
 
+    protected AbstractObject() { }
+
+    protected AbstractObject(Position position) {
+        this.position = position;
+    }
 }

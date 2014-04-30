@@ -6,4 +6,7 @@ public abstract class AbstractPerson extends AbstractMovableObject {
     protected String color;
     protected String gender;
 
+    protected AbstractPerson(Position position) {
+        super(position);
+    }
 }

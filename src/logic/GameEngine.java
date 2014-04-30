@@ -2,6 +2,8 @@ package logic;
 
 import graphics.GraphicsManager;
 
+import java.util.List;
+
 /**
  * This class manages the life-cycle of the game
  */
@@ -23,12 +25,19 @@ public class GameEngine {
     private GraphicsManager graphicsManager;
 
     /**
+     * The timestamp of the last update loop
+     */
+    private long lastLoopTime;
+
+    /**
      * @param graphicsManager        The {@link GraphicsManager} which manages the graphics
      */
     public GameEngine(GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
-        inputManager = new InputManager();
         gameWorld = new GameWorld(graphicsManager);
+        inputManager = new InputManager(gameWorld, graphicsManager);
+        this.graphicsManager.setInputManager(inputManager);
+        lastLoopTime = System.currentTimeMillis();
     }
     
     public GameWorld getGameWorld() {
@@ -47,9 +56,17 @@ public class GameEngine {
      * This method describes the life-cycle of the game
      */
     public void loopOnce() {
-        // see input - acum nu avem
-        // update objects
+        long currentLoopTime = System.currentTimeMillis();
 
+        // Check input
+        List<AbstractEvent> eventList = inputManager.popNewEvents();
+        for(AbstractEvent event : eventList)
+            event.handle();
+
+        // update objects
+        // ...
+
+        lastLoopTime = currentLoopTime;
     }
 
 }

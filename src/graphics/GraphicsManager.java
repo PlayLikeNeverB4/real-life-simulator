@@ -2,6 +2,7 @@ package graphics;
 
 import com.jogamp.opengl.util.Animator;
 import logic.GameEngine;
+import logic.InputManager;
 
 import javax.media.opengl.*;
 import javax.media.opengl.awt.GLCanvas;
@@ -36,6 +37,8 @@ public class GraphicsManager implements GLEventListener {
      */
     private GLCanvas canvas;
 
+    private InputManager inputManager;
+
     /**
      * @param mainWindow        The {@link graphics.MainWindow} of the application
      */
@@ -66,9 +69,6 @@ public class GraphicsManager implements GLEventListener {
         // Adding an OpenGL event listener to the canvas
         this.canvas.addGLEventListener(this);
 
-        // Adding the keyboard and mouse event listeners to the canvas
-//        this.canvas.addKeyListener(this);
-
         // Creating an animator that will redraw the scene 40 times per second
         Animator animator = new Animator(this.canvas);
 
@@ -86,6 +86,20 @@ public class GraphicsManager implements GLEventListener {
 
     public MainWindow getMainWindow() {
         return mainWindow;
+    }
+
+    public GLCanvas getCanvas() {
+        return canvas;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setInputManager(InputManager inputManager) {
+        this.inputManager = inputManager;
+        this.canvas.addKeyListener(inputManager);
+        this.canvas.addMouseMotionListener(inputManager);
     }
 
     public void setGameEngine(GameEngine gameEngine) {

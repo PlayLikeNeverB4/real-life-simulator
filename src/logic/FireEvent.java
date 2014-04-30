@@ -3,7 +3,7 @@ package logic;
 /**
  * This class will handle the events that are referring to a FireObject
  */
-public class FireEvent extends AbstractEvent {
+public class FireEvent extends AbstractObjectEvent {
 
     public FireEvent(FireEvent fireEvent) {
     }
@@ -17,7 +17,7 @@ public class FireEvent extends AbstractEvent {
     }
 
     @Override
-    protected void updateWorldObject(AbstractObject targetObject) throws Exception {
+    protected void updateWorldObject(AbstractObject targetObject) {
     }
 
 

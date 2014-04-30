@@ -1,6 +1,5 @@
 package logic;
 
-import graphics.AbstractRenderer;
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
 
@@ -11,6 +10,11 @@ import java.util.List;
  * Represents the game world
  */
 public class GameWorld extends AbstractObject {
+
+    /**
+     * The size of the game world
+     */
+    private Dimension dimension;
 
     /**
      * A list containing all of the objects inside the game world
@@ -31,11 +35,8 @@ public class GameWorld extends AbstractObject {
      * This constructor initializes all of the containing fields of GameWorld class
      */
     public GameWorld(GraphicsManager graphicsManager) {
-        mainCharacter = new MainCharacter(graphicsManager);
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
-        objectList.add(mainCharacter);
-        movableObjectList.add(mainCharacter);
         this.renderer = new GameWorldRenderer(this, graphicsManager);
         initializeGameWorld(graphicsManager);
     }
@@ -44,8 +45,28 @@ public class GameWorld extends AbstractObject {
      * This method creates objects and adds them to the game world
      */
     private void initializeGameWorld(GraphicsManager graphicsManager) {
-        objectList.add(new TestObject(new Position(0, 0, 0), 7, graphicsManager));
+        dimension = new Dimension(1000, 1000, 1000);
+        mainCharacter = new MainCharacter(new Position(500, 500, 500), graphicsManager);
+        addMovableObject(mainCharacter);
+//        objectList.add(new TestObject(new Position(0, 0, 0), 7, graphicsManager));
 //        gameWorld.getObjectList().add(new TestObject(new Position(5, 0, 0), 40, graphicsManager));
+    }
+
+    /**
+     * Adds an ordinary object to the game world
+     * @param abstractObject The object to be added
+     */
+    private void addObject(AbstractObject abstractObject) {
+        objectList.add(abstractObject);
+    }
+
+    /**
+     * Adds a movable object to the game world
+     * @param movableObject The object to be added
+     */
+    private void addMovableObject(AbstractMovableObject movableObject) {
+        addObject(movableObject);
+        movableObjectList.add(movableObject);
     }
 
     public MainCharacter getMainCharacter() {
@@ -58,6 +79,10 @@ public class GameWorld extends AbstractObject {
 
     public List<AbstractMovableObject> getMovableObjectList() {
         return movableObjectList;
+    }
+
+    public Dimension getDimension() {
+        return dimension;
     }
 
     /**

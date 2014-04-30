@@ -37,4 +37,32 @@ public class Position {
     public void setZ(double z) {
         this.z = z;
     }
+
+    /**
+     * @param angle              The angle to the OX axis in the XOY plane
+     * @param horizontalDistance The horizontal distance to the original position
+     * @param verticalDistance   The vertical distance to the original position
+     * @return                   A position at an angle and distance from this position
+     */
+    public Position computeRelativePosition(double angle, double horizontalDistance, double verticalDistance) {
+        double nextX = x - Math.cos(angle) * horizontalDistance;
+        double nextY = y - Math.sin(angle) * horizontalDistance;
+        double nextZ = z + verticalDistance;
+        return new Position(nextX, nextY, nextZ);
+    }
+
+    public Position add(Position position) {
+        return new Position(x + position.x,
+                            y + position.y,
+                            z + position.z);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
 }

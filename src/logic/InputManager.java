@@ -1,5 +1,10 @@
 package logic;
 
+import graphics.GraphicsManager;
+import graphics.MainWindow;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -12,12 +17,18 @@ import java.util.List;
  */
 public class InputManager implements MouseMotionListener, KeyListener {
 
+    private GameWorld gameWorld;
+
+    private GraphicsManager graphicsManager;
+
     /**
      * A LinkedList that contains all the events which appear during execution of the application
      */
     private List<AbstractEvent> eventList;
 
-    public InputManager() {
+    public InputManager(GameWorld gameWorld, GraphicsManager graphicsManager) {
+        this.gameWorld = gameWorld;
+        this.graphicsManager = graphicsManager;
         eventList = new LinkedList<AbstractEvent>();
     }
 
@@ -27,15 +38,8 @@ public class InputManager implements MouseMotionListener, KeyListener {
      */
     public synchronized List<AbstractEvent> popNewEvents() {
         List<AbstractEvent> cpyEventList = new LinkedList<AbstractEvent>();
-        for(int i = 0; i < eventList.size(); i++) {
-            AbstractEvent event = eventList.get(i);
-            if (event instanceof MoveEvent)
-                cpyEventList.add(new MoveEvent((MoveEvent) event));
-            else if(event instanceof FireEvent) {
-                cpyEventList.add(new FireEvent((FireEvent) event));
-            } else if(event instanceof SwitchEvent) {
-                cpyEventList.add(new SwitchEvent((SwitchEvent) event));
-            }
+        for(AbstractEvent event : eventList) {
+            cpyEventList.add(event);
         }
         eventList.clear();
         return cpyEventList;
@@ -45,21 +49,21 @@ public class InputManager implements MouseMotionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
-            case KeyEvent.VK_UP : eventList.add(new MoveEvent(MoveEvent.FORWARD));
+            case KeyEvent.VK_UP : eventList.add(new MoveObjectEvent(MoveObjectEvent.FORWARD));
                 break;
-            case KeyEvent.VK_DOWN : eventList.add(new MoveEvent(MoveEvent.BACK));
+            case KeyEvent.VK_DOWN : eventList.add(new MoveObjectEvent(MoveObjectEvent.BACK));
                 break;
-            case KeyEvent.VK_LEFT : eventList.add(new MoveEvent(MoveEvent.LEFT));
+            case KeyEvent.VK_LEFT : eventList.add(new MoveObjectEvent(MoveObjectEvent.LEFT));
                 break;
-            case KeyEvent.VK_RIGHT : eventList.add(new MoveEvent(MoveEvent.RIGHT));
+            case KeyEvent.VK_RIGHT : eventList.add(new MoveObjectEvent(MoveObjectEvent.RIGHT));
                 break;
-            case KeyEvent.VK_W : eventList.add(new MoveEvent(MoveEvent.FORWARD));
+            case KeyEvent.VK_W : eventList.add(new MoveObjectEvent(MoveObjectEvent.FORWARD));
                 break;
-            case KeyEvent.VK_S : eventList.add(new MoveEvent(MoveEvent.BACK));
+            case KeyEvent.VK_S : eventList.add(new MoveObjectEvent(MoveObjectEvent.BACK));
                 break;
-            case KeyEvent.VK_A : eventList.add(new MoveEvent(MoveEvent.LEFT));
+            case KeyEvent.VK_A : eventList.add(new MoveObjectEvent(MoveObjectEvent.LEFT));
                 break;
-            case KeyEvent.VK_D : eventList.add(new MoveEvent(MoveEvent.RIGHT));
+            case KeyEvent.VK_D : eventList.add(new MoveObjectEvent(MoveObjectEvent.RIGHT));
                 break;
             case KeyEvent.VK_F : eventList.add(new FireEvent());
                 break;
@@ -73,6 +77,27 @@ public class InputManager implements MouseMotionListener, KeyListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        int middleX = graphicsManager.getCanvas().getWidth() / 2;
+        int middleY = graphicsManager.getCanvas().getHeight() / 2;
+
+//        System.out.println(e.getY() + " " + middleY);
+
+        eventList.add(new MouseMoveEvent(e.getX() - middleX,
+                                         e.getY() - middleY,
+                                         gameWorld.getMainCharacter(),
+                                         graphicsManager));
+
+        Robot robot = null;
+        try {
+            robot = new Robot();
+            MainWindow mainWindow = graphicsManager.getMainWindow();
+            Point point = new Point(middleX, middleY);
+            SwingUtilities.convertPointToScreen(point, graphicsManager.getCanvas());
+            robot.mouseMove(mainWindow.getX() + mainWindow.getWidth() / 2,
+                    (int) point.getY());
+        } catch (AWTException e1) {
+            e1.printStackTrace();
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ package logic;
 public abstract class AbstractMovableObject extends AbstractObject {
 
     /**
-     * The object's orientation represented as the angle to the OX axis
+     * The object's orientation represented as the angle to the OX axis in the XOY plane
      */
     protected double direction;
 
@@ -20,6 +20,18 @@ public abstract class AbstractMovableObject extends AbstractObject {
      * Negative acceleration means deceleration
      */
     protected double acceleration;
+
+    protected AbstractMovableObject(Position position) {
+        super(position);
+    }
+
+    public double getDirection() {
+        return direction;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
 
     /**
      * Updates the objects' position and speed considering its current speed, acceleration and direction
@@ -35,12 +47,12 @@ public abstract class AbstractMovableObject extends AbstractObject {
      */
     private void updatePosition(double time) {
         double distance = this.speed * time;
-        double crtx = this.position.getX();
-        double crty = this.position.getY();
-        double nextx = crtx + Math.cos(this.direction) * distance;
-        double nexty = crty + Math.sin(this.direction) * distance;
-        this.position.setX(nextx);
-        this.position.setY(nexty);
+        double crtX = this.position.getX();
+        double crtY = this.position.getY();
+        double nextX = crtX + Math.cos(this.direction) * distance;
+        double nextY = crtX + Math.sin(this.direction) * distance;
+        this.position.setX(nextX);
+        this.position.setY(nextY);
     }
 
     /**

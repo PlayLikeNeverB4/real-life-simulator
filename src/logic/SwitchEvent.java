@@ -1,6 +1,6 @@
 package logic;
 
-public class SwitchEvent extends AbstractEvent {
+public class SwitchEvent extends AbstractObjectEvent {
 
     public SwitchEvent(SwitchEvent switchEvent) {
     }
@@ -14,7 +14,7 @@ public class SwitchEvent extends AbstractEvent {
     }
 
     @Override
-    protected void updateWorldObject(AbstractObject targetObject) throws Exception {
+    protected void updateWorldObject(AbstractObject targetObject) {
     }
 
 }

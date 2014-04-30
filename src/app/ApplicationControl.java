@@ -17,7 +17,7 @@ public class ApplicationControl {
      * Initializes all the members of it. The GraphicsManager object, the MainWindow object and the GameEngine object.
      */
     public ApplicationControl() {
-        mainWindow = new MainWindow(1365, 740);
+        mainWindow = new MainWindow(800, 600);
         graphicsManager = new GraphicsManager(mainWindow);
         gameEngine = new GameEngine(graphicsManager);
         graphicsManager.setGameEngine(gameEngine);
