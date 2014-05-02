@@ -59,6 +59,7 @@ public class GameEngine {
         long currentLoopTime = System.currentTimeMillis();
 
         // Check input
+        inputManager.checkMoveKeys(currentLoopTime - lastLoopTime);
         List<AbstractEvent> eventList = inputManager.popNewEvents();
         for(AbstractEvent event : eventList)
             event.handle();
