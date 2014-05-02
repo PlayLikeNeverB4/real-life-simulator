@@ -33,6 +33,7 @@ public class GameWorld extends AbstractObject {
 
     /**
      * This constructor initializes all of the containing fields of GameWorld class
+     * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     public GameWorld(GraphicsManager graphicsManager) {
         objectList = new LinkedList<AbstractObject>();
@@ -43,13 +44,16 @@ public class GameWorld extends AbstractObject {
 
     /**
      * This method creates objects and adds them to the game world
+     * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     private void initializeGameWorld(GraphicsManager graphicsManager) {
         dimension = new Dimension(1000, 1000, 1000);
-        mainCharacter = new MainCharacter(new Position(500, 500, 500), graphicsManager);
-        addMovableObject(mainCharacter);
-//        objectList.add(new TestObject(new Position(0, 0, 0), 7, graphicsManager));
-//        gameWorld.getObjectList().add(new TestObject(new Position(5, 0, 0), 40, graphicsManager));
+        mainCharacter = new MainCharacter(new Position(500, 500, 500), graphicsManager, 0.3);
+        addObject(mainCharacter);
+        addObject(new TestObject(new Position(10, 100, 100), 70, graphicsManager));
+        addObject(new Parallelepiped(new Position(800, 200, 200), new Dimension(100, 130, 135), graphicsManager));
+        addObject(new Parallelepiped(new Position(650, 750, 350), new Dimension(100, 100, 100), graphicsManager));
+        addObject(new Parallelepiped(new Position(350, 450, 850), new Dimension(140, 111, 135), graphicsManager));
     }
 
     /**

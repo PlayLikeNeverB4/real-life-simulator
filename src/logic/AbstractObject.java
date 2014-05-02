@@ -26,6 +26,9 @@ public abstract class AbstractObject {
     }
 
     protected void updatePosition(double dx, double dy, double dz) {
+        this.position.setX(this.position.getX() + dx);
+        this.position.setY(this.position.getY() + dy);
+        this.position.setZ(this.position.getZ() + dz);
     }
 
     protected AbstractObject() { }

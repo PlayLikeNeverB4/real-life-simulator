@@ -17,9 +17,18 @@ import java.util.List;
  */
 public class InputManager implements MouseMotionListener, KeyListener {
 
-    private GameWorld gameWorld;
+    private static final int FORWARD = 0;
+    private static final int LEFT = 1;
+    private static final int DOWN = 2;
+    private static final int RIGHT = 3;
 
+    private GameWorld gameWorld;
     private GraphicsManager graphicsManager;
+
+    /**
+     * BitMask containing the directions towards which the mainCharacter moves
+     */
+    private int activeDirections;
 
     /**
      * A LinkedList that contains all the events which appear during execution of the application
@@ -30,6 +39,7 @@ public class InputManager implements MouseMotionListener, KeyListener {
         this.gameWorld = gameWorld;
         this.graphicsManager = graphicsManager;
         eventList = new LinkedList<AbstractEvent>();
+        activeDirections = 0;
     }
 
     /**
@@ -45,32 +55,103 @@ public class InputManager implements MouseMotionListener, KeyListener {
         return cpyEventList;
     }
 
+    /**
+     * Sets the bit at index send as parameter
+     * @param index     The bit position that is set
+     */
+    private void markPressed(int index) {
+        activeDirections |= 1 << index;
+    }
+
+    /**
+     * Clears the bit at index send as parameter
+     * @param index     The bit position that is cleared
+     */
+    private void markReleased(int index) {
+        activeDirections &= ~(1 << index);
+    }
+
+    /**
+     * Clears the bits for the opposite moving directions
+     * @return the new and correct combination of moving directions
+     */
+    private int clearOppositeDirections() {
+        int tempActiveDirections = activeDirections;
+        if( (tempActiveDirections & (1 << 0)) > 0 && (tempActiveDirections & (1 << 2)) > 0 ) { // both forward and backward
+            tempActiveDirections &= ~(1 << 0);
+            tempActiveDirections &= ~(1 << 2);
+        }
+        if( (tempActiveDirections & (1 << 1)) > 0 && (tempActiveDirections & (1 << 3)) > 0 ) { // both left and right
+            tempActiveDirections &= ~(1 << 1);
+            tempActiveDirections &= ~(1 << 3);
+        }
+        return tempActiveDirections;
+    }
+
+    /**
+     * Checks for active move directions. If at least one direction is active it creates a new MoveMainCharacterEvent
+     * @param movingTime    Amount of time in which the mainCharacter moves
+     */
+    public void checkMoveKeys(long movingTime) {
+        int tempActiveDirections = clearOppositeDirections();
+        if(tempActiveDirections != 0)
+            eventList.add(new MoveMainCharacterEvent(tempActiveDirections, gameWorld, movingTime));
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
-            case KeyEvent.VK_UP : eventList.add(new MoveObjectEvent(MoveObjectEvent.FORWARD));
+            case KeyEvent.VK_UP :    markPressed(FORWARD);
                 break;
-            case KeyEvent.VK_DOWN : eventList.add(new MoveObjectEvent(MoveObjectEvent.BACK));
+            case KeyEvent.VK_LEFT :  markPressed(LEFT);
                 break;
-            case KeyEvent.VK_LEFT : eventList.add(new MoveObjectEvent(MoveObjectEvent.LEFT));
+            case KeyEvent.VK_DOWN :  markPressed(DOWN);
                 break;
-            case KeyEvent.VK_RIGHT : eventList.add(new MoveObjectEvent(MoveObjectEvent.RIGHT));
+            case KeyEvent.VK_RIGHT : markPressed(RIGHT);
                 break;
-            case KeyEvent.VK_W : eventList.add(new MoveObjectEvent(MoveObjectEvent.FORWARD));
+            case KeyEvent.VK_W :     markPressed(FORWARD);
                 break;
-            case KeyEvent.VK_S : eventList.add(new MoveObjectEvent(MoveObjectEvent.BACK));
+            case KeyEvent.VK_A :     markPressed(LEFT);
                 break;
-            case KeyEvent.VK_A : eventList.add(new MoveObjectEvent(MoveObjectEvent.LEFT));
+            case KeyEvent.VK_S :     markPressed(DOWN);
                 break;
-            case KeyEvent.VK_D : eventList.add(new MoveObjectEvent(MoveObjectEvent.RIGHT));
+            case KeyEvent.VK_D :     markPressed(RIGHT);
                 break;
             case KeyEvent.VK_F : eventList.add(new FireEvent());
-                break;
+                return;
             case KeyEvent.VK_E : eventList.add(new SwitchEvent());
+                return;
+            default: {
+                System.out.println("This key is not a valid one!");
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        switch (key) {
+            case KeyEvent.VK_UP :    markReleased(FORWARD);
+                break;
+            case KeyEvent.VK_LEFT :  markReleased(LEFT);
+                break;
+            case KeyEvent.VK_DOWN :  markReleased(DOWN);
+                break;
+            case KeyEvent.VK_RIGHT : markReleased(RIGHT);
+                break;
+            case KeyEvent.VK_W :     markReleased(FORWARD);
+                break;
+            case KeyEvent.VK_A :     markReleased(LEFT);
+                break;
+            case KeyEvent.VK_S :     markReleased(DOWN);
+                break;
+            case KeyEvent.VK_D :     markReleased(RIGHT);
                 break;
             default: {
                 System.out.println("This key is not a valid one!");
+                return;
             }
         }
     }
@@ -102,10 +183,6 @@ public class InputManager implements MouseMotionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 
     @Override

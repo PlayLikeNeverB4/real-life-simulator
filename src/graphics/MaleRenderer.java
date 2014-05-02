@@ -21,11 +21,17 @@ public class MaleRenderer extends AbstractPersonRenderer {
         double z = abstractPerson.getPosition().getZ();
 
         gl.glBegin(GL2.GL_QUADS);
-            gl.glColor3d(0, 0, 0);
+            gl.glColor3d(0, 1, 0);
             gl.glVertex3d(x - 5, y, z);
             gl.glVertex3d(x - 5, y, z + 30);
             gl.glVertex3d(x + 5, y, z + 30);
             gl.glVertex3d(x + 5, y, z);
+
+            gl.glColor3d(1, 1, 0);
+            gl.glVertex3d(x, y - 5, z);
+            gl.glVertex3d(x, y - 5, z + 30);
+            gl.glVertex3d(x, y + 5, z + 30);
+            gl.glVertex3d(x, y + 5, z);
         gl.glEnd();
     }
 

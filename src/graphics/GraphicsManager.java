@@ -59,6 +59,7 @@ public class GraphicsManager implements GLEventListener {
         // Try to enable 2x anti aliasing (it should be supported on most hardware)
         capabilities.setNumSamples(2);
         capabilities.setSampleBuffers(true);
+        capabilities.setDepthBits(64);
 
         // Creating an OpenGL canvas
         this.canvas = new GLCanvas(capabilities);
@@ -126,10 +127,15 @@ public class GraphicsManager implements GLEventListener {
 
         // Choose the shading model
         this.glObject.glShadeModel(GL2.GL_SMOOTH);
+        this.glObject.glEnable(GL.GL_LINE_SMOOTH);
 
         // Activate the depth test and set the depth function
         this.glObject.glEnable(GL.GL_DEPTH_TEST);
         this.glObject.glDepthFunc(GL.GL_LESS);
+
+        this.glObject.glDisable(GL.GL_BLEND);
+//        this.glObject.glEnable(GL.GL_BLEND);
+//        this.glObject.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
     }
 
     /*
