@@ -18,11 +18,6 @@ public abstract class AbstractRenderer {
     protected GraphicsManager graphicsManager;
 
     /**
-     * This method renders the object
-     */
-    public abstract void render();
-
-    /**
      *
      * @param renderedObject    The {@link AbstractObject} that will be rendered on the screen
      * @param graphicsManager   The {@link GraphicsManager} which manages the graphics for rendering
@@ -31,5 +26,10 @@ public abstract class AbstractRenderer {
         this.renderedObject = renderedObject;
         this.graphicsManager = graphicsManager;
     }
+
+    /**
+     * This method renders the object
+     */
+    public abstract void render();
 
 }

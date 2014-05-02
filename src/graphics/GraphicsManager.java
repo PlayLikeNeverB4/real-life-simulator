@@ -57,7 +57,7 @@ public class GraphicsManager implements GLEventListener {
         capabilities.setDoubleBuffered(true);
 
         // Try to enable 2x anti aliasing (it should be supported on most hardware)
-        capabilities.setNumSamples(2);
+        capabilities.setNumSamples(16);
         capabilities.setSampleBuffers(true);
         capabilities.setDepthBits(64);
 
@@ -108,6 +108,11 @@ public class GraphicsManager implements GLEventListener {
         this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
     }
 
+    private void loadTextures(String pathToDir) {
+        GameWorldRenderer.loadTextures(pathToDir, this);
+        RoadRenderer.loadTextures(pathToDir, this);
+    }
+
     /*
         Initializes JOGL
      */
@@ -133,9 +138,20 @@ public class GraphicsManager implements GLEventListener {
         this.glObject.glEnable(GL.GL_DEPTH_TEST);
         this.glObject.glDepthFunc(GL.GL_LESS);
 
+        // Blending options
         this.glObject.glDisable(GL.GL_BLEND);
 //        this.glObject.glEnable(GL.GL_BLEND);
 //        this.glObject.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
+
+        // Texture setting
+        this.glObject.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+        this.glObject.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+
+        // For very close textures (to prevent z-fighting)
+        glObject.glPolygonOffset(0.0f, -1);
+
+        // Load all of the needed textures into the RAM
+        loadTextures("res/textures/");
     }
 
     /*

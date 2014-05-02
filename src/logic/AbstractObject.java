@@ -13,12 +13,25 @@ public abstract class AbstractObject {
     Position position;
 
     /**
+     * The object's orientation represented as the angle to the OX axis in the XOY plane
+     */
+    protected double direction;
+
+    /**
      * The renderer which will draw the object
      */
     AbstractRenderer renderer;
 
     public Position getPosition() {
         return position;
+    }
+
+    public double getDirection() {
+        return direction;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
     }
 
     public AbstractRenderer getRenderer() {

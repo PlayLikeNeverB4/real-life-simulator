@@ -8,6 +8,7 @@ public class TestObject extends AbstractTree {
     public Position posOrigin, posBack, posUp;
 
     public TestObject(Position p, double height, GraphicsManager graphicsManager) {
+        super(p, height);
         this.renderer = new TestObjectRenderer(this, graphicsManager);
         this.position = p;
         this.posOrigin = position;

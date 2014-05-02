@@ -6,11 +6,6 @@ package logic;
 public abstract class AbstractMovableObject extends AbstractObject {
 
     /**
-     * The object's orientation represented as the angle to the OX axis in the XOY plane
-     */
-    protected double direction;
-
-    /**
      * The object's speed measured in units per second
      */
     protected double speed;
@@ -23,14 +18,6 @@ public abstract class AbstractMovableObject extends AbstractObject {
 
     protected AbstractMovableObject(Position position) {
         super(position);
-    }
-
-    public double getDirection() {
-        return direction;
-    }
-
-    public void setDirection(double direction) {
-        this.direction = direction;
     }
 
     /**

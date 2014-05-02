@@ -47,13 +47,13 @@ public class GameWorld extends AbstractObject {
      * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     private void initializeGameWorld(GraphicsManager graphicsManager) {
-        dimension = new Dimension(1000, 1000, 1000);
-        mainCharacter = new MainCharacter(new Position(500, 500, 500), graphicsManager, 0.3);
+        dimension = new Dimension(1000, 1000, 500);
+        mainCharacter = new MainCharacter(new Position(500, 500, 0), graphicsManager, 0.2);
         addObject(mainCharacter);
-        addObject(new TestObject(new Position(10, 100, 100), 70, graphicsManager));
-        addObject(new Parallelepiped(new Position(800, 200, 200), new Dimension(100, 130, 135), graphicsManager));
-        addObject(new Parallelepiped(new Position(650, 750, 350), new Dimension(100, 100, 100), graphicsManager));
-        addObject(new Parallelepiped(new Position(350, 450, 850), new Dimension(140, 111, 135), graphicsManager));
+        addObject(new Parallelepiped(new Position(700, 600, 30), new Dimension(30, 30, 30), graphicsManager));
+        addObject(new Parallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), graphicsManager));
+        addObject(new Parallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), graphicsManager));
+        addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
     }
 
     /**
