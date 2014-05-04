@@ -1,9 +1,12 @@
-package graphics;
+package graphics.shapes;
 
+import graphics.AbstractRenderer;
+import graphics.GraphicsManager;
+import graphics.TextureHandler;
 import logic.AbstractObject;
 import logic.GeometryUtils;
 import logic.Position;
-import logic.Road;
+import logic.shapes.Road;
 
 import javax.media.opengl.GL2;
 

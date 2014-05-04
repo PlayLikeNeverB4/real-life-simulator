@@ -29,11 +29,11 @@ public class TextureHandler {
      */
     boolean transparent;
 
-    TextureHandler(String filename, GraphicsManager graphicsManager) {
+    public TextureHandler(String filename, GraphicsManager graphicsManager) {
         this(filename, graphicsManager, true);
     }
 
-    TextureHandler(String filename, GraphicsManager graphicsManager, boolean transparent) {
+    public TextureHandler(String filename, GraphicsManager graphicsManager, boolean transparent) {
         this.graphicsManager = graphicsManager;
         this.transparent = transparent;
 

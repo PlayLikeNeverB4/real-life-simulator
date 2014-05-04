@@ -1,6 +1,7 @@
 package graphics;
 
 import com.jogamp.opengl.util.Animator;
+import graphics.shapes.RoadRenderer;
 import logic.GameEngine;
 import logic.InputManager;
 

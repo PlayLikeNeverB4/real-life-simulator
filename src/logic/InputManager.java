@@ -2,6 +2,7 @@ package logic;
 
 import graphics.GraphicsManager;
 import graphics.MainWindow;
+import logic.events.*;
 
 import javax.swing.*;
 import java.awt.*;

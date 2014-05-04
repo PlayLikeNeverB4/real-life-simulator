@@ -21,7 +21,10 @@ public class ApplicationControl {
         graphicsManager = new GraphicsManager(mainWindow);
         gameEngine = new GameEngine(graphicsManager);
         graphicsManager.setGameEngine(gameEngine);
+
         mainWindow.setVisible(true);
+        mainWindow.requestFocus();
+        graphicsManager.getCanvas().requestFocusInWindow();
     }
 
     /**

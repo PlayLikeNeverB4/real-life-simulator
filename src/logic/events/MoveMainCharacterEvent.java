@@ -1,4 +1,8 @@
-package logic;
+package logic.events;
+
+import logic.AbstractObject;
+import logic.GameWorld;
+import logic.MainCharacter;
 
 /**
  * Event that handles the movement of the mainCharacter
@@ -44,7 +48,7 @@ public class MoveMainCharacterEvent extends AbstractObjectEvent {
             sumOfAngles = (360 + 270) * Math.PI / 180;
         }
 
-        double distance = mainCharacter.speed * movingTime;
+        double distance = mainCharacter.getSpeed() * movingTime;
         double angle = sumOfAngles / countActiveDirections;
         mainCharacter.move(angle, distance);
     }

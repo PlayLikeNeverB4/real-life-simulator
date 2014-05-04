@@ -1,7 +1,9 @@
-package graphics;
+package graphics.shapes;
 
+import graphics.AbstractRenderer;
+import graphics.GraphicsManager;
 import logic.AbstractObject;
-import logic.Parallelepiped;
+import logic.shapes.Parallelepiped;
 
 import javax.media.opengl.GL2;
 
@@ -13,7 +15,7 @@ public class ParallelepipedRenderer extends AbstractRenderer {
     /**
      *
      * @param renderedObject    The {@link Parallelepiped} that will be rendered on the screen
-     * @param graphicsManager   The {@link GraphicsManager} which manages the renderer of parallelepiped
+     * @param graphicsManager   The {@link graphics.GraphicsManager} which manages the renderer of parallelepiped
      */
     public ParallelepipedRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         super(renderedObject, graphicsManager);

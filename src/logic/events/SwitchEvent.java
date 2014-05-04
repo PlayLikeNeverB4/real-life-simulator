@@ -1,4 +1,6 @@
-package logic;
+package logic.events;
+
+import logic.AbstractObject;
 
 public class SwitchEvent extends AbstractObjectEvent {
 

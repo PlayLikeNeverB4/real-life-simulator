@@ -1,4 +1,4 @@
-package logic;
+package logic.events;
 
 /**
  * This class refers to all events that can appear in the application

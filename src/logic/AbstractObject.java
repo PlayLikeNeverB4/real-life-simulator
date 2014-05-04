@@ -10,7 +10,7 @@ public abstract class AbstractObject {
     /**
      * The position of the object in the game world
      */
-    Position position;
+    protected Position position;
 
     /**
      * The object's orientation represented as the angle to the OX axis in the XOY plane
@@ -20,7 +20,7 @@ public abstract class AbstractObject {
     /**
      * The renderer which will draw the object
      */
-    AbstractRenderer renderer;
+    protected AbstractRenderer renderer;
 
     public Position getPosition() {
         return position;

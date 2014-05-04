@@ -1,4 +1,8 @@
-package logic;
+package logic.events;
+
+import logic.AbstractObject;
+import logic.GameWorld;
+import logic.events.AbstractEvent;
 
 /**
  * Refers to all events referring to objects that can appear in the application

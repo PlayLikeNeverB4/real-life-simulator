@@ -1,6 +1,7 @@
 package logic;
 
 import graphics.GraphicsManager;
+import logic.events.AbstractEvent;
 
 import java.util.List;
 

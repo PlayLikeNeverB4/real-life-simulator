@@ -1,7 +1,10 @@
-package logic;
+package logic.shapes;
 
 import graphics.GraphicsManager;
-import graphics.RoadRenderer;
+import graphics.shapes.RoadRenderer;
+import logic.AbstractStaticObject;
+import logic.Dimension;
+import logic.Position;
 
 public class Road extends AbstractStaticObject {
 

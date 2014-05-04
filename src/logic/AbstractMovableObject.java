@@ -20,6 +20,10 @@ public abstract class AbstractMovableObject extends AbstractObject {
         super(position);
     }
 
+    public double getSpeed() {
+        return speed;
+    }
+
     /**
      * Updates the objects' position and speed considering its current speed, acceleration and direction
      * @param time The amount of time passed since the last update

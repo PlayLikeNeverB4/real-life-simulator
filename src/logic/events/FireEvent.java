@@ -1,4 +1,6 @@
-package logic;
+package logic.events;
+
+import logic.AbstractObject;
 
 /**
  * This class will handle the events that are referring to a FireObject

@@ -2,6 +2,8 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
+import logic.shapes.Parallelepiped;
+import logic.shapes.Road;
 
 import java.util.LinkedList;
 import java.util.List;
