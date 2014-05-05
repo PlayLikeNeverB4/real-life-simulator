@@ -2,6 +2,7 @@ package logic;
 
 import graphics.GraphicsManager;
 import graphics.TestObjectRenderer;
+import javafx.geometry.BoundingBox;
 
 public class TestObject extends AbstractTree {
 
@@ -22,5 +23,13 @@ public class TestObject extends AbstractTree {
         this.height = height;
         this.posBack = new Position(posOrigin.getX() + 3, posOrigin.getY(), posOrigin.getZ());
         this.posUp = new Position(posOrigin.getX() + 1, posOrigin.getY(), posOrigin.getZ() + height);
+    }
+
+    /**
+     * Computes the axis aligned bounding box of this object
+     */
+    @Override
+    public BoundingBox getBoundingBox() {
+        return null;
     }
 }

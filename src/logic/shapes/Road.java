@@ -2,6 +2,7 @@ package logic.shapes;
 
 import graphics.GraphicsManager;
 import graphics.shapes.RoadRenderer;
+import javafx.geometry.BoundingBox;
 import logic.AbstractStaticObject;
 import logic.Dimension;
 import logic.Position;
@@ -21,4 +22,11 @@ public class Road extends AbstractStaticObject {
         return dimension;
     }
 
+    /**
+     * Computes the axis aligned bounding box of this object
+     */
+    @Override
+    public BoundingBox getBoundingBox() {
+        return null;
+    }
 }

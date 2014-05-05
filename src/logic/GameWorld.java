@@ -2,6 +2,7 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
+import javafx.geometry.BoundingBox;
 import logic.shapes.Parallelepiped;
 import logic.shapes.Road;
 
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Represents the game world
  */
-public class GameWorld extends AbstractObject {
+public class GameWorld extends AbstractStaticObject {
 
     /**
      * The size of the game world
@@ -38,9 +39,11 @@ public class GameWorld extends AbstractObject {
      * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     public GameWorld(GraphicsManager graphicsManager) {
+        super(new Position(0, 0, 0));
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
+        dimension = new Dimension(1000, 1000, 500);
         initializeGameWorld(graphicsManager);
     }
 
@@ -49,12 +52,11 @@ public class GameWorld extends AbstractObject {
      * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     private void initializeGameWorld(GraphicsManager graphicsManager) {
-        dimension = new Dimension(1000, 1000, 500);
         mainCharacter = new MainCharacter(new Position(500, 500, 0), graphicsManager, 0.2);
-        addObject(mainCharacter);
+        addMovableObject(mainCharacter);
         addObject(new Parallelepiped(new Position(700, 600, 30), new Dimension(30, 30, 30), graphicsManager));
         addObject(new Parallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), graphicsManager));
-        addObject(new Parallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), graphicsManager));
+        addObject(new Parallelepiped(new Position(500, 550, 0), new Dimension(50, 100, 100), graphicsManager));
         addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
     }
 
@@ -100,4 +102,11 @@ public class GameWorld extends AbstractObject {
             movableObject.update(time);
     }
 
+    /**
+     * Computes the axis aligned bounding box of this object
+     */
+    @Override
+    public BoundingBox getBoundingBox() {
+        return null;
+    }
 }

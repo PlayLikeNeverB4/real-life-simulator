@@ -16,8 +16,28 @@ public abstract class AbstractMovableObject extends AbstractObject {
      */
     protected double acceleration;
 
+    /**
+     * The last known position without collisions
+     */
+    protected Position lastValidPosition;
+
+    public AbstractMovableObject(Position position, double direction, double speed, double acceleration) {
+        super(position, direction);
+        this.speed = speed;
+        this.acceleration = acceleration;
+        this.lastValidPosition = position;
+    }
+
+    public AbstractMovableObject(AbstractMovableObject movableObject) {
+        this(movableObject.position, movableObject.direction, movableObject.speed, movableObject.acceleration);
+    }
+
     protected AbstractMovableObject(Position position) {
-        super(position);
+        this(position, 0.0, 0.0, 0.0);
+    }
+
+    public AbstractMovableObject(Position position, double direction) {
+        this(position, direction, 0.0, 0.0);
     }
 
     public double getSpeed() {
@@ -25,10 +45,20 @@ public abstract class AbstractMovableObject extends AbstractObject {
     }
 
     /**
+     * Tests if this object can move or not
+     */
+    public boolean isMovable() {
+        return true;
+    }
+
+    /**
      * Updates the objects' position and speed considering its current speed, acceleration and direction
      * @param time The amount of time passed since the last update
      */
     public void update(double time) {
+        // save the last position
+        lastValidPosition = new Position(position);
+
         updatePosition(time);
     }
 
@@ -41,7 +71,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
         double crtX = this.position.getX();
         double crtY = this.position.getY();
         double nextX = crtX + Math.cos(this.direction) * distance;
-        double nextY = crtX + Math.sin(this.direction) * distance;
+        double nextY = crtY + Math.sin(this.direction) * distance;
         this.position.setX(nextX);
         this.position.setY(nextY);
     }
@@ -54,4 +84,13 @@ public abstract class AbstractMovableObject extends AbstractObject {
         double delta = this.acceleration * time;
         this.speed += delta;
     }
+
+    protected void collisionBounceHandler(AbstractObject abstractObject) {
+        // TODO: do something maybe?
+    }
+
+    protected void revertToLastValidPosition() {
+        position = new Position(lastValidPosition);
+    }
+
 }

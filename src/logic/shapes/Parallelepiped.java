@@ -2,14 +2,15 @@ package logic.shapes;
 
 import graphics.GraphicsManager;
 import graphics.shapes.ParallelepipedRenderer;
-import logic.AbstractComponent;
+import javafx.geometry.BoundingBox;
+import logic.AbstractStaticObject;
 import logic.Dimension;
 import logic.Position;
 
 /**
  * This class represents a component of an game world object that can be represented as a parallelepiped
  */
-public class Parallelepiped extends AbstractComponent {
+public class Parallelepiped extends AbstractStaticObject {
 
     /**
      * The {@link logic.Dimension} of the component (geometrical shape) of an object that is rendered
@@ -23,6 +24,7 @@ public class Parallelepiped extends AbstractComponent {
      * @param graphicsManager   The {@link GraphicsManager} which manages the renderer of parallelepiped
      */
     public Parallelepiped(Position position, Dimension dimension, GraphicsManager graphicsManager) {
+        super(position);
         this.position = position;
         this.dimension = dimension;
         this.renderer = new ParallelepipedRenderer(this, graphicsManager);
@@ -32,6 +34,12 @@ public class Parallelepiped extends AbstractComponent {
         return dimension;
     }
 
-
-
+    /**
+     * Computes the axis aligned bounding box of this object
+     */
+    @Override
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(position.getX(), position.getY(), position.getZ(),
+                               dimension.getX(), dimension.getY(), dimension.getZ());
+    }
 }

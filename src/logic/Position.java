@@ -14,6 +14,10 @@ public class Position {
         this.z = z;
     }
 
+    public Position(Position position) {
+        this(position.x, position.y, position.z);
+    }
+
     public double getX() {
         return x;
     }

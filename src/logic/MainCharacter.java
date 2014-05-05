@@ -2,17 +2,26 @@ package logic;
 
 import graphics.GraphicsManager;
 import graphics.MaleRenderer;
+import javafx.geometry.BoundingBox;
 
 /**
  * The object which the user controls
  */
 public class MainCharacter extends AbstractPerson {
 
-    public MainCharacter(Position position, GraphicsManager graphicsManager, double speed) {
-        super(position);
-        this.speed = speed;
+    /**
+     * The sensitivity of the user control keys when moving the main character
+     */
+    private double movingSpeed;
+
+    public MainCharacter(Position position, GraphicsManager graphicsManager, double movingSpeed) {
+        super(position, Math.PI / 2);
+        this.movingSpeed = movingSpeed;
         this.renderer = new MaleRenderer(this, graphicsManager);
-        direction = Math.PI / 2;
+    }
+
+    public double getMovingSpeed() {
+        return movingSpeed;
     }
 
     /**
@@ -20,6 +29,16 @@ public class MainCharacter extends AbstractPerson {
      * @param angle     The angle to the mainCharacter's direction axis
      */
     public void move(double angle, double distance) {
+        this.lastValidPosition = new Position(this.position);
         this.position = this.position.add(GeometryUtils.computePointOnCircle(direction + angle, distance));
+    }
+
+    /**
+     * Computes the axis aligned bounding box of this object
+     */
+    @Override
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(position.getX() - 5, position.getY() - 5, position.getZ(),
+                               10, 10, 30);
     }
 }

@@ -9,4 +9,8 @@ public abstract class AbstractPerson extends AbstractMovableObject {
     protected AbstractPerson(Position position) {
         super(position);
     }
+
+    public AbstractPerson(Position position, double direction) {
+        super(position, direction);
+    }
 }

@@ -1,6 +1,6 @@
 package logic;
 
-public class AmbientCharacter extends AbstractPerson {
+public abstract class AmbientCharacter extends AbstractPerson {
 
     private Object path;
 

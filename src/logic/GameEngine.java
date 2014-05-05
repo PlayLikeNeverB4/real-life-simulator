@@ -16,6 +16,11 @@ public class GameEngine {
     private GameWorld gameWorld;
 
     /**
+     * The {@link logic.PhysicsEngine} that handles the physics for this game engine
+     */
+    private PhysicsEngine physicsEngine;
+
+    /**
      * The {@link InputManager} which will handle the input events from keyboard or mouse
      */
     private InputManager inputManager;
@@ -36,6 +41,7 @@ public class GameEngine {
     public GameEngine(GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
         gameWorld = new GameWorld(graphicsManager);
+        physicsEngine = new PhysicsEngine(gameWorld);
         inputManager = new InputManager(gameWorld, graphicsManager);
         this.graphicsManager.setInputManager(inputManager);
         lastLoopTime = System.currentTimeMillis();
@@ -65,8 +71,14 @@ public class GameEngine {
         for(AbstractEvent event : eventList)
             event.handle();
 
+        // Update the game world
+
         // update objects
-        // ...
+        for(AbstractMovableObject movableObject : gameWorld.getMovableObjectList())
+            if(movableObject != gameWorld.getMainCharacter()) // the mainCharacter's moves are special
+                movableObject.update(currentLoopTime - lastLoopTime);
+        // check for collisions
+        physicsEngine.checkCollisions();
 
         lastLoopTime = currentLoopTime;
     }
