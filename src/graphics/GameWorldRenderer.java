@@ -23,9 +23,9 @@ public class GameWorldRenderer extends AbstractRenderer {
     public void render() {
         GameWorld gameWorld = (GameWorld) renderedObject;
         renderWorldBox();
-        for(AbstractObject abstractObject : gameWorld.getObjectList()) {
-            abstractObject.getRenderer().render();
-        }
+        for(AbstractObject abstractObject : gameWorld.getObjectList())
+            if(abstractObject.getRenderer() != null)
+                abstractObject.getRenderer().render();
     }
 
     private void renderWorldBox() {

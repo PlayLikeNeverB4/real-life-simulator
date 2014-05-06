@@ -41,11 +41,11 @@ public class GameWorld extends AbstractStaticObject {
      */
     public GameWorld(GraphicsManager graphicsManager) {
         super(new Position(0, 0, 0));
+        dimension = new Dimension(1000, 1000, 500);
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
-        mainCharacter = new MainCharacter(new Position(500, 500, 0), graphicsManager, 0.2);
-        dimension = new Dimension(1000, 1000, 500);     
+        mainCharacter = new MainCharacter(new Position(520, 570, 200), graphicsManager, 0.2);
     }
 
     /**
@@ -54,6 +54,7 @@ public class GameWorld extends AbstractStaticObject {
      */
     public void initializeGameWorld(GraphicsManager graphicsManager) {
         dimension = new Dimension(1000, 1000, 500);
+        addObject(new WorldBox(new Position(0, 0, 0), dimension));
         addMovableObject(mainCharacter);
         ShapeSurfaceType[] shapeSurfaceTypes = new ShapeSurfaceType[6];
         shapeSurfaceTypes[0] = new ShapeSurfaceType(new TextureHandler("res/textures/grass.png", graphicsManager, false));
@@ -61,11 +62,9 @@ public class GameWorld extends AbstractStaticObject {
         shapeSurfaceTypes[2] = new ShapeSurfaceType(new Color(233, 56, 0));
         shapeSurfaceTypes[3] = new ShapeSurfaceType(new Color(123, 34, 200));
         shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(255, 0, 0));
-//        shapeSurfaceTypes[5] = new ShapeSurfaceType(new TextureHandler("res/textures/sky.png", graphicsManager, false));
-//        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(123, 134, 200));
         shapeSurfaceTypes[5] = new ShapeSurfaceType(new Color(3, 78, 10));
-        addObject(new StaticParallelepiped(new Position(700, 600, 30), new Dimension(30, 30, 30), shapeSurfaceTypes, graphicsManager));
-        addObject(new MovableParallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
+        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(30, 30, 30), shapeSurfaceTypes, graphicsManager));
+        addMovableObject(new MovableParallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
         addObject(new StaticParallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), shapeSurfaceTypes, graphicsManager));
         addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
     }

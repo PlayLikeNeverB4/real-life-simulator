@@ -30,8 +30,8 @@ public class MainCharacter extends AbstractPerson {
      * @param angle     The angle to the mainCharacter's direction axis
      */
     public void move(double angle, double distance) {
-        this.lastValidPosition = new Position(this.position);
-        this.position = this.position.add(GeometryUtils.computePointOnCircle(direction + angle, distance));
+        Position delta = GeometryUtils.computePointOnCircle(direction + angle, distance);
+        move(delta.getX(), delta.getY(), delta.getZ());
     }
 
     /**

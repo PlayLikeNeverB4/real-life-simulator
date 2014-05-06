@@ -89,6 +89,17 @@ public abstract class AbstractMovableObject extends AbstractObject {
         // TODO: do something maybe?
     }
 
+    /**
+     * Moves the object located at (x, y, z) to (x+dx, y+dy, z+dz)
+     * @param dx x distance
+     * @param dy y distance
+     * @param dz z distance
+     */
+    public void move(double dx, double dy, double dz) {
+        this.lastValidPosition = new Position(this.position);
+        this.position = this.position.add(new Position(dx, dy, dz));
+    }
+
     protected void revertToLastValidPosition() {
         position = new Position(lastValidPosition);
     }

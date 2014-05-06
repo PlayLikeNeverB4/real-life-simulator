@@ -80,6 +80,11 @@ public class GameEngine {
         // check for collisions
         physicsEngine.checkCollisions();
 
+        // apply gravity
+        physicsEngine.applyGravity(currentLoopTime - lastLoopTime);
+        // check for collisions
+        physicsEngine.checkCollisions();
+
         lastLoopTime = currentLoopTime;
     }
 

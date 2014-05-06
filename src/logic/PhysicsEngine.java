@@ -36,4 +36,13 @@ public class PhysicsEngine {
             }
         }
     }
+
+    /**
+     * Simulates gravity over a period of time
+     * @param time The time amount that needs to be simulated
+     */
+    public void applyGravity(double time) {
+        Gravity gravity = new Gravity(gameWorld);
+        gravity.apply(time);
+    }
 }
