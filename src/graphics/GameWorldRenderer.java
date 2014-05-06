@@ -16,7 +16,7 @@ public class GameWorldRenderer extends AbstractRenderer {
 
     public static void loadTextures(String pathToDir, GraphicsManager graphicsManager) {
         groundTexture = new TextureHandler(pathToDir + "grass.png", graphicsManager, false);
-        skyTexture = new TextureHandler(pathToDir + "sky3.png", graphicsManager, false);
+        skyTexture = new TextureHandler(pathToDir + "sky.png", graphicsManager, false);
     }
 
     @Override
