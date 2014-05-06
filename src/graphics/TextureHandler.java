@@ -65,6 +65,7 @@ public class TextureHandler {
      * Enables texturing. This must be done before using the texture.
      */
     public static void enableTexturing(GL2 gl) {
+        gl.glColor3d(1, 1, 1);
         gl.glEnable(GL.GL_TEXTURE_2D);
     }
 

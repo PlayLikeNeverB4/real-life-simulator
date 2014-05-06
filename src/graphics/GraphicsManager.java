@@ -153,6 +153,8 @@ public class GraphicsManager implements GLEventListener {
 
         // Load all of the needed textures into the RAM
         loadTextures("res/textures/");
+
+        gameEngine.getGameWorld().initializeGameWorld(this);
     }
 
     /*

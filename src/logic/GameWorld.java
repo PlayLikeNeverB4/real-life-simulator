@@ -2,10 +2,11 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
+import graphics.TextureHandler;
 import javafx.geometry.BoundingBox;
-import logic.shapes.Parallelepiped;
-import logic.shapes.Road;
+import logic.shapes.*;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,20 +44,29 @@ public class GameWorld extends AbstractStaticObject {
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
-        dimension = new Dimension(1000, 1000, 500);
-        initializeGameWorld(graphicsManager);
+        mainCharacter = new MainCharacter(new Position(500, 500, 0), graphicsManager, 0.2);
+        dimension = new Dimension(1000, 1000, 500);     
     }
 
     /**
      * This method creates objects and adds them to the game world
      * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
-    private void initializeGameWorld(GraphicsManager graphicsManager) {
-        mainCharacter = new MainCharacter(new Position(500, 500, 0), graphicsManager, 0.2);
+    public void initializeGameWorld(GraphicsManager graphicsManager) {
+        dimension = new Dimension(1000, 1000, 500);
         addMovableObject(mainCharacter);
-        addObject(new Parallelepiped(new Position(700, 600, 30), new Dimension(30, 30, 30), graphicsManager));
-        addObject(new Parallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), graphicsManager));
-        addObject(new Parallelepiped(new Position(500, 550, 0), new Dimension(50, 100, 100), graphicsManager));
+        ShapeSurfaceType[] shapeSurfaceTypes = new ShapeSurfaceType[6];
+        shapeSurfaceTypes[0] = new ShapeSurfaceType(new TextureHandler("res/textures/grass.png", graphicsManager, false));
+        shapeSurfaceTypes[1] = new ShapeSurfaceType(new Color(0, 255, 100));
+        shapeSurfaceTypes[2] = new ShapeSurfaceType(new Color(233, 56, 0));
+        shapeSurfaceTypes[3] = new ShapeSurfaceType(new Color(123, 34, 200));
+        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(255, 0, 0));
+//        shapeSurfaceTypes[5] = new ShapeSurfaceType(new TextureHandler("res/textures/sky.png", graphicsManager, false));
+//        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(123, 134, 200));
+        shapeSurfaceTypes[5] = new ShapeSurfaceType(new Color(3, 78, 10));
+        addObject(new StaticParallelepiped(new Position(700, 600, 30), new Dimension(30, 30, 30), shapeSurfaceTypes, graphicsManager));
+        addObject(new MovableParallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
+        addObject(new StaticParallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), shapeSurfaceTypes, graphicsManager));
         addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
     }
 

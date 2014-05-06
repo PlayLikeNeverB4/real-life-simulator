@@ -3,6 +3,7 @@ package logic;
 import graphics.GraphicsManager;
 import graphics.MaleRenderer;
 import javafx.geometry.BoundingBox;
+import logic.utils.GeometryUtils;
 
 /**
  * The object which the user controls

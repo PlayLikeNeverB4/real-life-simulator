@@ -1,6 +1,6 @@
 package graphics;
 
-import logic.GeometryUtils;
+import logic.utils.GeometryUtils;
 import logic.MainCharacter;
 import logic.Position;
 

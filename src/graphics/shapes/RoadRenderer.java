@@ -4,7 +4,7 @@ import graphics.AbstractRenderer;
 import graphics.GraphicsManager;
 import graphics.TextureHandler;
 import logic.AbstractObject;
-import logic.GeometryUtils;
+import logic.utils.GeometryUtils;
 import logic.Position;
 import logic.shapes.Road;
 
@@ -46,7 +46,6 @@ public class RoadRenderer extends AbstractRenderer {
         TextureHandler.enableTexturing(gl);
         roadTexture.bind();
 
-        gl.glColor3d(1, 1, 1);
         double roadScale = 100;
 
         gl.glBegin(GL2.GL_QUADS);

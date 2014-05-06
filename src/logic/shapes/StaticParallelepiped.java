@@ -6,11 +6,17 @@ import javafx.geometry.BoundingBox;
 import logic.AbstractStaticObject;
 import logic.Dimension;
 import logic.Position;
+import logic.utils.ParallelepipedUtils;
 
 /**
- * This class represents a component of an game world object that can be represented as a parallelepiped
+ * This class represents a static component of an game world object that can be represented as a parallelepiped
  */
-public class Parallelepiped extends AbstractStaticObject {
+public class StaticParallelepiped extends AbstractStaticObject {
+
+    /**
+     * An array of {@link Quad} that represents the sides of the parallelepiped
+     */
+    private Quad[] sides;
 
     /**
      * The {@link logic.Dimension} of the component (geometrical shape) of an object that is rendered
@@ -23,10 +29,19 @@ public class Parallelepiped extends AbstractStaticObject {
      * @param dimension     The {@link Dimension} of the parallelepiped
      * @param graphicsManager   The {@link GraphicsManager} which manages the renderer of parallelepiped
      */
-    public Parallelepiped(Position position, Dimension dimension, GraphicsManager graphicsManager) {
+    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager) {
         super(position);
         this.position = position;
         this.dimension = dimension;
+        sides = new Quad[6];
+        for(int i = 0; i < 6; i++) {
+            Position[] vertices = new Position[4];
+            for(int j = 0; j < 4; j++) {
+                vertices[j] = new Position(0, 0, 0);
+            }
+            sides[i] = new Quad(vertices, graphicsManager, surfaceTypes[i]);
+        }
+        ParallelepipedUtils.computeQuads(position, dimension, sides);
         this.renderer = new ParallelepipedRenderer(this, graphicsManager);
     }
 
@@ -34,9 +49,10 @@ public class Parallelepiped extends AbstractStaticObject {
         return dimension;
     }
 
-    /**
-     * Computes the axis aligned bounding box of this object
-     */
+    public Quad[] getSides() {
+        return sides;
+    }
+
     @Override
     public BoundingBox getBoundingBox() {
         return new BoundingBox(position.getX(), position.getY(), position.getZ(),

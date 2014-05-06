@@ -1,4 +1,6 @@
-package logic;
+package logic.utils;
+
+import logic.Position;
 
 /**
  * Handles most of the geometric calculations
@@ -7,10 +9,10 @@ public class GeometryUtils {
 
     /**
      * Computes a point in the XOY plane which is at horizontalDistance distance to (0,0) and at a specified angle
-     * The z-coordinate of the returned {@link Position} will always be 0
+     * The z-coordinate of the returned {@link logic.Position} will always be 0
      * @param angle              The angle to the OX axis
      * @param horizontalDistance The distance to (0,0)
-     * @return                   A {@link Position} at the requested angle and distance to (0,0)
+     * @return                   A {@link logic.Position} at the requested angle and distance to (0,0)
      */
     public static Position computePointOnCircle(double angle, double horizontalDistance) {
         double nextX = Math.cos(angle) * horizontalDistance;

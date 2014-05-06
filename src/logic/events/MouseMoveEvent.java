@@ -2,9 +2,8 @@ package logic.events;
 
 import graphics.Camera;
 import graphics.GraphicsManager;
-import logic.GeometryUtils;
+import logic.utils.GeometryUtils;
 import logic.MainCharacter;
-import logic.events.AbstractEvent;
 
 /**
  * Refers to a movement of the mouse

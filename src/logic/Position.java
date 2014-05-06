@@ -42,6 +42,16 @@ public class Position {
         this.z = z;
     }
 
+    public void set(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public void setPosition(Position position) {
+        set(position.x, position.y, position.z);
+    }
+
     /**
      * @param angle              The angle to the OX axis in the XOY plane
      * @param horizontalDistance The horizontal distance to the original position
