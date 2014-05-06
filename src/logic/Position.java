@@ -1,5 +1,7 @@
 package logic;
 
+import logic.utils.GeometryUtils;
+
 /**
  * Represents a 3D point in the game world
  */
@@ -69,6 +71,15 @@ public class Position {
         return new Position(x + position.x,
                             y + position.y,
                             z + position.z);
+    }
+
+    /**
+     * Moves the position in the XOY plane which is at a distance to (0,0) and at a specified angle
+     * @param angle     The angle to the OX axis in the XOY plane direction axis
+     */
+    public Position move(double angle, double distance) {
+        Position delta = GeometryUtils.computePointOnCircle(angle, distance);
+        return this.add(new Position(delta.getX(), delta.getY(), delta.getZ()));
     }
 
     @Override

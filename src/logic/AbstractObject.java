@@ -62,16 +62,26 @@ public abstract class AbstractObject {
     }
 
     /**
-     * Computes the axis aligned bounding box of this object
+     * Computes and returns an array containing the axis aligned bounding boxes that form of this object
      */
-    public abstract BoundingBox getBoundingBox();
+    public abstract BoundingBox[] getBoundingBoxes();
 
     /**
      * Tests if this object is in collision with another object
      * @param other The object to test collision with
      */
     public boolean isInCollisionWith(AbstractObject other) {
-        return getBoundingBox().intersects(other.getBoundingBox());
+        BoundingBox[] boundingBoxes = getBoundingBoxes();
+        BoundingBox[] otherBoundingBoxes = other.getBoundingBoxes();
+        if(boundingBoxes == null || otherBoundingBoxes == null)
+            return false;
+
+        for(BoundingBox boundingBox : boundingBoxes)
+            for(BoundingBox otherBoundingBox : otherBoundingBoxes)
+                if(boundingBox.intersects(otherBoundingBox))
+                    return true;
+
+        return false;
     }
 
     /**
@@ -79,6 +89,7 @@ public abstract class AbstractObject {
      * @param abstractObject The other object that this object collided with
      */
     public void collidedWith(AbstractObject abstractObject) {
+        abstractObject.collisionSpecialEffects(this);
         if(this.isMovable())
             ((AbstractMovableObject) this).revertToLastValidPosition();
         collisionBounceHandler(abstractObject);
@@ -91,7 +102,6 @@ public abstract class AbstractObject {
      * It updates this object's state depending on whether it bounces or not
      * @param abstractObject The other object that this object collided with
      */
-//    protected void collisionBounceHandler(AbstractObject abstractObject) {}
     protected abstract void collisionBounceHandler(AbstractObject abstractObject);
 
     /**
@@ -99,7 +109,14 @@ public abstract class AbstractObject {
      * It updates this object's state depending on the movable object's speed and direction
      * @param movableObject The other object that this object collided with
      */
-    protected void collidedWithMovableObject(AbstractMovableObject movableObject) {}
-//    protected abstract void collidedWithMovableObject(AbstractMovableObject movableObject);
+    protected abstract void collidedWithMovableObject(AbstractMovableObject movableObject);
+
+    /**
+     * Notifies this object that it collided with another object
+     * It updates the other object's state depending on this object's special effects
+     * @param abstractObject The other object that this object collided with
+     * @return true if the current collision is resolved; false otherwise
+     */
+    protected abstract void collisionSpecialEffects(AbstractObject abstractObject);
 
 }

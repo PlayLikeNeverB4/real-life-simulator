@@ -2,9 +2,11 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
-import graphics.TextureHandler;
 import javafx.geometry.BoundingBox;
-import logic.shapes.*;
+import logic.shapes.Road;
+import logic.shapes.ShapeSurfaceType;
+import logic.shapes.Stairs;
+import logic.shapes.StaticParallelepiped;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -56,17 +58,20 @@ public class GameWorld extends AbstractStaticObject {
         dimension = new Dimension(1000, 1000, 500);
         addObject(new WorldBox(new Position(0, 0, 0), dimension));
         addMovableObject(mainCharacter);
-        ShapeSurfaceType[] shapeSurfaceTypes = new ShapeSurfaceType[6];
-        shapeSurfaceTypes[0] = new ShapeSurfaceType(new TextureHandler("res/textures/grass.png", graphicsManager, false));
-        shapeSurfaceTypes[1] = new ShapeSurfaceType(new Color(0, 255, 100));
-        shapeSurfaceTypes[2] = new ShapeSurfaceType(new Color(233, 56, 0));
-        shapeSurfaceTypes[3] = new ShapeSurfaceType(new Color(123, 34, 200));
-        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(255, 0, 0));
-        shapeSurfaceTypes[5] = new ShapeSurfaceType(new Color(3, 78, 10));
-        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(30, 30, 30), shapeSurfaceTypes, graphicsManager));
-        addMovableObject(new MovableParallelepiped(new Position(100, 800, 0), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
-        addObject(new StaticParallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), shapeSurfaceTypes, graphicsManager));
+//        ShapeSurfaceType[] shapeSurfaceTypes = new ShapeSurfaceType[6];
+//        shapeSurfaceTypes[0] = new ShapeSurfaceType(new TextureHandler("res/textures/step.png", graphicsManager, false));
+//        shapeSurfaceTypes[1] = new ShapeSurfaceType(new Color(0, 255, 100));
+//        shapeSurfaceTypes[2] = new ShapeSurfaceType(new Color(233, 56, 0));
+//        shapeSurfaceTypes[3] = new ShapeSurfaceType(new Color(123, 34, 200));
+//        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(255, 0, 0));
+//        shapeSurfaceTypes[5] = new ShapeSurfaceType(new Color(3, 78, 10));
+//        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(30, 30, 30), shapeSurfaceTypes, graphicsManager));
+//        addObject(new StaticParallelepiped(new Position(100, 800, 0.1), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
+//        addObject(new StaticParallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), shapeSurfaceTypes, graphicsManager));
+        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(100, 100, 100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
         addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
+        addObject(new Stairs(new Position(300, 650, 0), 3, 10, new Dimension(100, 20, 10), graphicsManager));
+        addObject(new Stairs(new Position(500, 450, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
     }
 
     /**
@@ -115,7 +120,8 @@ public class GameWorld extends AbstractStaticObject {
      * Computes the axis aligned bounding box of this object
      */
     @Override
-    public BoundingBox getBoundingBox() {
+    public BoundingBox[] getBoundingBoxes() {
         return null;
     }
+
 }

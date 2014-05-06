@@ -3,6 +3,7 @@ package logic.utils;
 import logic.Dimension;
 import logic.Position;
 import logic.shapes.Quad;
+import logic.shapes.ShapeSurfaceType;
 
 /**
  * Handles most of the parallelepiped operations
@@ -50,6 +51,33 @@ public class ParallelepipedUtils {
                 v[vIdx].setPosition(vertices[indexes[sideIdx][vIdx]]);
             }
         }
+    }
+
+    /**
+     * Creates an array of 6 {@link ShapeSurfaceType}s, all of them equal to surfaceType
+     */
+    public static ShapeSurfaceType[] createShapeSurfaceTypeArray(ShapeSurfaceType surfaceType) {
+        ShapeSurfaceType[] surfaceTypes = new ShapeSurfaceType[6];
+        for(int i = 0; i < 6; i++)
+            surfaceTypes[i] = new ShapeSurfaceType(surfaceType);
+        return surfaceTypes;
+    }
+
+    /**
+     * Rotates a parallelepiped from its initial rotation by numberOfRotations rotations
+     */
+    public static void rotate(Position position, Dimension dimension, Quad[] sides, int numberOfRotations) {
+        if((numberOfRotations & 1) == 1) { // rotate 90 degrees
+            double aux = dimension.getX();
+            dimension.setX(dimension.getY());
+            dimension.setY(aux);
+        }
+        if(numberOfRotations == 2)
+            position.setX(position.getX() - dimension.getX());
+        else if(numberOfRotations == 3)
+            position.setY(position.getY() - dimension.getY());
+
+        ParallelepipedUtils.computeQuads(position, dimension, sides);
     }
 
 }

@@ -33,6 +33,11 @@ public class ShapeSurfaceType {
         this.color = color;
     }
 
+    public ShapeSurfaceType(ShapeSurfaceType surfaceType) {
+        this.color = surfaceType.getColor();
+        this.textureHandler = surfaceType.getTextureHandler();
+    }
+
     public TextureHandler getTextureHandler() {
         return textureHandler;
     }
@@ -46,9 +51,7 @@ public class ShapeSurfaceType {
      * @return      true if this surface is rendered as if it is covered with a texture, and false otherwise
      */
     public boolean isTextured() {
-        if(textureHandler == null)
-            return false;
-        return true;
+        return textureHandler != null;
     }
 
 }

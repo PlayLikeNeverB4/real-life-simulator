@@ -16,8 +16,10 @@ public class WorldBox extends AbstractStaticObject {
      * Considers only the floor as a physical object
      */
     @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(0, 0, 0,
-                               dimension.getX(), dimension.getY(), 0);
+    public BoundingBox[] getBoundingBoxes() {
+        return new BoundingBox[] {
+                new BoundingBox(0, 0, 0,
+                        dimension.getX(), dimension.getY(), 0)
+        };
     }
 }

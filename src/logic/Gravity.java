@@ -11,7 +11,7 @@ public class Gravity {
     /**
      * The speed of a falling object
      */
-    private static final double SPEED = 0.1;
+    private static final double SPEED = 0.3;
 
     /**
      * The game world for which it simulates the gravity

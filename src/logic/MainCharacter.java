@@ -3,7 +3,6 @@ package logic;
 import graphics.GraphicsManager;
 import graphics.MaleRenderer;
 import javafx.geometry.BoundingBox;
-import logic.utils.GeometryUtils;
 
 /**
  * The object which the user controls
@@ -30,16 +29,17 @@ public class MainCharacter extends AbstractPerson {
      * @param angle     The angle to the mainCharacter's direction axis
      */
     public void move(double angle, double distance) {
-        Position delta = GeometryUtils.computePointOnCircle(direction + angle, distance);
-        move(delta.getX(), delta.getY(), delta.getZ());
+        this.position = this.position.move(direction + angle, distance);
     }
 
     /**
      * Computes the axis aligned bounding box of this object
      */
     @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(position.getX() - 5, position.getY() - 5, position.getZ(),
-                               10, 10, 30);
+    public BoundingBox[] getBoundingBoxes() {
+        return new BoundingBox[] {
+                new BoundingBox(position.getX() - 5, position.getY() - 5, position.getZ(),
+                        10, 10, 30)
+        };
     }
 }

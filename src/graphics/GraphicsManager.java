@@ -2,6 +2,7 @@ package graphics;
 
 import com.jogamp.opengl.util.Animator;
 import graphics.shapes.RoadRenderer;
+import graphics.shapes.StairsRenderer;
 import logic.GameEngine;
 import logic.InputManager;
 
@@ -112,6 +113,7 @@ public class GraphicsManager implements GLEventListener {
     private void loadTextures(String pathToDir) {
         GameWorldRenderer.loadTextures(pathToDir, this);
         RoadRenderer.loadTextures(pathToDir, this);
+        StairsRenderer.loadTextures(pathToDir, this);
     }
 
     /*

@@ -45,6 +45,15 @@ public class StaticParallelepiped extends AbstractStaticObject {
         this.renderer = new ParallelepipedRenderer(this, graphicsManager);
     }
 
+    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager) {
+        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager);
+    }
+
+    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager, int numberOfRotations) {
+        this(position, dimension, surfaceType, graphicsManager);
+        rotate(numberOfRotations);
+    }
+
     public Dimension getDimension() {
         return dimension;
     }
@@ -53,9 +62,19 @@ public class StaticParallelepiped extends AbstractStaticObject {
         return sides;
     }
 
-    @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(position.getX(), position.getY(), position.getZ(),
-                               dimension.getX(), dimension.getY(), dimension.getZ());
+    /**
+     * Rotates a parallelepiped from its initial rotation by numberOfRotations rotations
+     */
+    private void rotate(int numberOfRotations) {
+        ParallelepipedUtils.rotate(position, dimension, sides, numberOfRotations);
     }
+
+    @Override
+    public BoundingBox[] getBoundingBoxes() {
+        return new BoundingBox[] {
+                new BoundingBox(position.getX(), position.getY(), position.getZ(),
+                        dimension.getX(), dimension.getY(), dimension.getZ())
+        };
+    }
+
 }

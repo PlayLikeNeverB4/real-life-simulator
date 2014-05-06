@@ -55,8 +55,10 @@ public class MovableParallelepiped extends AbstractMovableObject {
     }
 
     @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(position.getX(), position.getY(), position.getZ(),
-                               dimension.getX(), dimension.getY(), dimension.getZ());
+    public BoundingBox[] getBoundingBoxes() {
+        return new BoundingBox[] {
+                new BoundingBox(position.getX(), position.getY(), position.getZ(),
+                        dimension.getX(), dimension.getY(), dimension.getZ())
+        };
     }
 }

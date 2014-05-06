@@ -14,6 +14,10 @@ public class Dimension {
         this.z = z;
     }
 
+    public Dimension(Dimension otherDimension) {
+        this(otherDimension.x, otherDimension.y, otherDimension.z);
+    }
+
     public double getX() {
         return x;
     }

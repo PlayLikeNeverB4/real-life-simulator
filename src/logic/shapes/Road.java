@@ -26,7 +26,7 @@ public class Road extends AbstractStaticObject {
      * Computes the axis aligned bounding box of this object
      */
     @Override
-    public BoundingBox getBoundingBox() {
+    public BoundingBox[] getBoundingBoxes() {
         return null;
     }
 }

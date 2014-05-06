@@ -32,7 +32,7 @@ public class Quad extends AbstractStaticObject {
     }
 
     @Override
-    public BoundingBox getBoundingBox() {
+    public BoundingBox[] getBoundingBoxes() {
         return null;
     }
 

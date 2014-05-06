@@ -25,7 +25,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
         super(position, direction);
         this.speed = speed;
         this.acceleration = acceleration;
-        this.lastValidPosition = position;
+        this.lastValidPosition = new Position(position);
     }
 
     public AbstractMovableObject(AbstractMovableObject movableObject) {
@@ -85,8 +85,21 @@ public abstract class AbstractMovableObject extends AbstractObject {
         this.speed += delta;
     }
 
-    protected void collisionBounceHandler(AbstractObject abstractObject) {
-        // TODO: do something maybe?
+    /**
+     * Moves the object located at (x, y, z) to (x+dx, y+dy, z+dz)
+     * @param dx x distance
+     * @param dy y distance
+     * @param dz z distance
+     * @param isValid true if the move is known to be valid; false otherwise
+     */
+    public void move(double dx, double dy, double dz, boolean isValid) {
+//        if(this instanceof MainCharacter)
+//            System.out.println("Moved " + dx + " " + dy + " " + dz + " " + isValid);
+        if(!isValid)
+            this.lastValidPosition = new Position(this.position);
+        this.position = this.position.add(new Position(dx, dy, dz));
+        if(isValid)
+            this.lastValidPosition = new Position(this.position);
     }
 
     /**
@@ -96,12 +109,41 @@ public abstract class AbstractMovableObject extends AbstractObject {
      * @param dz z distance
      */
     public void move(double dx, double dy, double dz) {
-        this.lastValidPosition = new Position(this.position);
-        this.position = this.position.add(new Position(dx, dy, dz));
+        move(dx, dy, dz, false);
     }
 
     protected void revertToLastValidPosition() {
+//        if(this instanceof MainCharacter)
+//            System.out.println("Reverted from " + position + "\nto " + lastValidPosition);
         position = new Position(lastValidPosition);
+    }
+
+    /**
+     * Notifies this object that it collided with an object
+     * It updates this object's state depending on whether it bounces or not
+     * @param abstractObject The other object that this object collided with
+     */
+    protected void collisionBounceHandler(AbstractObject abstractObject) {
+        // TODO: do something maybe?
+    }
+
+    /**
+     * Notifies this object that it collided with a movable object
+     * It updates this object's state depending on the movable object's speed and direction
+     * @param movableObject The other object that this object collided with
+     */
+    protected void collidedWithMovableObject(AbstractMovableObject movableObject) {
+        // default action: do nothing
+    }
+
+    /**
+     * Notifies this object that it collided with another object
+     * It updates the other object's state depending on this object's special effects
+     * @param abstractObject The other object that this object collided with
+     * @return true if the current collision is resolved; false otherwise
+     */
+    protected void collisionSpecialEffects(AbstractObject abstractObject) {
+        // default action: do nothing
     }
 
 }
