@@ -1,6 +1,7 @@
 package graphics;
 
 import com.jogamp.opengl.util.Animator;
+import graphics.shapes.FenceRenderer;
 import graphics.shapes.RoadRenderer;
 import graphics.shapes.StairsRenderer;
 import logic.GameEngine;
@@ -114,6 +115,8 @@ public class GraphicsManager implements GLEventListener {
         GameWorldRenderer.loadTextures(pathToDir, this);
         RoadRenderer.loadTextures(pathToDir, this);
         StairsRenderer.loadTextures(pathToDir, this);
+        FenceRenderer.loadTextures(pathToDir, this);
+        PlayGroundRenderer.loadTextures(pathToDir, this);
     }
 
     /*

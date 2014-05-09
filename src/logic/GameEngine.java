@@ -64,9 +64,11 @@ public class GameEngine {
      */
     public void loopOnce() {
         long currentLoopTime = System.currentTimeMillis();
+        long timeInterval = currentLoopTime - lastLoopTime;
+        timeInterval = Math.min(40, timeInterval);
 
         // Check input
-        inputManager.checkMoveKeys(currentLoopTime - lastLoopTime);
+        inputManager.checkMoveKeys(timeInterval);
         List<AbstractEvent> eventList = inputManager.popNewEvents();
         for(AbstractEvent event : eventList)
             event.handle();
@@ -76,12 +78,12 @@ public class GameEngine {
         // update objects
         for(AbstractMovableObject movableObject : gameWorld.getMovableObjectList())
             if(movableObject != gameWorld.getMainCharacter()) // the mainCharacter's moves are special
-                movableObject.update(currentLoopTime - lastLoopTime);
+                movableObject.update(timeInterval);
         // check for collisions
         physicsEngine.checkCollisions();
 
         // apply gravity
-        physicsEngine.applyGravity(currentLoopTime - lastLoopTime);
+        physicsEngine.applyGravity(timeInterval);
         // check for collisions
         physicsEngine.checkCollisions();
 

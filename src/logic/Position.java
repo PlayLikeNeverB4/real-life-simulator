@@ -5,7 +5,7 @@ import logic.utils.GeometryUtils;
 /**
  * Represents a 3D point in the game world
  */
-public class Position {
+public class Position implements Comparable<Position> {
     private double x;
     private double y;
     private double z;
@@ -90,4 +90,29 @@ public class Position {
                 ", z=" + z +
                 '}';
     }
+
+    @Override
+    public int compareTo(Position o) {
+        if(x == o.x) {
+            if(y == o.y) {
+                if(z == o.z) {
+                    return 0;
+                } else if(z > o.z) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } else if(y > o.y) {
+                return 1;
+            } else {
+                return -1;
+            }
+
+        } else if(x > o.x){
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
 }

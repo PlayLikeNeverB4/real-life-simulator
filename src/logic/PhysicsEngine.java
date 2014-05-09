@@ -1,5 +1,7 @@
 package logic;
 
+import logic.utils.CollisionDetectionUtils;
+
 import java.util.List;
 
 /**
@@ -12,14 +14,8 @@ public class PhysicsEngine {
      */
     GameWorld gameWorld;
 
-    /**
-     * The collision detection manager
-     */
-    CollisionDetection collisionDetection;
-
     public PhysicsEngine(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
-        collisionDetection = new CollisionDetection(gameWorld);
     }
 
     /**
@@ -28,7 +24,7 @@ public class PhysicsEngine {
     public void checkCollisions() {
         List<AbstractMovableObject> movableObjectList = gameWorld.getMovableObjectList();
         for(AbstractMovableObject movableObject : movableObjectList) {
-            List<AbstractObject> collisions = collisionDetection.detect(movableObject);
+            List<AbstractObject> collisions = CollisionDetectionUtils.detect(movableObject, gameWorld);
 //            if(collisions.size() > 0)
 //                System.out.println("Collision!");
 //            if(movableObject instanceof MainCharacter)

@@ -2,11 +2,13 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
+import graphics.shapes.FenceRenderer;
 import javafx.geometry.BoundingBox;
 import logic.shapes.Road;
 import logic.shapes.ShapeSurfaceType;
 import logic.shapes.Stairs;
 import logic.shapes.StaticParallelepiped;
+import logic.utils.ParallelepipedUtils;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -47,7 +49,7 @@ public class GameWorld extends AbstractStaticObject {
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
-        mainCharacter = new MainCharacter(new Position(520, 570, 200), graphicsManager, 0.2);
+        mainCharacter = new MainCharacter(new Position(520, 570, 400), graphicsManager, 0.2);
     }
 
     /**
@@ -65,13 +67,19 @@ public class GameWorld extends AbstractStaticObject {
 //        shapeSurfaceTypes[3] = new ShapeSurfaceType(new Color(123, 34, 200));
 //        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(255, 0, 0));
 //        shapeSurfaceTypes[5] = new ShapeSurfaceType(new Color(3, 78, 10));
-//        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(30, 30, 30), shapeSurfaceTypes, graphicsManager));
+//        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(30), shapeSurfaceTypes, graphicsManager));
 //        addObject(new StaticParallelepiped(new Position(100, 800, 0.1), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
 //        addObject(new StaticParallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), shapeSurfaceTypes, graphicsManager));
-        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(100, 100, 100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
+        addObject(new PlayGround(new Position(101, 150, 0), 300, 2, graphicsManager));
+        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
         addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
         addObject(new Stairs(new Position(300, 650, 0), 3, 10, new Dimension(100, 20, 10), graphicsManager));
         addObject(new Stairs(new Position(500, 450, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
+        addObject(new PlayGround(new Position(500, 150, 0), 300, 3, graphicsManager));
+        addObject(new StaticParallelepiped(new Position(800, 850, 0),
+                new Dimension(50),
+                ParallelepipedUtils.createShapeSurfaceTypeArray(new ShapeSurfaceType(FenceRenderer.textures[1])),
+                graphicsManager));
     }
 
     /**
@@ -121,7 +129,8 @@ public class GameWorld extends AbstractStaticObject {
      */
     @Override
     public BoundingBox[] getBoundingBoxes() {
-        return null;
+        return new BoundingBox[] { new BoundingBox(position.getX(), position.getY(), position.getZ(),
+                                                   dimension.getX(), dimension.getY(), dimension.getZ())};
     }
 
 }

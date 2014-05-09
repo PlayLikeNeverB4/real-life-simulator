@@ -27,6 +27,7 @@ public class Road extends AbstractStaticObject {
      */
     @Override
     public BoundingBox[] getBoundingBoxes() {
-        return null;
+        return new BoundingBox[] {new BoundingBox(position.getX(), position.getY(), -1,
+                                    dimension.getX(), dimension.getY(), dimension.getZ())};
     }
 }

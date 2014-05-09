@@ -21,7 +21,7 @@ public class StaticParallelepiped extends AbstractStaticObject {
     /**
      * The {@link logic.Dimension} of the component (geometrical shape) of an object that is rendered
      */
-    private Dimension dimension;
+    protected Dimension dimension;
 
     /**
      *

@@ -1,9 +1,12 @@
 package logic.utils;
 
+import graphics.TextureHandler;
 import logic.Dimension;
 import logic.Position;
 import logic.shapes.Quad;
 import logic.shapes.ShapeSurfaceType;
+import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Handles most of the parallelepiped operations
@@ -55,11 +58,74 @@ public class ParallelepipedUtils {
 
     /**
      * Creates an array of 6 {@link ShapeSurfaceType}s, all of them equal to surfaceType
+     * @return      An array with 6 {@link ShapeSurfaceType}s
      */
     public static ShapeSurfaceType[] createShapeSurfaceTypeArray(ShapeSurfaceType surfaceType) {
         ShapeSurfaceType[] surfaceTypes = new ShapeSurfaceType[6];
         for(int i = 0; i < 6; i++)
             surfaceTypes[i] = new ShapeSurfaceType(surfaceType);
+        return surfaceTypes;
+    }
+
+    /**
+     * Creates an array of 6 {@link ShapeSurfaceType}s.
+     * All of the lateral sides are rendered with the texture send as parameter.
+     * Up and down sides are rendered with the color send as parameter.
+     * @param color     The {@link Color} used for rendering the up and down sides
+     * @param textureHandler        The {@link TextureHandler} used for rendering the lateral sides
+     * @return      An array with 6 {@link ShapeSurfaceType}s
+     */
+    public static ShapeSurfaceType[] createSurfaceTypeColorAndTexture(Color color, TextureHandler textureHandler) {
+        ShapeSurfaceType[] shapeSurfaceType = new ShapeSurfaceType[6];
+        shapeSurfaceType[4] = new ShapeSurfaceType(color);
+        shapeSurfaceType[5] = new ShapeSurfaceType(color);
+        for(int i = 0; i < 4; i++) {
+            shapeSurfaceType[i] = new ShapeSurfaceType(textureHandler);
+        }
+        return shapeSurfaceType;
+    }
+
+    /**
+     * Creates an array of 6 {@link ShapeSurfaceType}s, all of them equal to a random color
+     * from a pre-established list of colors
+     * @return      An array with 6 {@link ShapeSurfaceType}s
+     */
+    public static ShapeSurfaceType[] createShapeSurfaceTypeArrayRNGColors() {
+        int numberElements = 20;
+        Color[] setOfBeautifulColors = new Color[] {
+                new Color(21, 217, 238),
+                new Color(21, 217, 105),
+                new Color(255, 0, 0),
+                new Color(155, 4, 160),
+                new Color(38, 15, 253),
+                new Color(252, 252, 0),
+                new Color(0, 255, 0),
+                new Color(0, 0, 90),
+                new Color(255, 228, 181),
+                new Color(255, 20, 147),
+                new Color(184, 134, 11),
+                new Color(255, 69, 0),
+                new Color(0, 250, 154),
+                new Color(139, 69, 19),
+                new Color(148, 0, 211),
+                new Color(173, 255, 47),
+                new Color(17, 180, 0),
+                new Color(205, 92, 92),
+                new Color(100, 149, 237),
+                new Color(220, 20, 60)
+        };
+
+        ShapeSurfaceType[] surfaceTypes = new ShapeSurfaceType[6];
+        boolean[] inList = new boolean[numberElements];
+        Arrays.fill(inList, false);
+        for(int i = 0; i < 6; i++) {
+            int newIdx;
+            do {
+                newIdx = (int) RNGUtils.generateDouble(numberElements);
+            } while(inList[newIdx]);
+            surfaceTypes[i] = new ShapeSurfaceType(setOfBeautifulColors[newIdx]);
+            inList[newIdx] = true;
+        }
         return surfaceTypes;
     }
 

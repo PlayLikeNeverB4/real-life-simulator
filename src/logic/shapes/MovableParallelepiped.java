@@ -21,7 +21,7 @@ public class MovableParallelepiped extends AbstractMovableObject {
     /**
      * The {@link logic.Dimension} of the parallelepiped that is rendered
      */
-    private Dimension dimension;
+    protected Dimension dimension;
 
     /**
      *

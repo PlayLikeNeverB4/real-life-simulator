@@ -3,7 +3,7 @@ package logic;
 /**
  * Represents a 3D dimension in the game world
  */
-public class Dimension {
+public class Dimension implements Comparable<Dimension> {
     private double x;
     private double y;
     private double z;
@@ -16,6 +16,14 @@ public class Dimension {
 
     public Dimension(Dimension otherDimension) {
         this(otherDimension.x, otherDimension.y, otherDimension.z);
+    }
+
+    public Dimension(Position position) {
+        this(position.getX(), position.getY(), position.getZ());
+    }
+
+    public Dimension(double size) {
+        this(size, size, size);
     }
 
     public double getX() {
@@ -41,4 +49,12 @@ public class Dimension {
     public void setZ(double z) {
         this.z = z;
     }
+
+    @Override
+    public int compareTo(Dimension o) {
+        Position pos = new Position(o.x, o.y, o.z);
+        Position thisDimension = new Position(x, y, z);
+        return thisDimension.compareTo(pos);
+    }
+
 }

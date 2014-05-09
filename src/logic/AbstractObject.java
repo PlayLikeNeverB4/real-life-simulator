@@ -6,7 +6,7 @@ import javafx.geometry.BoundingBox;
 /**
  * Represents an object in the game world
  */
-public abstract class AbstractObject {
+public abstract class AbstractObject implements Comparable<AbstractObject> {
 
     /**
      * The position of the object in the game world
@@ -118,5 +118,27 @@ public abstract class AbstractObject {
      * @return true if the current collision is resolved; false otherwise
      */
     protected abstract void collisionSpecialEffects(AbstractObject abstractObject);
+
+    @Override
+    public int compareTo(AbstractObject o) {
+        if(position.compareTo(o.getPosition()) == 0) {
+            BoundingBox[] boundingBoxesThis = this.getBoundingBoxes();
+            BoundingBox[] boundingBoxes = o.getBoundingBoxes();
+            int conditionEvaluation = 0;
+            if(boundingBoxesThis != null && boundingBoxes != null) {
+                Dimension dimensionObj = new Dimension(boundingBoxes[0].getMaxX(),boundingBoxes[0].getMaxY(), boundingBoxes[0].getMaxZ());
+                Dimension dimensionThis = new Dimension(boundingBoxesThis[0].getMaxX(),boundingBoxesThis[0].getMaxY(), boundingBoxesThis[0].getMaxZ());
+                conditionEvaluation = dimensionThis.compareTo(dimensionObj);
+            }
+            if(conditionEvaluation == 0) {
+                return 0;
+            } else if(conditionEvaluation == 1) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+        return position.compareTo(o.getPosition());
+    }
 
 }
