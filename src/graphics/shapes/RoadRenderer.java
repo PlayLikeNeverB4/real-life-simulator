@@ -3,6 +3,7 @@ package graphics.shapes;
 import graphics.AbstractRenderer;
 import graphics.GraphicsManager;
 import graphics.TextureHandler;
+import graphics.TextureLoader;
 import logic.AbstractObject;
 import logic.utils.GeometryUtils;
 import logic.Position;
@@ -12,18 +13,12 @@ import javax.media.opengl.GL2;
 
 public class RoadRenderer extends AbstractRenderer {
 
-    private static TextureHandler roadTexture;
-
     /**
      * @param renderedObject  The {@link logic.AbstractObject} that will be rendered on the screen
      * @param graphicsManager The {@link graphics.GraphicsManager} which manages the graphics for rendering
      */
     public RoadRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         super(renderedObject, graphicsManager);
-    }
-
-    public static void loadTextures(String pathToDir, GraphicsManager graphicsManager) {
-        roadTexture = new TextureHandler(pathToDir + "road.png", graphicsManager);
     }
 
     /**
@@ -44,7 +39,7 @@ public class RoadRenderer extends AbstractRenderer {
         gl.glEnable(GL2.GL_POLYGON_OFFSET_FILL);
 
         TextureHandler.enableTexturing(gl);
-        roadTexture.bind();
+        TextureLoader.road.bind();
 
         double roadScale = 100;
 

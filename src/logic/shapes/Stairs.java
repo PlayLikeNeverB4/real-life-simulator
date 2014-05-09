@@ -1,6 +1,7 @@
 package logic.shapes;
 
 import graphics.GraphicsManager;
+import graphics.TextureLoader;
 import graphics.shapes.StairsRenderer;
 import javafx.geometry.BoundingBox;
 import logic.*;
@@ -30,7 +31,7 @@ public class Stairs extends AbstractStaticObject {
         double stepHeight = stepDimension.getZ();
         for(int stepIdx = 0; stepIdx < numberOfSteps; stepIdx++) {
             steps[stepIdx] = new StaticParallelepiped(new Position(position), new Dimension(stepDimension),
-                                                      new ShapeSurfaceType(StairsRenderer.getStepTexture()), graphicsManager, rotationIndex);
+                                                      new ShapeSurfaceType(TextureLoader.step), graphicsManager, rotationIndex);
 
             position = position.move(stairsDirection, stepDimension.getY());
             stepDimension.setZ(stepDimension.getZ() + stepHeight);

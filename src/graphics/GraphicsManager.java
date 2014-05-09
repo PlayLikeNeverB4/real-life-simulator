@@ -1,9 +1,6 @@
 package graphics;
 
 import com.jogamp.opengl.util.Animator;
-import graphics.shapes.FenceRenderer;
-import graphics.shapes.RoadRenderer;
-import graphics.shapes.StairsRenderer;
 import logic.GameEngine;
 import logic.InputManager;
 
@@ -111,15 +108,6 @@ public class GraphicsManager implements GLEventListener {
         this.camera = new Camera(gameEngine.getGameWorld().getMainCharacter(), this);
     }
 
-    private void loadTextures(String pathToDir) {
-        GameWorldRenderer.loadTextures(pathToDir, this);
-        RoadRenderer.loadTextures(pathToDir, this);
-        StairsRenderer.loadTextures(pathToDir, this);
-        BillboardRenderer.loadTextures(pathToDir, this);
-        FenceRenderer.loadTextures(pathToDir, this);
-        PlayGroundRenderer.loadTextures(pathToDir, this);
-    }
-
     /*
         Initializes JOGL
      */
@@ -159,7 +147,7 @@ public class GraphicsManager implements GLEventListener {
         glObject.glPolygonOffset(0.0f, -10);
 
         // Load all of the needed textures into the RAM
-        loadTextures("res/textures/");
+        TextureLoader.loadTextures("res/textures/", this);
 
         gameEngine.getGameWorld().initializeGameWorld(this);
     }

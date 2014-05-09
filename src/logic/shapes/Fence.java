@@ -1,7 +1,7 @@
 package logic.shapes;
 
 import graphics.GraphicsManager;
-import graphics.shapes.FenceRenderer;
+import graphics.TextureLoader;
 import logic.utils.ParallelepipedUtils;
 import logic.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class Fence extends StaticParallelepiped {
      */
     public Fence(Position position, logic.Dimension dimension, GraphicsManager graphicsManager, int idx) {
         super(position, dimension,
-                ParallelepipedUtils.createShapeSurfaceTypeArray(new ShapeSurfaceType(FenceRenderer.textures[idx])), graphicsManager);
+                ParallelepipedUtils.createShapeSurfaceTypeArray(new ShapeSurfaceType(TextureLoader.fences[idx])), graphicsManager);
     }
 
 }

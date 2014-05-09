@@ -1,7 +1,7 @@
 package logic;
 
-import graphics.BillboardRenderer;
 import graphics.GraphicsManager;
+import graphics.TextureLoader;
 import logic.utils.GeometryUtils;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ForestGenerator {
             Position treePos = GeometryUtils.computePointOnCircle(totalAngle, distance).add(position);
             double height = rng.nextDouble() * (MAX_TREE_HEIGHT - MIN_TREE_HEIGHT) + MIN_TREE_HEIGHT;
             int treeType = rng.nextInt(2);
-            Billboard tree = new Billboard(treePos, direction, new Dimension(TREE_WIDTH, height), BillboardRenderer.getTreeTexture(treeType), graphicsManager);
+            Billboard tree = new Billboard(treePos, direction, new Dimension(TREE_WIDTH, height), TextureLoader.trees[treeType], graphicsManager);
             trees.add(tree);
         }
 

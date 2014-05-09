@@ -7,16 +7,8 @@ import javax.media.opengl.GL2;
 
 public class GameWorldRenderer extends AbstractRenderer {
 
-    private static TextureHandler groundTexture;
-    private static TextureHandler skyTexture;
-
     public GameWorldRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         super(renderedObject, graphicsManager);
-    }
-
-    public static void loadTextures(String pathToDir, GraphicsManager graphicsManager) {
-        groundTexture = new TextureHandler(pathToDir + "grass.png", graphicsManager, false);
-        skyTexture = new TextureHandler(pathToDir + "sky.png", graphicsManager, false);
     }
 
     @Override
@@ -44,7 +36,7 @@ public class GameWorldRenderer extends AbstractRenderer {
         double sizeZ = gameWorld.getDimension().getZ();
 
         TextureHandler.enableTexturing(gl);
-        groundTexture.bind();
+        TextureLoader.ground.bind();
         int groundTextureScale = 32;
         gl.glBegin(GL2.GL_QUADS); // bottom face
             gl.glTexCoord2d(0, 0); // lower left
@@ -57,7 +49,7 @@ public class GameWorldRenderer extends AbstractRenderer {
             gl.glVertex3d(0, sizeY, 0);
         gl.glEnd();
 
-        skyTexture.bind();
+        TextureLoader.sky.bind();
         // front face
         gl.glBegin(GL2.GL_QUADS);
             gl.glTexCoord2d(0, 0); // lower left

@@ -3,7 +3,6 @@ package graphics;
 import logic.AbstractObject;
 import logic.AbstractStaticObject;
 import logic.PlayGround;
-import logic.shapes.JoyBox;
 
 import javax.media.opengl.GL2;
 import java.util.TreeSet;
@@ -13,8 +12,6 @@ import java.util.TreeSet;
  */
 public class PlayGroundRenderer extends AbstractRenderer {
 
-    private static TextureHandler sandTexture;
-
     /**
      * @param playGround  The {@link logic.AbstractObject} that will be rendered on the screen
      * @param graphicsManager The {@link graphics.GraphicsManager} which manages the graphics for rendering
@@ -22,10 +19,6 @@ public class PlayGroundRenderer extends AbstractRenderer {
     public PlayGroundRenderer(AbstractObject playGround, GraphicsManager graphicsManager) {
         super(playGround, graphicsManager);
         this.graphicsManager = graphicsManager;
-    }
-
-    public static void loadTextures(String pathToDir, GraphicsManager graphicsManager) {
-        sandTexture = new TextureHandler(pathToDir + "sand.png", graphicsManager);
     }
 
     /**
@@ -43,7 +36,7 @@ public class PlayGroundRenderer extends AbstractRenderer {
         // here is rendered the down side of playground
         gl.glEnable(GL2.GL_POLYGON_OFFSET_FILL);
         TextureHandler.enableTexturing(gl);
-        sandTexture.bind();
+        TextureLoader.sand.bind();
         gl.glBegin(GL2.GL_QUADS);
             gl.glTexCoord2d(0, 0);
             gl.glVertex3d(posX, posY, posZ);

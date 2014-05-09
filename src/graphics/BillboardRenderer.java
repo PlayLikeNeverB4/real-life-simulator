@@ -11,18 +11,9 @@ import javax.media.opengl.GL2;
 public class BillboardRenderer extends AbstractRenderer {
 
     /**
-     * An array of tree textures that can be used to render billboards
-     */
-    private static TextureHandler[] treeTextures;
-
-    /**
      * The selected texture for rendering this billboard
      */
     private TextureHandler textureHandler;
-
-    public static TextureHandler getTreeTexture(int textureIdx) {
-        return treeTextures[textureIdx];
-    }
 
     /**
      * @param renderedObject  The {@link logic.AbstractObject} that will be rendered on the screen
@@ -31,12 +22,6 @@ public class BillboardRenderer extends AbstractRenderer {
     public BillboardRenderer(AbstractObject renderedObject, TextureHandler textureHandler, GraphicsManager graphicsManager) {
         super(renderedObject, graphicsManager);
         this.textureHandler = textureHandler;
-    }
-
-    public static void loadTextures(String pathToDir, GraphicsManager graphicsManager) {
-        treeTextures = new TextureHandler[2];
-        treeTextures[0] = new TextureHandler(pathToDir + "billboard_tree0.png", graphicsManager);
-        treeTextures[1] = new TextureHandler(pathToDir + "billboard_tree1.png", graphicsManager);
     }
 
     /**
