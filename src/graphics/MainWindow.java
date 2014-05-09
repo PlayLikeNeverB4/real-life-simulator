@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
  */
 public class MainWindow extends JFrame {
 
-    private int height, width;
-
     /**
      * Default constructor has implicit width = 900 and height = 700.
      */
@@ -26,8 +24,9 @@ public class MainWindow extends JFrame {
     public MainWindow(int width, int height) {
         super("Real Life Simulator");
 
-        this.width = width;
-        this.height = height;
+//        // go full-screen
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setUndecorated(true);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

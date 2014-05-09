@@ -101,6 +101,23 @@ public class InputManager implements MouseMotionListener, KeyListener {
             eventList.add(new StopMainCharacterEvent(gameWorld));
     }
 
+    public void moveMouseToCenter() {
+        int middleX = graphicsManager.getCanvas().getWidth() / 2;
+        int middleY = graphicsManager.getCanvas().getHeight() / 2;
+
+        Robot robot = null;
+        try {
+            robot = new Robot();
+            MainWindow mainWindow = graphicsManager.getMainWindow();
+            Point point = new Point(middleX, middleY);
+            SwingUtilities.convertPointToScreen(point, graphicsManager.getCanvas());
+            robot.mouseMove(mainWindow.getX() + mainWindow.getWidth() / 2,
+                    (int) point.getY());
+        } catch (AWTException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -164,24 +181,16 @@ public class InputManager implements MouseMotionListener, KeyListener {
         int middleX = graphicsManager.getCanvas().getWidth() / 2;
         int middleY = graphicsManager.getCanvas().getHeight() / 2;
 
-//        System.out.println(e.getY() + " " + middleY);
-
-        eventList.add(new MouseMoveEvent(e.getX() - middleX,
-                                         e.getY() - middleY,
-                                         gameWorld.getMainCharacter(),
-                                         graphicsManager));
-
-        Robot robot = null;
-        try {
-            robot = new Robot();
-            MainWindow mainWindow = graphicsManager.getMainWindow();
-            Point point = new Point(middleX, middleY);
-            SwingUtilities.convertPointToScreen(point, graphicsManager.getCanvas());
-            robot.mouseMove(mainWindow.getX() + mainWindow.getWidth() / 2,
-                    (int) point.getY());
-        } catch (AWTException e1) {
-            e1.printStackTrace();
+        // Make sure that cursor didn't just enter the window
+        int distance = Math.abs(e.getX() - middleX) + Math.abs(e.getY() - middleY);
+        if(distance < middleX / 2) {
+            eventList.add(new MouseMoveEvent(e.getX() - middleX,
+                                             e.getY() - middleY,
+                                             gameWorld.getMainCharacter(),
+                                             graphicsManager));
         }
+
+        moveMouseToCenter();
     }
 
     @Override
