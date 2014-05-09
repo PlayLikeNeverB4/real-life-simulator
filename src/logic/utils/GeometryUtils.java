@@ -33,4 +33,13 @@ public class GeometryUtils {
             angle -= 2 * Math.PI;
         return angle;
     }
+
+    /**
+     * Computes and returns the angle difference between angle1 and angle2
+     */
+    public static double computeAngleDifference(double angle1, double angle2) {
+        angle1 = normalizeAngle(angle1);
+        angle2 = normalizeAngle(angle2);
+        return Math.min(Math.abs(angle1 - angle2), 2 * Math.PI - Math.abs(angle1 - angle2));
+    }
 }

@@ -11,6 +11,11 @@ import java.util.List;
 public class GameEngine {
 
     /**
+     * The maximum time interval between two frames
+     */
+    private static final int MAX_FRAME_TIME = 35;
+
+    /**
      * The {@link GameWorld} which stores the objects of the game
      */
     private GameWorld gameWorld;
@@ -44,15 +49,11 @@ public class GameEngine {
         physicsEngine = new PhysicsEngine(gameWorld);
         inputManager = new InputManager(gameWorld, graphicsManager);
         this.graphicsManager.setInputManager(inputManager);
-        lastLoopTime = System.currentTimeMillis();
+        lastLoopTime = -1;
     }
     
     public GameWorld getGameWorld() {
         return gameWorld;
-    }
-
-    public InputManager getInputManager() {
-        return inputManager;
     }
 
     public GraphicsManager getGraphicsManager() {
@@ -64,8 +65,7 @@ public class GameEngine {
      */
     public void loopOnce() {
         long currentLoopTime = System.currentTimeMillis();
-        long timeInterval = currentLoopTime - lastLoopTime;
-        timeInterval = Math.min(40, timeInterval);
+        long timeInterval = Math.min(MAX_FRAME_TIME, currentLoopTime - lastLoopTime);
 
         // Check input
         inputManager.checkMoveKeys(timeInterval);

@@ -46,9 +46,9 @@ public class MouseMoveEvent extends AbstractEvent {
 
         // x axis
         double deltaXAngle = convertHorizontalPixelDistanceToRadians(deltaX);
-        double nextXAngle = mainCharacter.getDirection() + deltaXAngle;
+        double nextXAngle = mainCharacter.getWatchingDirection() + deltaXAngle;
         nextXAngle = GeometryUtils.normalizeAngle(nextXAngle);
-        mainCharacter.setDirection(nextXAngle);
+        mainCharacter.setWatchingDirection(nextXAngle);
 
         // y axis
         double deltaYAngle = convertVerticalPixelDistanceToRadians(deltaY);

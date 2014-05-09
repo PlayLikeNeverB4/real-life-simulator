@@ -55,18 +55,10 @@ public class Position implements Comparable<Position> {
     }
 
     /**
-     * @param angle              The angle to the OX axis in the XOY plane
-     * @param horizontalDistance The horizontal distance to the original position
-     * @param verticalDistance   The vertical distance to the original position
-     * @return                   A position at an angle and distance from this position
+     * Adds two positions
+     * @param position The {@link Position} to add
+     * @return A new {@link Position} which represents the sum of this {@link Position} and the other one
      */
-    public Position computeRelativePosition(double angle, double horizontalDistance, double verticalDistance) {
-        double nextX = x - Math.cos(angle) * horizontalDistance;
-        double nextY = y - Math.sin(angle) * horizontalDistance;
-        double nextZ = z + verticalDistance;
-        return new Position(nextX, nextY, nextZ);
-    }
-
     public Position add(Position position) {
         return new Position(x + position.x,
                             y + position.y,
@@ -82,6 +74,16 @@ public class Position implements Comparable<Position> {
         return this.add(new Position(delta.getX(), delta.getY(), delta.getZ()));
     }
 
+    /**
+     * Computes and returns the distance between this {@link Position} and the other one
+     * @param position The {@link Position} to compute the distance to
+     */
+    public double distanceTo(Position position) {
+        double dx = x - position.x;
+        double dy = y - position.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
     @Override
     public String toString() {
         return "Position{" +
@@ -93,26 +95,10 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int compareTo(Position o) {
-        if(x == o.x) {
-            if(y == o.y) {
-                if(z == o.z) {
-                    return 0;
-                } else if(z > o.z) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            } else if(y > o.y) {
-                return 1;
-            } else {
-                return -1;
-            }
-
-        } else if(x > o.x){
-            return 1;
-        } else {
-            return -1;
-        }
+        if(Double.compare(x, o.x) != 0)
+            return Double.compare(x, o.x);
+        if(Double.compare(y, o.y) != 0)
+            return Double.compare(y, o.y);
+        return Double.compare(z, o.z);
     }
-
 }

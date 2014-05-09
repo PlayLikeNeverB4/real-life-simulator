@@ -1,5 +1,7 @@
 package logic;
 
+import logic.utils.GeometryUtils;
+
 /**
  * This class represents objects that can be moved
  */
@@ -52,6 +54,14 @@ public abstract class AbstractMovableObject extends AbstractObject {
     }
 
     /**
+     * Returns the current speed of the object
+     */
+    @Override
+    public double getCurrentSpeed() {
+        return this.speed;
+    }
+
+    /**
      * Updates the objects' position and speed considering its current speed, acceleration and direction
      * @param time The amount of time passed since the last update
      */
@@ -60,6 +70,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
         lastValidPosition = new Position(position);
 
         updatePosition(time);
+        updateSpeed(time);
     }
 
     /**
@@ -68,12 +79,9 @@ public abstract class AbstractMovableObject extends AbstractObject {
      */
     private void updatePosition(double time) {
         double distance = this.speed * time;
-        double crtX = this.position.getX();
-        double crtY = this.position.getY();
-        double nextX = crtX + Math.cos(this.direction) * distance;
-        double nextY = crtY + Math.sin(this.direction) * distance;
-        this.position.setX(nextX);
-        this.position.setY(nextY);
+        double addX = Math.cos(this.direction) * distance;
+        double addY = Math.sin(this.direction) * distance;
+        move(addX, addY, 0);
     }
 
     /**
@@ -82,7 +90,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
      */
     private void updateSpeed(double time) {
         double delta = this.acceleration * time;
-        this.speed += delta;
+        this.speed = Math.max(0, this.speed + delta);
     }
 
     /**
@@ -112,10 +120,60 @@ public abstract class AbstractMovableObject extends AbstractObject {
         move(dx, dy, dz, false);
     }
 
+    /**
+     * Moves this object from (x, y, z) to (x + delta.x, y + delta.y, z + delta.z)
+     */
+    public void move(Position delta) {
+        move(delta.getX(), delta.getY(), delta.getZ());
+    }
+
+    /**
+     * Moves the object located at (x, y, z) to (nextX, nextY, nextZ)
+     * @param nextX x-coordinate
+     * @param nextY y-coordinate
+     * @param nextZ z-coordinate
+     */
+    public void moveTo(double nextX, double nextY, double nextZ) {
+        move(nextX - position.getX(), nextY - position.getY(), nextZ - position.getZ());
+    }
+
+    /**
+     * Moves this object to another position
+     * @param isValid true if the move is known to be valid; false otherwise
+     */
+    public void moveTo(double nextX, double nextY, double nextZ, boolean isValid) {
+        move(nextX - position.getX(), nextY - position.getY(), nextZ - position.getZ(), isValid);
+    }
+
+    /**
+     * Same as moveTo(nextX, nextY, nextZ)
+     */
+    public void moveTo(Position next) {
+        moveTo(next, false);
+    }
+
+    /**
+     * Moves this object to another position
+     * @param next    The target {@link logic.Position}
+     * @param isValid true if the move is known to be valid; false otherwise
+     */
+    public void moveTo(Position next, boolean isValid) {
+        moveTo(next.getX(), next.getY(), next.getZ(), isValid);
+    }
+
+    /**
+     * Moves this object by a distance at an angle
+     */
+    public void move(double angle, double distance) {
+        Position delta = GeometryUtils.computePointOnCircle(angle, distance);
+        move(delta);
+    }
+
+    /**
+     * Moves back this object to the last known valid position
+     */
     protected void revertToLastValidPosition() {
-//        if(this instanceof MainCharacter)
-//            System.out.println("Reverted from " + position + "\nto " + lastValidPosition);
-        position = new Position(lastValidPosition);
+        moveTo(lastValidPosition, true);
     }
 
     /**
@@ -124,23 +182,27 @@ public abstract class AbstractMovableObject extends AbstractObject {
      * @param abstractObject The other object that this object collided with
      */
     protected void collisionBounceHandler(AbstractObject abstractObject) {
-        // TODO: do something maybe?
+        if(this.position.getZ() == this.lastValidPosition.getZ() && this.position.compareTo(this.lastValidPosition) != 0)
+            this.speed /= 2;
+        // default action: don't bounce
     }
 
     /**
-     * Notifies this object that it collided with a movable object
+     * Notifies this object that it collided with a movable object.
      * It updates this object's state depending on the movable object's speed and direction
      * @param movableObject The other object that this object collided with
      */
     protected void collidedWithMovableObject(AbstractMovableObject movableObject) {
-        // default action: do nothing
+        if(movableObject.getCurrentSpeed() > 0) { // the other object is moving, so it might affect this object
+            this.direction = movableObject.direction;
+            this.speed = movableObject.getCurrentSpeed();
+        }
     }
 
     /**
      * Notifies this object that it collided with another object
      * It updates the other object's state depending on this object's special effects
      * @param abstractObject The other object that this object collided with
-     * @return true if the current collision is resolved; false otherwise
      */
     protected void collisionSpecialEffects(AbstractObject abstractObject) {
         // default action: do nothing

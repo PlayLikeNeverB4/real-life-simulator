@@ -4,6 +4,7 @@ import graphics.GraphicsManager;
 import graphics.shapes.ParallelepipedRenderer;
 import javafx.geometry.BoundingBox;
 import logic.AbstractMovableObject;
+import logic.AbstractObject;
 import logic.Dimension;
 import logic.Position;
 import logic.utils.ParallelepipedUtils;
@@ -30,7 +31,7 @@ public class MovableParallelepiped extends AbstractMovableObject {
      * @param graphicsManager   The {@link graphics.GraphicsManager} which manages the renderer of parallelepiped
      */
     public MovableParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager) {
-        super(position);
+        super(position, 0, 0, -2e-4);
         this.position = position;
         this.dimension = dimension;
         sides = new Quad[6];
@@ -46,12 +47,66 @@ public class MovableParallelepiped extends AbstractMovableObject {
         this.renderer = new ParallelepipedRenderer(this, graphicsManager);
     }
 
+    public MovableParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager) {
+        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager);
+    }
+
     public Dimension getDimension() {
         return dimension;
     }
 
     public Quad[] getSides() {
         return sides;
+    }
+
+    /**
+     * Recomputes the component quads of this parallelepiped
+     */
+    private void recomputeQuads() {
+        ParallelepipedUtils.computeQuads(position, dimension, sides);
+    }
+
+    /**
+     * Moves the object located at (x, y, z) to (x+dx, y+dy, z+dz)
+     * @param dx x distance
+     * @param dy y distance
+     * @param dz z distance
+     */
+    @Override
+    public void move(double dx, double dy, double dz) {
+        move(dx, dy, dz, false);
+        recomputeQuads();
+    }
+
+    /**
+     * Notifies this object that it collided with a movable object.
+     * It updates this object's state depending on the movable object's speed and direction
+     *
+     * @param movableObject The other object that this object collided with
+     */
+    @Override
+    protected void collidedWithMovableObject(AbstractMovableObject movableObject) {
+        super.collidedWithMovableObject(movableObject);
+    }
+
+    /**
+     * Notifies this object that it collided with an object
+     * It updates this object's state depending on whether it bounces or not
+     *
+     * @param abstractObject The other object that this object collided with
+     */
+    @Override
+    protected void collisionBounceHandler(AbstractObject abstractObject) {
+        super.collisionBounceHandler(abstractObject);
+    }
+
+    /**
+     * Same as moveTo(nextX, nextY, nextZ)
+     */
+    @Override
+    public void moveTo(Position next, boolean isValid) {
+        moveTo(next.getX(), next.getY(), next.getZ(), isValid);
+        recomputeQuads();
     }
 
     @Override

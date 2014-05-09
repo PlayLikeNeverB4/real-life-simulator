@@ -32,17 +32,21 @@ public class PhysicsEngine {
             for(AbstractObject object : collisions) {
                 // save the previous data
                 double prevSpeed = movableObject.speed;
+                double prevDirection = movableObject.direction;
 
                 movableObject.collidedWith(object);
 
                 // save the computed data and restore the previous one
                 double computedSpeed = movableObject.speed;
+                double computedDirection = movableObject.direction;
                 movableObject.speed = prevSpeed;
+                movableObject.direction = prevDirection;
 
                 object.collidedWith(movableObject);
 
                 // restore the computed data
                 movableObject.speed = computedSpeed;
+                movableObject.direction = computedDirection;
             }
         }
     }

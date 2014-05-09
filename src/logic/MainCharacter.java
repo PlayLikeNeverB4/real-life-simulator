@@ -10,12 +10,23 @@ import javafx.geometry.BoundingBox;
 public class MainCharacter extends AbstractPerson {
 
     /**
+     * The direction where the main character is looking
+     */
+    private double watchingDirection;
+
+    /**
      * The sensitivity of the user control keys when moving the main character
      */
-    private double movingSpeed;
+    private final double movingSpeed;
+
+    /**
+     * True if the main character is moving; false otherwise
+     */
+    private boolean inMotion;
 
     public MainCharacter(Position position, GraphicsManager graphicsManager, double movingSpeed) {
-        super(position, Math.PI / 2);
+        super(position);
+        this.watchingDirection = 0;
         this.movingSpeed = movingSpeed;
         this.renderer = new MaleRenderer(this, graphicsManager);
     }
@@ -24,12 +35,45 @@ public class MainCharacter extends AbstractPerson {
         return movingSpeed;
     }
 
+    public double getWatchingDirection() {
+        return watchingDirection;
+    }
+
+    public void setWatchingDirection(double watchingDirection) {
+        this.watchingDirection = watchingDirection;
+    }
+
+    public void setInMotion(boolean inMotion) {
+        this.inMotion = inMotion;
+    }
+
+    /**
+     * Returns the current speed of the object
+     */
+    @Override
+    public double getCurrentSpeed() {
+        if(inMotion)
+            return movingSpeed;
+        else
+            return 0;
+    }
+
     /**
      * Moves the mainCharacter in the XOY plane which is at a distance to (0,0) and at a specified angle
-     * @param angle     The angle to the mainCharacter's direction axis
+     * @param angle     The angle to the mainCharacter's watching direction axis
      */
     public void move(double angle, double distance) {
-        this.position = this.position.move(direction + angle, distance);
+        super.move(watchingDirection + angle, distance);
+    }
+
+    /**
+     * Notifies this object that it collided with an object
+     * It updates this object's state depending on whether it bounces or not
+     * @param abstractObject The other object that this object collided with
+     */
+    @Override
+    protected void collisionBounceHandler(AbstractObject abstractObject) {
+        // do nothing (for now)
     }
 
     /**

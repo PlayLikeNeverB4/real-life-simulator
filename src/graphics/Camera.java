@@ -71,7 +71,7 @@ public class Camera {
         gl.glLoadIdentity();
 
         // Compute the camera position
-        double horizontalDirection = mainCharacter.getDirection();
+        double horizontalDirection = mainCharacter.getWatchingDirection();
         Position cameraRelativePosition = GeometryUtils.computePointOnCircle(Math.PI + horizontalDirection, horizontalDistance);
         cameraRelativePosition.setZ(verticalDistance);
         Position cameraPosition = mainCharacter.getPosition().add(cameraRelativePosition);

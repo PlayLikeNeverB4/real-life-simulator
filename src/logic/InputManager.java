@@ -97,6 +97,8 @@ public class InputManager implements MouseMotionListener, KeyListener {
         int tempActiveDirections = clearOppositeDirections();
         if(tempActiveDirections != 0)
             eventList.add(new MoveMainCharacterEvent(tempActiveDirections, gameWorld, movingTime));
+        else
+            eventList.add(new StopMainCharacterEvent(gameWorld));
     }
 
     @Override

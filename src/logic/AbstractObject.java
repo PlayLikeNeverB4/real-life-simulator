@@ -55,11 +55,10 @@ public abstract class AbstractObject implements Comparable<AbstractObject> {
      */
     public abstract boolean isMovable();
 
-    protected void updatePosition(double dx, double dy, double dz) {
-        this.position.setX(this.position.getX() + dx);
-        this.position.setY(this.position.getY() + dy);
-        this.position.setZ(this.position.getZ() + dz);
-    }
+    /**
+     * Returns the current speed of the object
+     */
+    public abstract double getCurrentSpeed();
 
     /**
      * Computes and returns an array containing the axis aligned bounding boxes that form of this object
@@ -90,9 +89,9 @@ public abstract class AbstractObject implements Comparable<AbstractObject> {
      */
     public void collidedWith(AbstractObject abstractObject) {
         abstractObject.collisionSpecialEffects(this);
+        collisionBounceHandler(abstractObject);
         if(this.isMovable())
             ((AbstractMovableObject) this).revertToLastValidPosition();
-        collisionBounceHandler(abstractObject);
         if(abstractObject.isMovable())
             collidedWithMovableObject((AbstractMovableObject) abstractObject);
     }

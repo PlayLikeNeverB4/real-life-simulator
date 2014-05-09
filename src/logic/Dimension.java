@@ -18,6 +18,11 @@ public class Dimension implements Comparable<Dimension> {
         this(otherDimension.x, otherDimension.y, otherDimension.z);
     }
 
+    public Dimension(double width, double height) {
+        this.x = width;
+        this.z = height;
+    }
+
     public Dimension(Position position) {
         this(position.getX(), position.getY(), position.getZ());
     }
@@ -48,6 +53,14 @@ public class Dimension implements Comparable<Dimension> {
 
     public void setZ(double z) {
         this.z = z;
+    }
+
+    public double getWidth() {
+        return x;
+    }
+
+    public double getHeight() {
+        return z;
     }
 
     @Override

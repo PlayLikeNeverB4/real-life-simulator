@@ -23,7 +23,14 @@ public class GameWorldRenderer extends AbstractRenderer {
     public void render() {
         GameWorld gameWorld = (GameWorld) renderedObject;
         renderWorldBox();
+
+        // render ordinary objects
         for(AbstractObject abstractObject : gameWorld.getObjectList())
+            if(abstractObject.getRenderer() != null)
+                abstractObject.getRenderer().render();
+
+        // render untouchable objects
+        for(AbstractObject abstractObject : gameWorld.getUntouchableObjectList())
             if(abstractObject.getRenderer() != null)
                 abstractObject.getRenderer().render();
     }

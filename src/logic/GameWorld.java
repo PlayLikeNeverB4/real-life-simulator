@@ -2,13 +2,8 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
-import graphics.shapes.FenceRenderer;
 import javafx.geometry.BoundingBox;
-import logic.shapes.Road;
-import logic.shapes.ShapeSurfaceType;
-import logic.shapes.Stairs;
-import logic.shapes.StaticParallelepiped;
-import logic.utils.ParallelepipedUtils;
+import logic.shapes.*;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -35,6 +30,11 @@ public class GameWorld extends AbstractStaticObject {
     private List<AbstractMovableObject> movableObjectList;
 
     /**
+     * A list containing all of the untouchable objects inside the game world
+     */
+    private List<AbstractObject> untouchableObjectList;
+
+    /**
      * The main character of the game world
      */
     private MainCharacter mainCharacter;
@@ -45,11 +45,12 @@ public class GameWorld extends AbstractStaticObject {
      */
     public GameWorld(GraphicsManager graphicsManager) {
         super(new Position(0, 0, 0));
-        dimension = new Dimension(1000, 1000, 500);
+        dimension = new Dimension(10000, 10000, 5000);
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
+        untouchableObjectList = new LinkedList<AbstractObject>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
-        mainCharacter = new MainCharacter(new Position(520, 570, 400), graphicsManager, 0.2);
+        mainCharacter = new MainCharacter(new Position(5000, 5000, 0.1), graphicsManager, 0.2);
     }
 
     /**
@@ -57,36 +58,37 @@ public class GameWorld extends AbstractStaticObject {
      * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     public void initializeGameWorld(GraphicsManager graphicsManager) {
-        dimension = new Dimension(1000, 1000, 500);
         addObject(new WorldBox(new Position(0, 0, 0), dimension));
         addMovableObject(mainCharacter);
-//        ShapeSurfaceType[] shapeSurfaceTypes = new ShapeSurfaceType[6];
-//        shapeSurfaceTypes[0] = new ShapeSurfaceType(new TextureHandler("res/textures/step.png", graphicsManager, false));
-//        shapeSurfaceTypes[1] = new ShapeSurfaceType(new Color(0, 255, 100));
-//        shapeSurfaceTypes[2] = new ShapeSurfaceType(new Color(233, 56, 0));
-//        shapeSurfaceTypes[3] = new ShapeSurfaceType(new Color(123, 34, 200));
-//        shapeSurfaceTypes[4] = new ShapeSurfaceType(new Color(255, 0, 0));
-//        shapeSurfaceTypes[5] = new ShapeSurfaceType(new Color(3, 78, 10));
-//        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(30), shapeSurfaceTypes, graphicsManager));
-//        addObject(new StaticParallelepiped(new Position(100, 800, 0.1), new Dimension(100, 20, 70), shapeSurfaceTypes, graphicsManager));
-//        addObject(new StaticParallelepiped(new Position(800, 200, 50), new Dimension(50, 100, 100), shapeSurfaceTypes, graphicsManager));
-        addObject(new PlayGround(new Position(101, 150, 0), 300, 2, graphicsManager));
-        addObject(new StaticParallelepiped(new Position(500, 550, 0), new Dimension(100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
-        addObject(new Road(new Position(500, 100, 0.2), new Dimension(100, 800, 0), Math.PI / 2, graphicsManager));
-        addObject(new Stairs(new Position(300, 650, 0), 3, 10, new Dimension(100, 20, 10), graphicsManager));
-        addObject(new Stairs(new Position(500, 450, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
-        addObject(new PlayGround(new Position(500, 150, 0), 300, 3, graphicsManager));
-        addObject(new StaticParallelepiped(new Position(800, 850, 0),
-                new Dimension(50),
-                ParallelepipedUtils.createShapeSurfaceTypeArray(new ShapeSurfaceType(FenceRenderer.textures[1])),
-                graphicsManager));
+        addObject(new StaticParallelepiped(new Position(5300, 5200, 0), new Dimension(100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
+        addObject(new Stairs(new Position(5100, 5300, 0), 3, 10, new Dimension(100, 20, 10), graphicsManager));
+        addObject(new Stairs(new Position(5300, 5100, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
+
+        addObject(new PlayGround(new Position(5500, 4500, 0), 300, 2, graphicsManager));
+        
+        addMovableObject(new MovableParallelepiped(new Position(4900, 4900, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
+        addMovableObject(new MovableParallelepiped(new Position(4900, 5200, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
+
+        generateForest(graphicsManager);
+        addUntouchableObject(new Road(new Position(5000, 1000, 0.8), new Dimension(100, 8000, 0), Math.PI / 2, graphicsManager));
+    }
+
+    /**
+     * Generates the forest surrounding the game world
+     */
+    private void generateForest(GraphicsManager graphicsManager) {
+        ForestGenerator forestGenerator = new ForestGenerator(this, graphicsManager);
+        forestGenerator.generate(new Position(0, dimension.getY() - 910, 2), new Dimension(dimension.getX(), 900, 0), 0, 100);
+        forestGenerator.generate(new Position(910, 0, 0), new Dimension(dimension.getX(), 900, 0), Math.PI / 2, 100);
+        forestGenerator.generate(new Position(dimension.getX(), 910, 0), new Dimension(dimension.getX(), 900, 0), Math.PI, 100);
+        forestGenerator.generate(new Position(dimension.getX() - 910, dimension.getY(), 0), new Dimension(dimension.getX(), 900, 0), Math.PI * 3 / 2, 100);
     }
 
     /**
      * Adds an ordinary object to the game world
      * @param abstractObject The object to be added
      */
-    private void addObject(AbstractObject abstractObject) {
+    public void addObject(AbstractObject abstractObject) {
         objectList.add(abstractObject);
     }
 
@@ -94,9 +96,17 @@ public class GameWorld extends AbstractStaticObject {
      * Adds a movable object to the game world
      * @param movableObject The object to be added
      */
-    private void addMovableObject(AbstractMovableObject movableObject) {
+    public void addMovableObject(AbstractMovableObject movableObject) {
         addObject(movableObject);
         movableObjectList.add(movableObject);
+    }
+
+    /**
+     * Add an untouchable object to the game world
+     * @param untouchableObject The object to be added
+     */
+    public void addUntouchableObject(AbstractObject untouchableObject) {
+        untouchableObjectList.add(untouchableObject);
     }
 
     public MainCharacter getMainCharacter() {
@@ -109,6 +119,10 @@ public class GameWorld extends AbstractStaticObject {
 
     public List<AbstractMovableObject> getMovableObjectList() {
         return movableObjectList;
+    }
+
+    public List<AbstractObject> getUntouchableObjectList() {
+        return untouchableObjectList;
     }
 
     public Dimension getDimension() {

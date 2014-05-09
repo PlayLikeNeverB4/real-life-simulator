@@ -14,6 +14,14 @@ public abstract class AbstractStaticObject extends AbstractObject {
     }
 
     /**
+     * Returns the current speed of the object
+     */
+    @Override
+    public double getCurrentSpeed() {
+        return 0;
+    }
+
+    /**
      * Notifies this object that it collided with an object
      * It updates this object's state depending on whether it bounces or not
      * @param abstractObject The other object that this object collided with

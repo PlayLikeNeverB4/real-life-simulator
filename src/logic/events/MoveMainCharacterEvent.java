@@ -51,6 +51,9 @@ public class MoveMainCharacterEvent extends AbstractObjectEvent {
         double distance = mainCharacter.getMovingSpeed() * movingTime;
         double angle = sumOfAngles / countActiveDirections;
         mainCharacter.move(angle, distance);
+
+        mainCharacter.setInMotion(true);
+        mainCharacter.setDirection(mainCharacter.getWatchingDirection() + angle);
     }
 
 }

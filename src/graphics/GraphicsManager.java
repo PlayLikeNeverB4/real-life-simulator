@@ -115,6 +115,7 @@ public class GraphicsManager implements GLEventListener {
         GameWorldRenderer.loadTextures(pathToDir, this);
         RoadRenderer.loadTextures(pathToDir, this);
         StairsRenderer.loadTextures(pathToDir, this);
+        BillboardRenderer.loadTextures(pathToDir, this);
         FenceRenderer.loadTextures(pathToDir, this);
         PlayGroundRenderer.loadTextures(pathToDir, this);
     }
@@ -145,8 +146,9 @@ public class GraphicsManager implements GLEventListener {
         this.glObject.glDepthFunc(GL.GL_LESS);
 
         // Blending options
-        this.glObject.glDisable(GL.GL_BLEND);
-//        this.glObject.glEnable(GL.GL_BLEND);
+//        this.glObject.glDisable(GL.GL_BLEND);
+        this.glObject.glEnable(GL.GL_BLEND);
+        this.glObject.glBlendFunc(GL2.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 //        this.glObject.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
 
         // Texture setting
@@ -154,7 +156,7 @@ public class GraphicsManager implements GLEventListener {
         this.glObject.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
 
         // For very close textures (to prevent z-fighting)
-        glObject.glPolygonOffset(0.0f, -1);
+        glObject.glPolygonOffset(0.0f, -10);
 
         // Load all of the needed textures into the RAM
         loadTextures("res/textures/");
