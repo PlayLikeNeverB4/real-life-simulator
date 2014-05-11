@@ -42,4 +42,32 @@ public class GeometryUtils {
         angle2 = normalizeAngle(angle2);
         return Math.min(Math.abs(angle1 - angle2), 2 * Math.PI - Math.abs(angle1 - angle2));
     }
+
+    /**
+     * Rotates point2 around point1 by an angle
+     * @return A {@link Position} representing the rotating point
+     */
+    public static Position rotateAroundPoint(Position point1, Position point2, double angle) {
+        // Translate to origin
+        Position P = new Position(point2.getX() - point1.getX(), point2.getY() - point1.getY());
+
+        // Rotate
+        double currentAngle = Math.atan2(P.getY(), P.getX());
+        double nextAngle = GeometryUtils.normalizeAngle(currentAngle + angle);
+        double distance = P.distanceTo(new Position(0, 0));
+        P = GeometryUtils.computePointOnCircle(nextAngle, distance);
+
+        // Translate back
+        P = P.add(point1);
+
+        return P;
+    }
+
+    /**
+     * Computes and returns the cross product between A, B and C in 2D
+     */
+    public static double crossProduct(Position A, Position B, Position C) {
+        return (B.getX() - A.getX()) * (C.getY() - A.getY()) - (B.getY() - A.getY()) * (C.getX() - A.getX());
+    }
+
 }

@@ -16,7 +16,7 @@ public class StaticParallelepiped extends AbstractStaticObject {
     /**
      * An array of {@link Quad} that represents the sides of the parallelepiped
      */
-    private Quad[] sides;
+    protected Quad[] sides;
 
     /**
      * The {@link logic.Dimension} of the component (geometrical shape) of an object that is rendered
@@ -24,12 +24,24 @@ public class StaticParallelepiped extends AbstractStaticObject {
     protected Dimension dimension;
 
     /**
+     * The rotation of the parallelepiped; The real angle is PI / 2 * rotation
+     */
+    protected int rotation;
+
+    /**
+     * true if the textures on it should be mirrored; false otherwise
+     */
+    protected boolean mirrored;
+
+    /**
      *
      * @param position      The {@link logic.Position} where the parallelepiped stays
      * @param dimension     The {@link Dimension} of the parallelepiped
+     * @param surfaceTypes  An array containing 6 {@link logic.shapes.ShapeSurfaceType}s, one for each face
      * @param graphicsManager   The {@link GraphicsManager} which manages the renderer of parallelepiped
+     * @param numberOfRotations The rotation of the parallelepiped
      */
-    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager) {
+    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager, int numberOfRotations) {
         super(position);
         this.position = position;
         this.dimension = dimension;
@@ -41,17 +53,23 @@ public class StaticParallelepiped extends AbstractStaticObject {
             }
             sides[i] = new Quad(vertices, graphicsManager, surfaceTypes[i]);
         }
-        ParallelepipedUtils.computeQuads(position, dimension, sides);
         this.renderer = new ParallelepipedRenderer(this, graphicsManager);
+        rotate(numberOfRotations);
+        if(rotation >= 2)
+            mirrored = true;
+        recomputeQuads();
+    }
+
+    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager) {
+        this(position, dimension, surfaceTypes, graphicsManager, 0);
     }
 
     public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager) {
-        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager);
+        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager, 0);
     }
 
     public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager, int numberOfRotations) {
-        this(position, dimension, surfaceType, graphicsManager);
-        rotate(numberOfRotations);
+        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager, numberOfRotations);
     }
 
     public Dimension getDimension() {
@@ -63,10 +81,18 @@ public class StaticParallelepiped extends AbstractStaticObject {
     }
 
     /**
+     * Recomputes the component quads of this parallelepiped
+     */
+    protected void recomputeQuads() {
+        ParallelepipedUtils.computeQuads(position, dimension, sides, rotation, mirrored);
+    }
+
+    /**
      * Rotates a parallelepiped from its initial rotation by numberOfRotations rotations
      */
-    private void rotate(int numberOfRotations) {
-        ParallelepipedUtils.rotate(position, dimension, sides, numberOfRotations);
+    protected void rotate(int numberOfRotations) {
+        rotation += numberOfRotations;
+        ParallelepipedUtils.rotate(position, dimension, sides, rotation, numberOfRotations, mirrored);
     }
 
     @Override
@@ -76,5 +102,4 @@ public class StaticParallelepiped extends AbstractStaticObject {
                         dimension.getX(), dimension.getY(), dimension.getZ())
         };
     }
-
 }

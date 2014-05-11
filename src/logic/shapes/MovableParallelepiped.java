@@ -43,7 +43,7 @@ public class MovableParallelepiped extends AbstractMovableObject {
             }
             sides[i] = new Quad(vertices, graphicsManager, surfaceTypes[i]);
         }
-        ParallelepipedUtils.computeQuads(position, dimension, sides);
+        recomputeQuads();
         this.renderer = new ParallelepipedRenderer(this, graphicsManager);
     }
 
@@ -62,8 +62,8 @@ public class MovableParallelepiped extends AbstractMovableObject {
     /**
      * Recomputes the component quads of this parallelepiped
      */
-    private void recomputeQuads() {
-        ParallelepipedUtils.computeQuads(position, dimension, sides);
+    protected void recomputeQuads() {
+        ParallelepipedUtils.computeQuads(position, dimension, sides, 0, false);
     }
 
     /**

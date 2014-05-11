@@ -75,10 +75,15 @@ public class GameEngine {
 
         // Update the game world
 
-        // update objects
+        // update objects' movement
         for(AbstractMovableObject movableObject : gameWorld.getMovableObjectList())
             if(movableObject != gameWorld.getMainCharacter()) // the mainCharacter's moves are special
                 movableObject.update(timeInterval);
+
+        // special update for objects
+        for(AbstractObject abstractObject : gameWorld.getObjectList())
+            abstractObject.specialUpdate(timeInterval);
+
         // check for collisions
         physicsEngine.checkCollisions();
 

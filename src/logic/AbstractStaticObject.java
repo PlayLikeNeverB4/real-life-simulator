@@ -22,6 +22,15 @@ public abstract class AbstractStaticObject extends AbstractObject {
     }
 
     /**
+     * Updates something unique.
+     * @param time The time passed since the last update
+     */
+    @Override
+    public void specialUpdate(double time) {
+        // default: do nothing
+    }
+
+    /**
      * Notifies this object that it collided with an object
      * It updates this object's state depending on whether it bounces or not
      * @param abstractObject The other object that this object collided with
@@ -43,7 +52,6 @@ public abstract class AbstractStaticObject extends AbstractObject {
      * Notifies this object that it collided with another object
      * It updates the other object's state depending on this object's special effects
      * @param abstractObject The other object that this object collided with
-     * @return true if the current collision is resolved; false otherwise
      */
     protected void collisionSpecialEffects(AbstractObject abstractObject) {
         // default action: do nothing

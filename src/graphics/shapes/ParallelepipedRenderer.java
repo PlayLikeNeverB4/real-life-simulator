@@ -4,8 +4,8 @@ import graphics.AbstractRenderer;
 import graphics.GraphicsManager;
 import logic.AbstractObject;
 import logic.shapes.MovableParallelepiped;
-import logic.shapes.StaticParallelepiped;
 import logic.shapes.Quad;
+import logic.shapes.StaticParallelepiped;
 
 /**
 * This class renders a component of a game world object that can be represented as a parallelepiped

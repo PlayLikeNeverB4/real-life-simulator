@@ -25,38 +25,6 @@ public class ParallelepipedUtils {
     };
 
     /**
-     * Computes the sides of the parallelepiped
-     * @param position      The origin position from where the parallelepiped is created
-     * @param dimension     The dimension of the parallelepiped
-     * @param sides         An array with the sides of the parallelepiped that will be computed
-     */
-    public static void computeQuads(Position position, Dimension dimension, Quad[] sides) {
-        double x, y, z, xLength, yWidth;
-        x =  position.getX();
-        y = position.getY();
-        z = position.getZ();
-        xLength = x + dimension.getX();
-        yWidth = y + dimension.getY();
-        Position[] vertices = new Position[8];
-
-        vertices[0] = new Position(x, y, z);
-        vertices[1] = new Position(xLength, y, z);
-        vertices[2] = new Position(xLength, yWidth, z);
-        vertices[3] = new Position(x, yWidth, z);
-
-        for(int i = 4; i <= 7; i++) {
-            vertices[i] = vertices[i - 4].add(new Position(0, 0, dimension.getZ()));
-        }
-
-        for(int sideIdx = 0; sideIdx < 6; sideIdx++) {
-            Position[] v = sides[sideIdx].getVertices();
-            for(int vIdx = 0; vIdx < 4; vIdx++) {
-                v[vIdx].setPosition(vertices[indexes[sideIdx][vIdx]]);
-            }
-        }
-    }
-
-    /**
      * Creates an array of 6 {@link ShapeSurfaceType}s, all of them equal to surfaceType
      * @return      An array with 6 {@link ShapeSurfaceType}s
      */
@@ -69,7 +37,7 @@ public class ParallelepipedUtils {
 
     /**
      * Creates an array of 6 {@link ShapeSurfaceType}s.
-     * All of the lateral sides are rendered with the texture send as parameter.
+     * All of the lateral sides are rendered with the texture sent as parameter.
      * Up and down sides are rendered with the color send as parameter.
      * @param color     The {@link Color} used for rendering the up and down sides
      * @param textureHandler        The {@link TextureHandler} used for rendering the lateral sides
@@ -81,6 +49,24 @@ public class ParallelepipedUtils {
         shapeSurfaceType[5] = new ShapeSurfaceType(color);
         for(int i = 0; i < 4; i++) {
             shapeSurfaceType[i] = new ShapeSurfaceType(textureHandler);
+        }
+        return shapeSurfaceType;
+    }
+
+    /**
+     * Creates an array of 6 {@link ShapeSurfaceType}s used for rendering the door.
+     * @param frontFaceType     The {@link logic.shapes.ShapeSurfaceType} used for rendering the door's front face
+     * @param backFaceType     The {@link logic.shapes.ShapeSurfaceType} used for rendering the door's back face
+     * @param sidesType        The {@link logic.shapes.ShapeSurfaceType} used for rendering the door's lateral sides
+     * @return      An array with 6 {@link ShapeSurfaceType}s
+     */
+    public static ShapeSurfaceType[] createSurfaceTypeDoorArray(ShapeSurfaceType frontFaceType, ShapeSurfaceType backFaceType, ShapeSurfaceType sidesType) {
+        ShapeSurfaceType[] shapeSurfaceType = new ShapeSurfaceType[6];
+        shapeSurfaceType[0] = new ShapeSurfaceType(frontFaceType);
+        shapeSurfaceType[2] = new ShapeSurfaceType(backFaceType);
+        shapeSurfaceType[1] = new ShapeSurfaceType(sidesType);
+        for(int i = 3; i < 6; i++) {
+            shapeSurfaceType[i] = new ShapeSurfaceType(sidesType);
         }
         return shapeSurfaceType;
     }
@@ -130,20 +116,75 @@ public class ParallelepipedUtils {
     }
 
     /**
-     * Rotates a parallelepiped from its initial rotation by numberOfRotations rotations
+     * Computes the sides of the parallelepiped
+     * @param position      The origin position from where the parallelepiped is created
+     * @param dimension     The dimension of the parallelepiped
+     * @param sides         An array with the sides of the parallelepiped that will be computed
+     * @param rotation      The rotation of the parallelepiped
+     * @param mirrored      True if the textures should be mirrored; false otherwise
      */
-    public static void rotate(Position position, Dimension dimension, Quad[] sides, int numberOfRotations) {
-        if((numberOfRotations & 1) == 1) { // rotate 90 degrees
-            double aux = dimension.getX();
-            dimension.setX(dimension.getY());
-            dimension.setY(aux);
-        }
-        if(numberOfRotations == 2)
-            position.setX(position.getX() - dimension.getX());
-        else if(numberOfRotations == 3)
-            position.setY(position.getY() - dimension.getY());
+    public static void computeQuads(Position position, Dimension dimension, Quad[] sides, int rotation, boolean mirrored) {
+        double x, y, z, xLength, yWidth;
+        x =  position.getX();
+        y = position.getY();
+        z = position.getZ();
+        xLength = x + dimension.getX();
+        yWidth = y + dimension.getY();
+        Position[] vertices = new Position[8];
 
-        ParallelepipedUtils.computeQuads(position, dimension, sides);
+        vertices[(4 - rotation + 4) % 4] = new Position(x, y, z);
+        vertices[(4 - rotation + 1 + 4) % 4] = new Position(xLength, y, z);
+        vertices[(4 - rotation + 2 + 4) % 4] = new Position(xLength, yWidth, z);
+        vertices[(4 - rotation + 3 + 4) % 4] = new Position(x, yWidth, z);
+
+        for(int i = 4; i <= 7; i++) {
+            vertices[i] = vertices[i - 4].add(new Position(0, 0, dimension.getZ()));
+        }
+
+        for(int sideIdx = 0; sideIdx < 6; sideIdx++) {
+            Position[] v = sides[sideIdx].getVertices();
+            if(mirrored) {
+                for(int vIdx = 0; vIdx < 4; vIdx++) // 0, 1, 2, 3 => 1, 0, 3, 2
+                    v[vIdx].setPosition(vertices[indexes[sideIdx][vIdx + 1 - 2 * (vIdx % 2)]]);
+            }
+            else {
+                for(int vIdx = 0; vIdx < 4; vIdx++)
+                    v[vIdx].setPosition(vertices[indexes[sideIdx][vIdx]]);
+            }
+        }
+    }
+
+    /**
+     * Rotates a parallelepiped from its initial rotation by numberOfRotations rotations
+     * @param position         The origin position from where the parallelepiped is created
+     * @param dimension        The dimension of the parallelepiped
+     * @param sides            An array with the sides of the parallelepiped that will be computed
+     * @param rotation         The rotation of the parallelepiped
+     * @param currentRotations The number of rotations that were last updated
+     * @param mirrored         True if the textures should be mirrored; false otherwise
+     */
+    public static void rotate(Position position, Dimension dimension, Quad[] sides, int rotation, int currentRotations, boolean mirrored) {
+        currentRotations = (currentRotations + 4) % 4;
+
+        double angle = Math.PI / 2 * currentRotations;
+
+        // Compute the opposite corner of the parallelepiped origin
+        Position P = new Position(position.getX() + dimension.getX(), position.getY() + dimension.getY());
+
+        // Rotate it around the origin
+        P = GeometryUtils.rotateAroundPoint(position, P, angle);
+
+        double posX = Math.min(P.getX(), position.getX());
+        double posY = Math.min(P.getY(), position.getY());
+        double maxX = Math.max(P.getX(), position.getX());
+        double maxY = Math.max(P.getY(), position.getY());
+
+        position.setX(posX);
+        position.setY(posY);
+        dimension.setX(maxX - posX);
+        dimension.setY(maxY - posY);
+
+        ParallelepipedUtils.computeQuads(position, dimension, sides, rotation, mirrored);
     }
 
 }

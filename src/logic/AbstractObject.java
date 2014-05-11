@@ -61,6 +61,12 @@ public abstract class AbstractObject implements Comparable<AbstractObject> {
     public abstract double getCurrentSpeed();
 
     /**
+     * Updates something unique.
+     * @param time The time passed since the last update
+     */
+    public abstract void specialUpdate(double time);
+
+    /**
      * Computes and returns an array containing the axis aligned bounding boxes that form of this object
      */
     public abstract BoundingBox[] getBoundingBoxes();
@@ -114,7 +120,6 @@ public abstract class AbstractObject implements Comparable<AbstractObject> {
      * Notifies this object that it collided with another object
      * It updates the other object's state depending on this object's special effects
      * @param abstractObject The other object that this object collided with
-     * @return true if the current collision is resolved; false otherwise
      */
     protected abstract void collisionSpecialEffects(AbstractObject abstractObject);
 

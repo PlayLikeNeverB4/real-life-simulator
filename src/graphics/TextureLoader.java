@@ -12,6 +12,8 @@ public class TextureLoader {
     public static TextureHandler ground;
     public static TextureHandler sky;
     public static TextureHandler sand;
+    public static TextureHandler doorFront;
+    public static TextureHandler doorBack;
 
     public static void loadTextures(String pathToDir, GraphicsManager graphicsManager) {
         trees = new TextureHandler[] {
@@ -27,6 +29,8 @@ public class TextureLoader {
         ground = new TextureHandler(pathToDir + "grass.png", graphicsManager, false);
         sky = new TextureHandler(pathToDir + "sky.png", graphicsManager, false);
         sand = new TextureHandler(pathToDir + "sand.png", graphicsManager);
+        doorFront = new TextureHandler(pathToDir + "door_front.png", graphicsManager);
+        doorBack = new TextureHandler(pathToDir + "door_back.png", graphicsManager);
     }
 
 }

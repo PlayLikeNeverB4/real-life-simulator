@@ -94,6 +94,15 @@ public abstract class AbstractMovableObject extends AbstractObject {
     }
 
     /**
+     * Updates something unique.
+     * @param time The time passed since the last update
+     */
+    @Override
+    public void specialUpdate(double time) {
+        // default: do nothing
+    }
+
+    /**
      * Moves the object located at (x, y, z) to (x+dx, y+dy, z+dz)
      * @param dx x distance
      * @param dy y distance

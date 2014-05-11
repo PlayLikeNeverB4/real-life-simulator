@@ -20,6 +20,14 @@ public class Position implements Comparable<Position> {
         this(position.x, position.y, position.z);
     }
 
+    public Position(double x, double y) {
+        this(x, y, 0);
+    }
+
+    public Position(Dimension dimension) {
+        this(dimension.getX(), dimension.getY(), dimension.getZ());
+    }
+
     public double getX() {
         return x;
     }

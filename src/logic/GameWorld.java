@@ -2,6 +2,7 @@ package logic;
 
 import graphics.GameWorldRenderer;
 import graphics.GraphicsManager;
+import graphics.TextureLoader;
 import javafx.geometry.BoundingBox;
 import logic.shapes.*;
 
@@ -20,7 +21,7 @@ public class GameWorld extends AbstractStaticObject {
     private Dimension dimension;
 
     /**
-     * A list containing all of the objects inside the game world
+     * A list containing all of the touchable objects inside the game world except
      */
     private List<AbstractObject> objectList;
 
@@ -65,23 +66,35 @@ public class GameWorld extends AbstractStaticObject {
         addObject(new Stairs(new Position(5300, 5100, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
 
         addObject(new PlayGround(new Position(5500, 4500, 0), 300, 2, graphicsManager));
-        
+
+        addObject(new Door(new Position(5200, 4700, 0), new Dimension(30, 5, 60),
+                           new ShapeSurfaceType(TextureLoader.doorFront),
+                           new ShapeSurfaceType(TextureLoader.doorBack),
+                           new ShapeSurfaceType(new Color(241, 182, 107)),
+                           graphicsManager, 1));
+        addObject(new StaticParallelepiped(new Position(5200, 4600, 0), new Dimension(100, 5, 60),
+                new ShapeSurfaceType(Color.GRAY), graphicsManager, 1));
+        addObject(new StaticParallelepiped(new Position(5200, 4730, 0), new Dimension(100, 5, 60),
+                new ShapeSurfaceType(Color.GRAY), graphicsManager, 1));
+
         addMovableObject(new MovableParallelepiped(new Position(4900, 4900, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
         addMovableObject(new MovableParallelepiped(new Position(4900, 5200, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
 
-        generateForest(graphicsManager);
+        generateForest(graphicsManager, 1000);
+
         addUntouchableObject(new Road(new Position(5000, 1000, 0.8), new Dimension(100, 8000, 0), Math.PI / 2, graphicsManager));
     }
 
     /**
      * Generates the forest surrounding the game world
+     * @param margin The size of the forest
      */
-    private void generateForest(GraphicsManager graphicsManager) {
+    private void generateForest(GraphicsManager graphicsManager, double margin) {
         ForestGenerator forestGenerator = new ForestGenerator(this, graphicsManager);
-        forestGenerator.generate(new Position(0, dimension.getY() - 910, 2), new Dimension(dimension.getX(), 900, 0), 0, 100);
-        forestGenerator.generate(new Position(910, 0, 0), new Dimension(dimension.getX(), 900, 0), Math.PI / 2, 100);
-        forestGenerator.generate(new Position(dimension.getX(), 910, 0), new Dimension(dimension.getX(), 900, 0), Math.PI, 100);
-        forestGenerator.generate(new Position(dimension.getX() - 910, dimension.getY(), 0), new Dimension(dimension.getX(), 900, 0), Math.PI * 3 / 2, 100);
+        forestGenerator.generate(new Position(0, dimension.getY() - (margin + 1), 2), new Dimension(dimension.getX(), margin, 0), 0, 100);
+        forestGenerator.generate(new Position(margin + 1, 0, 0), new Dimension(dimension.getX(), margin, 0), Math.PI / 2, 100);
+        forestGenerator.generate(new Position(dimension.getX(), margin + 1, 0), new Dimension(dimension.getX(), margin, 0), Math.PI, 100);
+        forestGenerator.generate(new Position(dimension.getX() - (margin + 1), dimension.getY(), 0), new Dimension(dimension.getX(), margin, 0), Math.PI * 3 / 2, 100);
     }
 
     /**
