@@ -1,6 +1,7 @@
 package logic.shapes;
 
 import graphics.TextureHandler;
+import logic.Dimension;
 
 import java.awt.*;
 
@@ -10,11 +11,23 @@ import java.awt.*;
 public class ShapeSurfaceType {
 
     private TextureHandler textureHandler;
+    private Dimension textureDimension;
     private Color color;
 
     public ShapeSurfaceType() {
         textureHandler = null;
+        textureDimension = null;
         color = null;
+    }
+
+    /**
+     * Constructor used for a surface that will be covered with a texture
+     * @param textureHandler    The texture for rendering the shape
+     * @param textureDimension  The dimension of texture in the game world; If the object is larger it will be repeated
+     */
+    public ShapeSurfaceType(TextureHandler textureHandler, Dimension textureDimension) {
+        this.textureHandler = textureHandler;
+        this.textureDimension = textureDimension;
     }
 
     /**
@@ -23,6 +36,7 @@ public class ShapeSurfaceType {
      */
     public ShapeSurfaceType(TextureHandler textureHandler) {
         this.textureHandler = textureHandler;
+        this.textureDimension = null;
     }
 
     /**
@@ -36,10 +50,15 @@ public class ShapeSurfaceType {
     public ShapeSurfaceType(ShapeSurfaceType surfaceType) {
         this.color = surfaceType.getColor();
         this.textureHandler = surfaceType.getTextureHandler();
+        this.textureDimension = surfaceType.getTextureDimension();
     }
 
     public TextureHandler getTextureHandler() {
         return textureHandler;
+    }
+
+    public Dimension getTextureDimension() {
+        return textureDimension;
     }
 
     public Color getColor() {
