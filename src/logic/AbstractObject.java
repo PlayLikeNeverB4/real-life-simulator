@@ -38,6 +38,10 @@ public abstract class AbstractObject implements Comparable<AbstractObject> {
         return position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public double getDirection() {
         return direction;
     }

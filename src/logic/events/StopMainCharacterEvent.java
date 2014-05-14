@@ -3,6 +3,7 @@ package logic.events;
 import logic.AbstractObject;
 import logic.GameWorld;
 import logic.MainCharacter;
+import logic.shapes.BodyMember;
 
 public class StopMainCharacterEvent extends AbstractObjectEvent {
 
@@ -31,5 +32,12 @@ public class StopMainCharacterEvent extends AbstractObjectEvent {
     protected void updateWorldObject(AbstractObject targetObject) {
         MainCharacter mainCharacter = (MainCharacter) targetObject;
         mainCharacter.setInMotion(false);
+
+        // set the body members (legs, arms) vertical
+        BodyMember[] bodyMembers = mainCharacter.getBodyMembers();
+        for(int i = 0; i < bodyMembers.length; i++) {
+            bodyMembers[i].setRelativeAngle(0);
+        }
     }
+
 }
