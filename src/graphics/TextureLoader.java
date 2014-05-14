@@ -22,7 +22,7 @@ public class TextureLoader {
         };
         fences = new TextureHandler[] {
                 new TextureHandler(pathToDir + "fenceWood.png", graphicsManager),
-                new TextureHandler(pathToDir + "fenceRock.png", graphicsManager)
+                new TextureHandler(pathToDir + "rock.png", graphicsManager)
         };
         road = new TextureHandler(pathToDir + "road.png", graphicsManager);
         step = new TextureHandler(pathToDir + "step.png", graphicsManager);

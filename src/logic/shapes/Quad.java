@@ -21,7 +21,7 @@ public class Quad extends AbstractStaticObject {
         super(vertices[0]);
         this.vertices = vertices;
         if(surfaceType.isTextured()) {
-            renderer = new TexturedQuadRenderer(this, graphicsManager, surfaceType.getTextureHandler());
+            renderer = new TexturedQuadRenderer(this, graphicsManager, surfaceType.getTextureHandler(), surfaceType.getTextureDimension());
         } else {
             renderer = new ColoredQuadRenderer(this, graphicsManager, surfaceType.getColor());
         }

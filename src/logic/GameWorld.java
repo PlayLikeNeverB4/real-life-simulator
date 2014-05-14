@@ -51,7 +51,7 @@ public class GameWorld extends AbstractStaticObject {
         movableObjectList = new LinkedList<AbstractMovableObject>();
         untouchableObjectList = new LinkedList<AbstractObject>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
-        mainCharacter = new MainCharacter(new Position(5000, 5000, 0.1), graphicsManager, 0.2);
+        mainCharacter = new MainCharacter(new Position(5000, 5000, 0.1), new Dimension(10, 5, 50), graphicsManager, 0.2);
     }
 
     /**
@@ -81,8 +81,15 @@ public class GameWorld extends AbstractStaticObject {
         addMovableObject(new MovableParallelepiped(new Position(4900, 5200, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
 
         generateForest(graphicsManager, 1000);
+        generateGameWorldFences(graphicsManager, 3000, 35);
 
         addUntouchableObject(new Road(new Position(5000, 1000, 0.8), new Dimension(100, 8000, 0), Math.PI / 2, graphicsManager));
+
+        double radius = 15;
+        addObject(new StaticSphere(new Position(5000, 4800, radius), new ShapeSurfaceType(Color.YELLOW), radius, graphicsManager));
+        addMovableObject(new MovableSphere(new Position(5000, 4900, radius + 0.1), new ShapeSurfaceType(TextureLoader.sky), radius, graphicsManager));
+        radius = 5;
+        addObject(new StaticSphere(new Position(5000, 4700, radius + 30), new ShapeSurfaceType(new Color(229, 194, 152)), radius, graphicsManager));
     }
 
     /**
@@ -91,10 +98,42 @@ public class GameWorld extends AbstractStaticObject {
      */
     private void generateForest(GraphicsManager graphicsManager, double margin) {
         ForestGenerator forestGenerator = new ForestGenerator(this, graphicsManager);
-        forestGenerator.generate(new Position(0, dimension.getY() - (margin + 1), 2), new Dimension(dimension.getX(), margin, 0), 0, 100);
+        forestGenerator.generate(new Position(0, dimension.getY() - (margin + 1), 0), new Dimension(dimension.getX(), margin, 0), 0, 100);
         forestGenerator.generate(new Position(margin + 1, 0, 0), new Dimension(dimension.getX(), margin, 0), Math.PI / 2, 100);
         forestGenerator.generate(new Position(dimension.getX(), margin + 1, 0), new Dimension(dimension.getX(), margin, 0), Math.PI, 100);
         forestGenerator.generate(new Position(dimension.getX() - (margin + 1), dimension.getY(), 0), new Dimension(dimension.getX(), margin, 0), Math.PI * 3 / 2, 100);
+    }
+
+    /**
+     * Generates the fences surrounding the game world
+     * @param distanceFromWorldBoxMargin The distance from the margin of worldBox
+     */
+    private void generateGameWorldFences(GraphicsManager graphicsManager, double distanceFromWorldBoxMargin, double fenceWidth) {
+        double scale = 20;
+        Dimension dimensionFence = new Dimension(fenceWidth, (dimension.getY() - 2 * distanceFromWorldBoxMargin) - fenceWidth, fenceWidth);
+        Dimension fenceTexture = new Dimension(dimensionFence.getY() / scale, dimensionFence.getX(), 0);
+        addObject(new StaticParallelepiped(
+                position.add(new Position(distanceFromWorldBoxMargin, distanceFromWorldBoxMargin + fenceWidth, 2)),
+                dimensionFence,
+                new ShapeSurfaceType(TextureLoader.fences[1], fenceTexture),
+                graphicsManager));
+        addObject(new StaticParallelepiped(
+                position.add(new Position(dimension.getX() - distanceFromWorldBoxMargin - fenceWidth, distanceFromWorldBoxMargin + fenceWidth, 2)),
+                dimensionFence,
+                new ShapeSurfaceType(TextureLoader.fences[1], fenceTexture),
+                graphicsManager));
+
+        dimensionFence = new Dimension(dimension.getX() - 2 * distanceFromWorldBoxMargin, fenceWidth, fenceWidth);
+        addObject(new StaticParallelepiped(
+                position.add(new Position(distanceFromWorldBoxMargin, distanceFromWorldBoxMargin, 2)),
+                dimensionFence,
+                new ShapeSurfaceType(TextureLoader.fences[1], fenceTexture),
+                graphicsManager));
+        addObject(new StaticParallelepiped(
+                position.add(new Position(distanceFromWorldBoxMargin, dimension.getY() - distanceFromWorldBoxMargin, 2)),
+                dimensionFence,
+                new ShapeSurfaceType(TextureLoader.fences[1], fenceTexture),
+                graphicsManager));
     }
 
     /**
