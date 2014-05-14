@@ -25,6 +25,32 @@ public class ParallelepipedUtils {
     };
 
     /**
+     * The pre-established list of colors
+     */
+    private static final Color[] setOfBeautifulColors = new Color[] {
+            new Color(21, 217, 238),
+            new Color(21, 217, 105),
+            new Color(255, 0, 0),
+            new Color(155, 4, 160),
+            new Color(38, 15, 253),
+            new Color(252, 252, 0),
+            new Color(0, 255, 0),
+            new Color(0, 0, 90),
+            new Color(255, 228, 181),
+            new Color(255, 20, 147),
+            new Color(184, 134, 11),
+            new Color(255, 69, 0),
+            new Color(0, 250, 154),
+            new Color(139, 69, 19),
+            new Color(148, 0, 211),
+            new Color(173, 255, 47),
+            new Color(17, 180, 0),
+            new Color(205, 92, 92),
+            new Color(100, 149, 237),
+            new Color(220, 20, 60)
+    };
+
+    /**
      * Creates an array of 6 {@link ShapeSurfaceType}s, all of them equal to surfaceType
      * @return      An array with 6 {@link ShapeSurfaceType}s
      */
@@ -78,29 +104,6 @@ public class ParallelepipedUtils {
      */
     public static ShapeSurfaceType[] createShapeSurfaceTypeArrayRNGColors() {
         int numberElements = 20;
-        Color[] setOfBeautifulColors = new Color[] {
-                new Color(21, 217, 238),
-                new Color(21, 217, 105),
-                new Color(255, 0, 0),
-                new Color(155, 4, 160),
-                new Color(38, 15, 253),
-                new Color(252, 252, 0),
-                new Color(0, 255, 0),
-                new Color(0, 0, 90),
-                new Color(255, 228, 181),
-                new Color(255, 20, 147),
-                new Color(184, 134, 11),
-                new Color(255, 69, 0),
-                new Color(0, 250, 154),
-                new Color(139, 69, 19),
-                new Color(148, 0, 211),
-                new Color(173, 255, 47),
-                new Color(17, 180, 0),
-                new Color(205, 92, 92),
-                new Color(100, 149, 237),
-                new Color(220, 20, 60)
-        };
-
         ShapeSurfaceType[] surfaceTypes = new ShapeSurfaceType[6];
         boolean[] inList = new boolean[numberElements];
         Arrays.fill(inList, false);
