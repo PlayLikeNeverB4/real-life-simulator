@@ -61,6 +61,10 @@ public class TextureHandler {
         disableTexturing(gl);
     }
 
+    public TextureReader.Texture getTexture() {
+        return texture;
+    }
+
     /**
      * Enables texturing. This must be done before using the texture.
      */

@@ -21,13 +21,16 @@ public class ColoredSphereRenderer extends AbstractRenderer {
      */
     private Color color;
 
+    int numberOfSlices;
+
     /**
      * @param renderedObject  The {@link logic.AbstractObject} that will be rendered on the screen
      * @param graphicsManager The {@link graphics.GraphicsManager} which manages the graphics for rendering
      */
-    public ColoredSphereRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager, Color color) {
+    public ColoredSphereRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager, Color color, int numberOfSlices) {
         super(renderedObject, graphicsManager);
         this.color = color;
+        this.numberOfSlices = numberOfSlices;
     }
 
     /**
@@ -53,8 +56,8 @@ public class ColoredSphereRenderer extends AbstractRenderer {
             glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
             glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
             glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
-            final int slices = 65;
-            final int stacks = 65;
+            final int slices = numberOfSlices;
+            final int stacks = slices;
             glu.gluSphere(sphere, radius, slices, stacks);
             glu.gluDeleteQuadric(sphere);
         gl.glPopMatrix(); //restore matrix

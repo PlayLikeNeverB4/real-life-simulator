@@ -2,6 +2,7 @@ package graphics;
 
 import logic.AbstractObject;
 import logic.AbstractStaticObject;
+import logic.ParticleSource;
 import logic.PlayGround;
 
 import javax.media.opengl.GL2;
@@ -26,12 +27,13 @@ public class PlayGroundRenderer extends AbstractRenderer {
      */
     public void render() {
         GL2 gl = graphicsManager.getGlObject();
+        PlayGround playGround = (PlayGround) renderedObject;
 
         double posX = renderedObject.getPosition().getX();
         double posY = renderedObject.getPosition().getY();
         double posZ = renderedObject.getPosition().getZ() + 0.5;
 
-        double size = ((PlayGround) renderedObject).getPlayGroundSize();
+        double size = playGround.getPlayGroundSize();
 
         // here is rendered the down side of playground
         gl.glEnable(GL2.GL_POLYGON_OFFSET_FILL);
@@ -52,18 +54,22 @@ public class PlayGroundRenderer extends AbstractRenderer {
         gl.glEnd();
         gl.glDisable(GL2.GL_POLYGON_OFFSET_FILL);
         TextureHandler.disableTexturing(gl);
-
+        
         // rendering the lateral sides of playground - rendering it's fences
-        AbstractStaticObject[] fences = ((PlayGround) renderedObject).getSurroundings();
+        AbstractStaticObject[] fences = playGround.getSurroundings();
         for(int fenceIdx = 0; fenceIdx < 4; fenceIdx++) {
             fences[fenceIdx].getRenderer().render();
         }
 
         // rendering it's JoyBoxes
-        TreeSet<AbstractObject> joyBoxes = ((PlayGround) renderedObject).getBoxes();
+        TreeSet<AbstractObject> joyBoxes = playGround.getBoxes();
         for(AbstractObject joyBox : joyBoxes) {
             joyBox.getRenderer().render();
         }
+
+        // rendering the JoyBox effects
+        for(ParticleSource particleSource : playGround.getJoyBoxEffectsList())
+            particleSource.getRenderer().render();
 
     }
 }

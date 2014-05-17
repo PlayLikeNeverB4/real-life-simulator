@@ -22,16 +22,6 @@ public class Camera {
     private GraphicsManager graphicsManager;
 
     /**
-     * The relative horizontal distance to the main character
-     */
-    private double horizontalDistance;
-
-    /**
-     * The relative vertical distance to the main character
-     */
-    private double verticalDistance;
-
-    /**
      * The distance from the camera to the center
      */
     private double centerDistance;
@@ -41,14 +31,25 @@ public class Camera {
      */
     public double verticalDirection;
 
+    /**
+     * The curent camera setting. (0 - far, 1 - near)
+     */
+    private int setting;
+
+    /**
+     * The relative horizontal distance to the main character
+     */
+    private static final int horizontalDistance[] = { 40, 1 };
+
+    /**
+     * The relative vertical distance to the main character
+     */
+    private static final int verticalDistance[] = { 50, 50 };
+
     public Camera(MainCharacter mainCharacter, GraphicsManager graphicsManager) {
         this.mainCharacter = mainCharacter;
         this.graphicsManager = graphicsManager;
-
-        // Set the camera relative position
-        horizontalDistance = 30;
-        verticalDistance = 40;
-        centerDistance = 2 * horizontalDistance;
+        this.setting = 0;
     }
 
     public double getVerticalDirection() {
@@ -57,6 +58,13 @@ public class Camera {
 
     public void setVerticalDirection(double verticalDirection) {
         this.verticalDirection = verticalDirection;
+    }
+
+    /**
+     * Toggles the camera setting
+     */
+    public void toggleSetting() {
+        setting = 1 - setting;
     }
 
     /**
@@ -71,9 +79,10 @@ public class Camera {
         gl.glLoadIdentity();
 
         // Compute the camera position
+        centerDistance = 2 * horizontalDistance[setting];
         double horizontalDirection = mainCharacter.getWatchingDirection();
-        Position cameraRelativePosition = GeometryUtils.computePointOnCircle(Math.PI + horizontalDirection, horizontalDistance);
-        cameraRelativePosition.setZ(verticalDistance);
+        Position cameraRelativePosition = GeometryUtils.computePointOnCircle(Math.PI + horizontalDirection, horizontalDistance[setting]);
+        cameraRelativePosition.setZ(verticalDistance[setting]);
         Position cameraPosition = mainCharacter.getPosition().add(cameraRelativePosition);
 
         // Compute the center position

@@ -11,6 +11,7 @@ import logic.utils.CollisionDetectionUtils;
 import logic.utils.ParallelepipedUtils;
 import logic.utils.RNGUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -63,6 +64,7 @@ public class PlayGround extends AbstractStaticObject {
      * A TreeSet of all of the {@link JoyBox}es that are in the playground
      */
     private TreeSet<AbstractObject> boxes;
+
     private GraphicsManager graphicsManager;
 
     /**
@@ -79,11 +81,17 @@ public class PlayGround extends AbstractStaticObject {
      */
     private double playGroundSize;
 
+    /**
+     * List of active particle sources used for joybox destruction effects
+     */
+    private List<ParticleSource> joyBoxEffectsList;
+
     public PlayGround(Position position, double playGroundSize, int direction, GraphicsManager graphicsManager) {
         super(position);
         this.graphicsManager = graphicsManager;
         this.direction = direction;
         this.playGroundSize = playGroundSize;
+        joyBoxEffectsList = new LinkedList<ParticleSource>();
         boxes = new TreeSet<AbstractObject>();
         surroundings = new AbstractStaticObject[4]; // down - sand - only quad; 4: back, right, left, front
         addJoyBox();
@@ -108,6 +116,10 @@ public class PlayGround extends AbstractStaticObject {
 
     public double getPlayGroundSize() {
         return playGroundSize;
+    }
+
+    public List<ParticleSource> getJoyBoxEffectsList() {
+        return joyBoxEffectsList;
     }
 
     /**
@@ -213,7 +225,7 @@ public class PlayGround extends AbstractStaticObject {
     }
 
     /**
-     * Says that a {@link JoyBox} was destroyed and creates a random number of new joyBoxes
+     * Notifies the playground that a {@link JoyBox} was destroyed and creates a random number of new joyBoxes
      */
     private void joyBoxDestroyed() {
         int highValue = MAX_BOXES - boxes.size();
@@ -230,7 +242,20 @@ public class PlayGround extends AbstractStaticObject {
      */
     public void removeJoyBox(AbstractObject joyBox) {
         boxes.remove(joyBox);
+        joyBoxEffectsList.add(new FunParticleSource(joyBox.position, 3, graphicsManager));
         joyBoxDestroyed();
+    }
+
+    /**
+     * Updates something unique.
+     *
+     * @param time The time passed since the last update
+     */
+    @Override
+    public void specialUpdate(double time) {
+        super.specialUpdate(time);
+        for(ParticleSource particleSource : joyBoxEffectsList)
+            particleSource.specialUpdate(time);
     }
 
     @Override
@@ -255,13 +280,19 @@ public class PlayGround extends AbstractStaticObject {
      * It updates the other object's state depending on this object's special effects
      * @param abstractObject The other object that this object collided with
      */
-    protected void collisionSpecialEffects(AbstractObject abstractObject) {
+    public void collisionSpecialEffects(AbstractObject abstractObject) {
         if(!abstractObject.isMovable())
             throw new RuntimeException();
 
         List<AbstractObject> collisions = CollisionDetectionUtils.detect(abstractObject, boxes);
         for(AbstractObject joyBox : collisions)
             joyBox.collisionSpecialEffects(abstractObject);
+
+        List<ParticleSource> liveParticleSources = new LinkedList<ParticleSource>();
+        for(ParticleSource particleSource : joyBoxEffectsList)
+            if(!particleSource.isDead())
+                liveParticleSources.add(particleSource);
+        joyBoxEffectsList = liveParticleSources;
     }
 
 }

@@ -190,7 +190,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
      * It updates this object's state depending on whether it bounces or not
      * @param abstractObject The other object that this object collided with
      */
-    protected void collisionBounceHandler(AbstractObject abstractObject) {
+    public void collisionBounceHandler(AbstractObject abstractObject) {
         if(this.position.getZ() == this.lastValidPosition.getZ() && this.position.compareTo(this.lastValidPosition) != 0)
             this.speed /= 2;
         // default action: don't bounce
@@ -201,7 +201,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
      * It updates this object's state depending on the movable object's speed and direction
      * @param movableObject The other object that this object collided with
      */
-    protected void collidedWithMovableObject(AbstractMovableObject movableObject) {
+    public void collidedWithMovableObject(AbstractMovableObject movableObject) {
         if(movableObject.getCurrentSpeed() > 0) { // the other object is moving, so it might affect this object
             this.direction = movableObject.direction;
             this.speed = movableObject.getCurrentSpeed();
@@ -213,7 +213,7 @@ public abstract class AbstractMovableObject extends AbstractObject {
      * It updates the other object's state depending on this object's special effects
      * @param abstractObject The other object that this object collided with
      */
-    protected void collisionSpecialEffects(AbstractObject abstractObject) {
+    public void collisionSpecialEffects(AbstractObject abstractObject) {
         // default action: do nothing
     }
 

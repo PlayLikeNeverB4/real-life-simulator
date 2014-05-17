@@ -60,8 +60,11 @@ public class Door extends StaticParallelepiped {
      */
     private Position anchor;
 
-    public Door(Position position, Dimension dimension, ShapeSurfaceType frontFaceType, ShapeSurfaceType backFaceType, ShapeSurfaceType sidesType, GraphicsManager graphicsManager, int numberOfRotations) {
-        super(position, dimension, ParallelepipedUtils.createSurfaceTypeDoorArray(frontFaceType, backFaceType, sidesType), graphicsManager, numberOfRotations);
+    public Door(Position position, Dimension dimension, int numberOfRotations, ShapeSurfaceType frontFaceType, ShapeSurfaceType backFaceType, ShapeSurfaceType sidesType, GraphicsManager graphicsManager) {
+        super(position, dimension, numberOfRotations,
+              ParallelepipedUtils.createSurfaceTypeDoorArray(frontFaceType, backFaceType, sidesType), graphicsManager);
+        this.position = ParallelepipedUtils.computeDoorPosition(this.position, this.dimension, numberOfRotations);
+        recomputeQuads();
         renderer = new DoorRenderer(this, graphicsManager);
         originalPosition = new Position(this.position);
         originalDimension = new Dimension(this.dimension);
@@ -69,8 +72,8 @@ public class Door extends StaticParallelepiped {
         opened = false;
     }
 
-    public Door(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager, int numberOfRotations) {
-        this(position, dimension, surfaceType, surfaceType, surfaceType, graphicsManager, numberOfRotations);
+    public Door(Position position, Dimension dimension, int numberOfRotations, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager) {
+        this(position, dimension, numberOfRotations, surfaceType, surfaceType, surfaceType, graphicsManager);
     }
 
     public double getRelativeAngle() {
@@ -134,7 +137,7 @@ public class Door extends StaticParallelepiped {
      * @param abstractObject The other object that this object collided with
      */
     @Override
-    protected void collisionSpecialEffects(AbstractObject abstractObject) {
+    public void collisionSpecialEffects(AbstractObject abstractObject) {
         if(abstractObject.isMovable()) { // only movable objects can open it
             if(!opened) {
                 // Check which way the door should open by compute the cross product

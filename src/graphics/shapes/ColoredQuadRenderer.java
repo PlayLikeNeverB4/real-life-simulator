@@ -34,7 +34,7 @@ public class ColoredQuadRenderer extends AbstractRenderer {
         Quad quadObject = (Quad) renderedObject;
         Position[] vertices = quadObject.getVertices();
 
-        gl.glColor3d(color.getRed() / 255.0, color.getGreen() / 255.0, color.getBlue() / 255.0);
+        gl.glColor4d(color.getRed() / 255.0, color.getGreen() / 255.0, color.getBlue() / 255.0, color.getAlpha() / 255.0);
         gl.glBegin(GL2.GL_QUADS);
             for(int i = 0; i < 4; i++) {
                 gl.glVertex3d(vertices[i].getX(), vertices[i].getY(), vertices[i].getZ());

@@ -98,12 +98,26 @@ public class ParallelepipedUtils {
     }
 
     /**
+     * Creates an array of 6 {@link ShapeSurfaceType}s used for rendering the door.
+     * @param floorType     The {@link logic.shapes.ShapeSurfaceType} used for rendering the floor's top face
+     * @param sidesType     The {@link logic.shapes.ShapeSurfaceType} used for rendering the rest of the sides
+     * @return              An array with 6 {@link ShapeSurfaceType}s
+     */
+    public static ShapeSurfaceType[] createSurfaceTypeFloorArray(ShapeSurfaceType floorType, ShapeSurfaceType sidesType) {
+        ShapeSurfaceType[] shapeSurfaceType = new ShapeSurfaceType[6];
+        for(int i = 0; i < 5; i++)
+            shapeSurfaceType[i] = new ShapeSurfaceType(sidesType);
+        shapeSurfaceType[5] = new ShapeSurfaceType(floorType);
+        return shapeSurfaceType;
+    }
+
+    /**
      * Creates an array of 6 {@link ShapeSurfaceType}s, all of them equal to a random color
      * from a pre-established list of colors
      * @return      An array with 6 {@link ShapeSurfaceType}s
      */
     public static ShapeSurfaceType[] createShapeSurfaceTypeArrayRNGColors() {
-        int numberElements = 20;
+        int numberElements = setOfBeautifulColors.length;
         ShapeSurfaceType[] surfaceTypes = new ShapeSurfaceType[6];
         boolean[] inList = new boolean[numberElements];
         Arrays.fill(inList, false);
@@ -116,6 +130,14 @@ public class ParallelepipedUtils {
             inList[newIdx] = true;
         }
         return surfaceTypes;
+    }
+
+    /**
+     * Generates and returns a random color from the set of "beautiful" colors
+     */
+    public static Color createRNGColor() {
+        int numberElements = setOfBeautifulColors.length;
+        return setOfBeautifulColors[ (int) RNGUtils.generateDouble(numberElements) ];
     }
 
     /**
@@ -188,6 +210,49 @@ public class ParallelepipedUtils {
         dimension.setY(maxY - posY);
 
         ParallelepipedUtils.computeQuads(position, dimension, sides, rotation, mirrored);
+    }
+
+    /**
+     * Computes the quad at a position with a dimension
+     * @param position  The origin position of the quad
+     * @param dimension The dimension of the quad
+     * @return          The computed quad
+     */
+    public static Position[] computeQuad(Position position, Dimension dimension) {
+        Position[] vertices = new Position[4];
+        vertices[0] = new Position(position);
+        vertices[2] = position.add(new Position(dimension));
+
+        if(dimension.getX() == 0) {
+            vertices[1] = position.add(new Position(0, dimension.getY(), 0));
+            vertices[3] = position.add(new Position(0, 0, dimension.getZ()));
+        }
+        else if(dimension.getY() == 0) {
+            vertices[1] = position.add(new Position(dimension.getX(), 0, 0));
+            vertices[3] = position.add(new Position(0, 0, dimension.getZ()));
+        }
+        else { // Z = 0
+            vertices[1] = position.add(new Position(dimension.getX(), 0, 0));
+            vertices[3] = position.add(new Position(0, dimension.getY(), 0));
+        }
+
+        return vertices;
+    }
+
+    /**
+     * Computes the position of the door given the original position, dimension and the rotation of the door
+     * @param position  The original position of the door
+     * @param dimension The original dimension of the door
+     * @param rotation  The rotation of the door
+     * @return The new position of the door
+     */
+    public static Position computeDoorPosition(Position position, Dimension dimension, int rotation) {
+        switch (rotation) {
+            case 0: return position;
+            case 1: return position.add(new Position(dimension.getX(), 0, 0));
+        }
+
+        return null;
     }
 
 }

@@ -30,8 +30,8 @@ public class Stairs extends AbstractStaticObject {
         // create the steps
         double stepHeight = stepDimension.getZ();
         for(int stepIdx = 0; stepIdx < numberOfSteps; stepIdx++) {
-            steps[stepIdx] = new StaticParallelepiped(new Position(position), new Dimension(stepDimension),
-                                                      new ShapeSurfaceType(TextureLoader.step), graphicsManager, rotationIndex);
+            steps[stepIdx] = new StaticParallelepiped(new Position(position), new Dimension(stepDimension), rotationIndex,
+                                                      new ShapeSurfaceType(TextureLoader.step), graphicsManager);
 
             position = position.move(stairsDirection, stepDimension.getY());
             stepDimension.setZ(stepDimension.getZ() + stepHeight);
@@ -63,7 +63,7 @@ public class Stairs extends AbstractStaticObject {
      * @param abstractObject The other object that this object collided with
      */
     @Override
-    protected void collisionSpecialEffects(AbstractObject abstractObject) {
+    public void collisionSpecialEffects(AbstractObject abstractObject) {
         if(!abstractObject.isMovable())
             return;
 

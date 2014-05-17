@@ -1,6 +1,6 @@
 package logic;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Manages the gravity
@@ -27,7 +27,7 @@ public class Gravity {
      */
     public void apply(double time) {
         double distance = time * SPEED;
-        List<AbstractMovableObject> movableObjectList = gameWorld.getMovableObjectList();
+        Collection<AbstractMovableObject> movableObjectList = gameWorld.getMovableObjectList();
 
         for(AbstractMovableObject movableObject : movableObjectList)
             movableObject.move(0, 0, -distance);

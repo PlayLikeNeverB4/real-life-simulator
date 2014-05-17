@@ -37,11 +37,11 @@ public class StaticParallelepiped extends AbstractStaticObject {
      *
      * @param position      The {@link logic.Position} where the parallelepiped stays
      * @param dimension     The {@link Dimension} of the parallelepiped
+     * @param numberOfRotations The rotation of the parallelepiped
      * @param surfaceTypes  An array containing 6 {@link logic.shapes.ShapeSurfaceType}s, one for each face
      * @param graphicsManager   The {@link GraphicsManager} which manages the renderer of parallelepiped
-     * @param numberOfRotations The rotation of the parallelepiped
      */
-    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager, int numberOfRotations) {
+    public StaticParallelepiped(Position position, Dimension dimension, int numberOfRotations, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager) {
         super(position);
         this.position = position;
         this.dimension = dimension;
@@ -61,15 +61,15 @@ public class StaticParallelepiped extends AbstractStaticObject {
     }
 
     public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType[] surfaceTypes, GraphicsManager graphicsManager) {
-        this(position, dimension, surfaceTypes, graphicsManager, 0);
+        this(position, dimension, 0, surfaceTypes, graphicsManager);
     }
 
     public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager) {
-        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager, 0);
+        this(position, dimension, 0, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager);
     }
 
-    public StaticParallelepiped(Position position, Dimension dimension, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager, int numberOfRotations) {
-        this(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager, numberOfRotations);
+    public StaticParallelepiped(Position position, Dimension dimension, int numberOfRotations, ShapeSurfaceType surfaceType, GraphicsManager graphicsManager) {
+        this(position, dimension, numberOfRotations, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), graphicsManager);
     }
 
     public Dimension getDimension() {

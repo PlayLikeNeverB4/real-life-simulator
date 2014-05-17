@@ -20,7 +20,7 @@ public class StaticSphere extends AbstractStaticObject {
         if(surfaceType.isTextured()) {
             renderer = new TexturedSphereRenderer(this, graphicsManager, surfaceType.getTextureHandler());
         } else {
-            renderer = new ColoredSphereRenderer(this, graphicsManager, surfaceType.getColor());
+            renderer = new ColoredSphereRenderer(this, graphicsManager, surfaceType.getColor(), 10);
         }
     }
 

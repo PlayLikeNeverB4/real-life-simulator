@@ -21,7 +21,10 @@ public class Quad extends AbstractStaticObject {
         super(vertices[0]);
         this.vertices = vertices;
         if(surfaceType.isTextured()) {
-            renderer = new TexturedQuadRenderer(this, graphicsManager, surfaceType.getTextureHandler(), surfaceType.getTextureDimension());
+            if(surfaceType.getTextureDimension() == null)
+                renderer = new TexturedQuadRenderer(this, graphicsManager, surfaceType.getTextureHandler());
+            else
+                renderer = new TexturedQuadRenderer(this, graphicsManager, surfaceType.getTextureHandler(), surfaceType.getTextureDimension());
         } else {
             renderer = new ColoredQuadRenderer(this, graphicsManager, surfaceType.getColor());
         }
@@ -29,18 +32,6 @@ public class Quad extends AbstractStaticObject {
 
     public Position[] getVertices() {
         return vertices;
-    }
-
-    public Position computeMiddle() {
-        double x = 0.0;
-        double y = 0.0;
-        for(Position pos : vertices) {
-            x += pos.getX();
-            y += pos.getY();
-        }
-        x /= 4;
-        y /= 4;
-        return new Position(x, y);
     }
 
     @Override

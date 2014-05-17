@@ -24,9 +24,9 @@ public class MainWindow extends JFrame {
     public MainWindow(int width, int height) {
         super("Real Life Simulator");
 
-//        // go full-screen
-//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        this.setUndecorated(true);
+        // go full-screen
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setUndecorated(true);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -35,6 +35,9 @@ public class MainWindow extends JFrame {
         makeCursorInvisible();
     }
 
+    /**
+     * Hides the cursor
+     */
     private void makeCursorInvisible() {
         // Transparent 16 x 16 pixel cursor image
         BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);

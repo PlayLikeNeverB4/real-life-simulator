@@ -2,6 +2,7 @@ package logic;
 
 import logic.utils.CollisionDetectionUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,13 +23,9 @@ public class PhysicsEngine {
      * Updates the game world by detecting and resolving the collisions between objects
      */
     public void checkCollisions() {
-        List<AbstractMovableObject> movableObjectList = gameWorld.getMovableObjectList();
+        Collection<AbstractMovableObject> movableObjectList = gameWorld.getMovableObjectList();
         for(AbstractMovableObject movableObject : movableObjectList) {
             List<AbstractObject> collisions = CollisionDetectionUtils.detect(movableObject, gameWorld);
-//            if(collisions.size() > 0)
-//                System.out.println("Collision!");
-//            if(movableObject instanceof MainCharacter)
-//                System.out.println("Checking MC: " + movableObject.getPosition());
             for(AbstractObject object : collisions) {
                 // save the previous data
                 double prevSpeed = movableObject.speed;

@@ -22,7 +22,7 @@ public abstract class AbstractRenderer {
      * @param renderedObject    The {@link AbstractObject} that will be rendered on the screen
      * @param graphicsManager   The {@link GraphicsManager} which manages the graphics for rendering
      */
-    protected AbstractRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
+    public AbstractRenderer(AbstractObject renderedObject, GraphicsManager graphicsManager) {
         this.renderedObject = renderedObject;
         this.graphicsManager = graphicsManager;
     }

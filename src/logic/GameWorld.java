@@ -16,6 +16,15 @@ import java.util.List;
 public class GameWorld extends AbstractStaticObject {
 
     /**
+     * The width of an alley from the game world
+     */
+    public static double ALLEY_WIDTH = 40;
+    /**
+     * The z-coordinate of an alley from the game world
+     */
+    public static double ALLEY_HEIGHT = 0.4;
+
+    /**
      * The size of the game world
      */
     private Dimension dimension;
@@ -36,6 +45,11 @@ public class GameWorld extends AbstractStaticObject {
     private List<AbstractObject> untouchableObjectList;
 
     /**
+     * A list containing all of the fire places inside the game world
+     */
+    private List<FirePlace> firePlaces;
+
+    /**
      * The main character of the game world
      */
     private MainCharacter mainCharacter;
@@ -50,6 +64,7 @@ public class GameWorld extends AbstractStaticObject {
         objectList = new LinkedList<AbstractObject>();
         movableObjectList = new LinkedList<AbstractMovableObject>();
         untouchableObjectList = new LinkedList<AbstractObject>();
+        firePlaces = new LinkedList<FirePlace>();
         this.renderer = new GameWorldRenderer(this, graphicsManager);
         mainCharacter = new MainCharacter(new Position(5000, 5000, 0.1), new Dimension(10, 5, 50), graphicsManager, 0.2);
     }
@@ -59,37 +74,109 @@ public class GameWorld extends AbstractStaticObject {
      * @param graphicsManager The {@link GraphicsManager} which manages all of the rendering
      */
     public void initializeGameWorld(GraphicsManager graphicsManager) {
+        // The world box
         addObject(new WorldBox(new Position(0, 0, 0), dimension));
+        // The main character
         addMovableObject(mainCharacter);
-        addObject(new StaticParallelepiped(new Position(5300, 5200, 0), new Dimension(100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
-        addObject(new Stairs(new Position(5100, 5300, 0), 3, 10, new Dimension(100, 20, 10), graphicsManager));
-        addObject(new Stairs(new Position(5300, 5100, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
 
+        // The stairs that the kids play on
+        addObject(new StaticParallelepiped(new Position(5400, 5200, 0), new Dimension(100), new ShapeSurfaceType(Color.BLUE), graphicsManager));
+        addObject(new Stairs(new Position(5200, 5300, 0), 3, 10, new Dimension(100, 20, 10), graphicsManager));
+        addObject(new Stairs(new Position(5400, 5100, 0), 0, 5, new Dimension(100, 20, 20), graphicsManager));
+
+        // The playground
         addObject(new PlayGround(new Position(5500, 4500, 0), 300, 2, graphicsManager));
 
-        addObject(new Door(new Position(5200, 4700, 0), new Dimension(30, 5, 60),
-                           new ShapeSurfaceType(TextureLoader.doorFront),
-                           new ShapeSurfaceType(TextureLoader.doorBack),
-                           new ShapeSurfaceType(new Color(241, 182, 107)),
-                           graphicsManager, 1));
-        addObject(new StaticParallelepiped(new Position(5200, 4600, 0), new Dimension(100, 5, 60),
-                new ShapeSurfaceType(Color.GRAY), graphicsManager, 1));
-        addObject(new StaticParallelepiped(new Position(5200, 4730, 0), new Dimension(100, 5, 60),
-                new ShapeSurfaceType(Color.GRAY), graphicsManager, 1));
+        // The block of apartments
+        addObject(new Block(new Position(4000, 5000, 0), 2, graphicsManager));
 
-        addMovableObject(new MovableParallelepiped(new Position(4900, 4900, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
-        addMovableObject(new MovableParallelepiped(new Position(4900, 5200, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
+        // The red boxes that can be moved
+        addMovableObject(new MovableParallelepiped(new Position(4500, 4100, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
+        addMovableObject(new MovableParallelepiped(new Position(4500, 4400, 0.1), new Dimension(50), new ShapeSurfaceType(Color.RED), graphicsManager));
 
+        // Generate the forest at the edge of the game world
         generateForest(graphicsManager, 1000);
+        // Generate the fences at the edge of the game world
         generateGameWorldFences(graphicsManager, 3000, 35);
 
-        addUntouchableObject(new Road(new Position(5000, 1000, 0.8), new Dimension(100, 8000, 0), Math.PI / 2, graphicsManager));
+        // The big road
+        addUntouchableObject(new Road(new Position(5000, 3000, 0.8), new Dimension(100, 4000, 0), Math.PI / 2, graphicsManager));
 
+        // Alley surrounding the block
+        addUntouchableObject(new Alley(new Position(3900, 4900, ALLEY_HEIGHT),
+                                       new Dimension(1050, ALLEY_WIDTH, 0),
+                                       graphicsManager));
+        addUntouchableObject(new Alley(new Position(3900, 4900 + ALLEY_WIDTH, ALLEY_HEIGHT),
+                                       new Dimension(ALLEY_WIDTH, 600, 0),
+                                       graphicsManager));
+        addUntouchableObject(new Alley(new Position(3900 + ALLEY_WIDTH, 4900 + 600, ALLEY_HEIGHT),
+                                       new Dimension(1050, ALLEY_WIDTH, 0),
+                                       graphicsManager));
+        addUntouchableObject(new Alley(new Position(3900 + 1050, 4900, ALLEY_HEIGHT),
+                                       new Dimension(ALLEY_WIDTH, 600, 0),
+                                       graphicsManager));
+        addUntouchableObject(new Alley(new Position(3900 + 545, 4900 + ALLEY_WIDTH, ALLEY_HEIGHT),
+                                       new Dimension(100, 150, 0),
+                                       graphicsManager));
+
+        // Generate the walking pedestrians
+        generateAmbientCharacters(graphicsManager);
+
+        // Some fireworks
+        addUntouchableObject(new FunParticleSource(new Position(5460, 5240, 200), 10, graphicsManager));
+        addUntouchableObject(new FunParticleSource(new Position(5000, 5000, 40), 10, graphicsManager));
+
+        // The fire places
+        addFirePlace(new FirePlace(new Position(4700, 4600, 0), graphicsManager));
+        addFirePlace(new FirePlace(new Position(4600, 4600, 0), graphicsManager));
+        addFirePlace(new FirePlace(new Position(4500, 4600, 0), graphicsManager));
+
+        // The sphere that can be moved
         double radius = 15;
-        addObject(new StaticSphere(new Position(5000, 4800, radius), new ShapeSurfaceType(Color.YELLOW), radius, graphicsManager));
         addMovableObject(new MovableSphere(new Position(5000, 4900, radius + 0.1), new ShapeSurfaceType(TextureLoader.sky), radius, graphicsManager));
-        radius = 5;
-        addObject(new StaticSphere(new Position(5000, 4700, radius + 30), new ShapeSurfaceType(new Color(229, 194, 152)), radius, graphicsManager));
+    }
+
+    /**
+     * Generates people in the game world
+     * @param graphicsManager The graphics manager used for rendering the people
+     */
+    private void generateAmbientCharacters(GraphicsManager graphicsManager) {
+        // Walking pedestrians
+        Position[] path = new Position[] {
+                new Position(3924, 4920),
+                new Position(3919, 5518),
+                new Position(4970, 5516),
+                new Position(4978, 4924)
+        };
+        addUntouchableObject(new AmbientCharacter(new Position(3900, 4900, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3900, 4950, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3900, 4950, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3900, 4950, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3900, 4950, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3900, 4950, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3919, 5518, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3919, 5518, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(3919, 5518, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(4970, 5516, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(4970, 5516, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+        addUntouchableObject(new AmbientCharacter(new Position(4970, 5516, 0.1), new Dimension(10, 5, 50), path, graphicsManager));
+
+        // Children playing
+        path = new Position[] {
+                new Position(5164, 5236),
+                new Position(5393, 5278),
+                new Position(5466, 5279),
+                new Position(5477, 5198),
+                new Position(5383, 5201),
+                new Position(5400, 5210),
+                new Position(5393, 5278),
+                new Position(5466, 5279),
+                new Position(5477, 5198),
+                new Position(5410, 5027),
+        };
+        addMovableObject(new AmbientCharacter(new Position(5164, 5236, 0.2), new Dimension(7, 3, 30), 1, 0.2, path, graphicsManager));
+        addMovableObject(new AmbientCharacter(new Position(5100, 5236, 0.2), new Dimension(7, 3, 30), 1, 0.2, path, graphicsManager));
+        addMovableObject(new AmbientCharacter(new Position(5000, 5236, 0.2), new Dimension(7, 3, 30), 1, 0.2, path, graphicsManager));
     }
 
     /**
@@ -161,6 +248,11 @@ public class GameWorld extends AbstractStaticObject {
         untouchableObjectList.add(untouchableObject);
     }
 
+    public void addFirePlace(FirePlace firePlace) {
+        untouchableObjectList.add(firePlace);
+        firePlaces.add(firePlace);
+    }
+
     public MainCharacter getMainCharacter() {
         return mainCharacter;
     }
@@ -175,6 +267,10 @@ public class GameWorld extends AbstractStaticObject {
 
     public List<AbstractObject> getUntouchableObjectList() {
         return untouchableObjectList;
+    }
+
+    public List<FirePlace> getFirePlaces() {
+        return firePlaces;
     }
 
     public Dimension getDimension() {

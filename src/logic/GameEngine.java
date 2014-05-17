@@ -67,6 +67,8 @@ public class GameEngine {
         long currentLoopTime = System.currentTimeMillis();
         long timeInterval = Math.min(MAX_FRAME_TIME, currentLoopTime - lastLoopTime);
 
+//        System.out.println(gameWorld.getMainCharacter().getPosition());
+
         // Check input
         inputManager.checkMoveKeys(timeInterval);
         List<AbstractEvent> eventList = inputManager.popNewEvents();
@@ -79,10 +81,15 @@ public class GameEngine {
         for(AbstractMovableObject movableObject : gameWorld.getMovableObjectList())
             if(movableObject != gameWorld.getMainCharacter()) // the mainCharacter's moves are special
                 movableObject.update(timeInterval);
+        for(AbstractObject object : gameWorld.getUntouchableObjectList())
+            if(object.isMovable())
+                ((AbstractMovableObject)object).update(timeInterval);
 
         // special update for objects
         for(AbstractObject abstractObject : gameWorld.getObjectList())
             abstractObject.specialUpdate(timeInterval);
+        for(AbstractObject object : gameWorld.getUntouchableObjectList())
+            object.specialUpdate(timeInterval);
 
         // check for collisions
         physicsEngine.checkCollisions();

@@ -101,6 +101,9 @@ public class InputManager implements MouseMotionListener, KeyListener {
             eventList.add(new StopMainCharacterEvent(gameWorld));
     }
 
+    /**
+     * Moves the cursor to the center of the canvas
+     */
     public void moveMouseToCenter() {
         int middleX = graphicsManager.getCanvas().getWidth() / 2;
         int middleY = graphicsManager.getCanvas().getHeight() / 2;
@@ -138,12 +141,14 @@ public class InputManager implements MouseMotionListener, KeyListener {
                 break;
             case KeyEvent.VK_D :     markPressed(RIGHT);
                 break;
-            case KeyEvent.VK_F : eventList.add(new FireEvent());
+            case KeyEvent.VK_F : eventList.add(new FireEvent(gameWorld));
+                return;
+            case KeyEvent.VK_C : eventList.add(new CameraToggleEvent(graphicsManager.getCamera()));
                 return;
             case KeyEvent.VK_E : eventList.add(new SwitchEvent());
                 return;
             default: {
-                System.out.println("This key is not a valid one!");
+//                System.out.println("This key is not a valid one!");
                 return;
             }
         }
@@ -170,7 +175,7 @@ public class InputManager implements MouseMotionListener, KeyListener {
             case KeyEvent.VK_D :     markReleased(RIGHT);
                 break;
             default: {
-                System.out.println("This key is not a valid one!");
+//                System.out.println("This key is not a valid one!");
                 return;
             }
         }

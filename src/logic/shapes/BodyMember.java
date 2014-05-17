@@ -47,7 +47,7 @@ public class BodyMember extends StaticParallelepiped {
     private Position anchor;
 
     public BodyMember(Position position, Dimension dimension, ShapeSurfaceType surfaceType, AbstractPerson person, int startAngleDirection) {
-        super(position, dimension, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), person.getGraphicsManager(), 0);
+        super(position, dimension, 0, ParallelepipedUtils.createShapeSurfaceTypeArray(surfaceType), person.getGraphicsManager());
         renderer = new BodyMemberRenderer(this, person.getGraphicsManager());
         this.person = person;
         this.maxAngle = Math.PI / 4.0;

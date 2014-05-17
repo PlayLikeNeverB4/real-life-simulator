@@ -35,9 +35,8 @@ public class JoyBox extends StaticParallelepiped {
      * @param abstractObject The other object that this object collided with
      */
     @Override
-    protected void collisionSpecialEffects(AbstractObject abstractObject) {
+    public void collisionSpecialEffects(AbstractObject abstractObject) {
         playGround.removeJoyBox(this);
-        // TODO: trebuie sa pui fluturici
     }
 
 }

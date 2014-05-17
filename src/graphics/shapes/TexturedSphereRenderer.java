@@ -58,8 +58,8 @@ public class TexturedSphereRenderer extends AbstractRenderer {
                 glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
                 glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
                 glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
-                final int slices = 65;
-                final int stacks = 65;
+                final int slices = 10;
+                final int stacks = 10;
                 glu.gluSphere(sphere, radius, slices, stacks);
                 glu.gluDeleteQuadric(sphere);
 

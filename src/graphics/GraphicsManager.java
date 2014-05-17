@@ -120,7 +120,7 @@ public class GraphicsManager implements GLEventListener {
         this.gluObject = GLU.createGLU();
 
         // Setting the clear color (the color which will be used to erase the canvas)
-        this.glObject.glClearColor(0, 0, 0, 0);
+        this.glObject.glClearColor(1, 1, 1, 1);
 
         // Selecting the modelview matrix
         this.glObject.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
@@ -134,14 +134,8 @@ public class GraphicsManager implements GLEventListener {
         this.glObject.glDepthFunc(GL.GL_LESS);
 
         // Blending options
-//        this.glObject.glDisable(GL.GL_BLEND);
         this.glObject.glEnable(GL.GL_BLEND);
-        this.glObject.glBlendFunc(GL2.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-//        this.glObject.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
-
-        // Texture setting
-        this.glObject.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
-        this.glObject.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+        this.glObject.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
 
         // For very close textures (to prevent z-fighting)
         glObject.glPolygonOffset(0.0f, -10);

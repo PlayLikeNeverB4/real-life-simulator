@@ -111,21 +111,21 @@ public abstract class AbstractObject implements Comparable<AbstractObject> {
      * It updates this object's state depending on whether it bounces or not
      * @param abstractObject The other object that this object collided with
      */
-    protected abstract void collisionBounceHandler(AbstractObject abstractObject);
+    public abstract void collisionBounceHandler(AbstractObject abstractObject);
 
     /**
      * Notifies this object that it collided with a movable object
      * It updates this object's state depending on the movable object's speed and direction
      * @param movableObject The other object that this object collided with
      */
-    protected abstract void collidedWithMovableObject(AbstractMovableObject movableObject);
+    public abstract void collidedWithMovableObject(AbstractMovableObject movableObject);
 
     /**
      * Notifies this object that it collided with another object
      * It updates the other object's state depending on this object's special effects
      * @param abstractObject The other object that this object collided with
      */
-    protected abstract void collisionSpecialEffects(AbstractObject abstractObject);
+    public abstract void collisionSpecialEffects(AbstractObject abstractObject);
 
     @Override
     public int compareTo(AbstractObject o) {

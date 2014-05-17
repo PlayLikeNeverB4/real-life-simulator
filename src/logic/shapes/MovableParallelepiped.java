@@ -85,7 +85,7 @@ public class MovableParallelepiped extends AbstractMovableObject {
      * @param movableObject The other object that this object collided with
      */
     @Override
-    protected void collidedWithMovableObject(AbstractMovableObject movableObject) {
+    public void collidedWithMovableObject(AbstractMovableObject movableObject) {
         super.collidedWithMovableObject(movableObject);
     }
 
@@ -96,7 +96,7 @@ public class MovableParallelepiped extends AbstractMovableObject {
      * @param abstractObject The other object that this object collided with
      */
     @Override
-    protected void collisionBounceHandler(AbstractObject abstractObject) {
+    public void collisionBounceHandler(AbstractObject abstractObject) {
         super.collisionBounceHandler(abstractObject);
     }
 
